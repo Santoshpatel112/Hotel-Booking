@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![EasyStay Logo](https://img.shields.io/badge/EasyStay-Hotel%20Booking-blue?style=for-the-badge&logo=hotel)
+![EasyStay Logo](https://www.design.com/maker/drafts/d22a273b-35de-4c31-85f1-3bb06093d21b/share)
 
 **Streamline your hotel booking experience with modern technology**
 
@@ -35,6 +35,7 @@
 ## 🎯 Problem Statement
 
 The hospitality industry faces challenges with:
+
 - **Fragmented booking systems** leading to overbooking
 - **Poor user experience** causing booking abandonment
 - **Manual processes** increasing operational costs
@@ -53,12 +54,12 @@ graph TB
     B --> D[Booking Service]
     B --> E[Hotel Management Service]
     B --> F[User Service]
-    
+
     C --> G[(MongoDB - Users)]
     D --> H[(MongoDB - Bookings)]
     E --> I[(MongoDB - Hotels)]
     F --> G
-    
+
     D --> J[Payment Gateway]
     D --> K[Email Service]
     E --> L[Image Storage]
@@ -66,13 +67,13 @@ graph TB
 
 ### 🔧 Technology Stack
 
-| Layer | Technology | Purpose |
-|-------|------------|---------|
-| **Backend** | Node.js + Express.js | RESTful API development |
-| **Database** | MongoDB + Mongoose | Data persistence & modeling |
-| **Authentication** | JWT + bcrypt | Secure user authentication |
-| **Validation** | Express Validator | Input validation & sanitization |
-| **Security** | Helmet + CORS | API security & protection |
+| Layer              | Technology           | Purpose                         |
+| ------------------ | -------------------- | ------------------------------- |
+| **Backend**        | Node.js + Express.js | RESTful API development         |
+| **Database**       | MongoDB + Mongoose   | Data persistence & modeling     |
+| **Authentication** | JWT + bcrypt         | Secure user authentication      |
+| **Validation**     | Express Validator    | Input validation & sanitization |
+| **Security**       | Helmet + CORS        | API security & protection       |
 
 ---
 
@@ -139,40 +140,40 @@ EMAIL_PASS=your_app_password
 
 ### 🔐 Authentication Endpoints
 
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| `POST` | `/api/auth/register` | User registration | ❌ |
-| `POST` | `/api/auth/login` | User login | ❌ |
-| `POST` | `/api/auth/logout` | User logout | ✅ |
-| `GET` | `/api/auth/profile` | Get user profile | ✅ |
+| Method | Endpoint             | Description       | Auth Required |
+| ------ | -------------------- | ----------------- | ------------- |
+| `POST` | `/api/auth/register` | User registration | ❌            |
+| `POST` | `/api/auth/login`    | User login        | ❌            |
+| `POST` | `/api/auth/logout`   | User logout       | ✅            |
+| `GET`  | `/api/auth/profile`  | Get user profile  | ✅            |
 
 ### 🏨 Hotel Management
 
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| `GET` | `/api/hotels` | Get all hotels | ❌ |
-| `GET` | `/api/hotels/:id` | Get hotel details | ❌ |
-| `POST` | `/api/hotels` | Create new hotel | ✅ (Admin) |
-| `PUT` | `/api/hotels/:id` | Update hotel | ✅ (Admin) |
-| `DELETE` | `/api/hotels/:id` | Delete hotel | ✅ (Admin) |
+| Method   | Endpoint          | Description       | Auth Required |
+| -------- | ----------------- | ----------------- | ------------- |
+| `GET`    | `/api/hotels`     | Get all hotels    | ❌            |
+| `GET`    | `/api/hotels/:id` | Get hotel details | ❌            |
+| `POST`   | `/api/hotels`     | Create new hotel  | ✅ (Admin)    |
+| `PUT`    | `/api/hotels/:id` | Update hotel      | ✅ (Admin)    |
+| `DELETE` | `/api/hotels/:id` | Delete hotel      | ✅ (Admin)    |
 
 ### 🛏️ Room Management
 
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| `GET` | `/api/rooms` | Get available rooms | ❌ |
-| `GET` | `/api/rooms/:id` | Get room details | ❌ |
-| `POST` | `/api/rooms` | Add new room | ✅ (Admin) |
-| `PUT` | `/api/rooms/:id` | Update room | ✅ (Admin) |
-| `DELETE` | `/api/rooms/:id` | Delete room | ✅ (Admin) |
+| Method   | Endpoint         | Description         | Auth Required |
+| -------- | ---------------- | ------------------- | ------------- |
+| `GET`    | `/api/rooms`     | Get available rooms | ❌            |
+| `GET`    | `/api/rooms/:id` | Get room details    | ❌            |
+| `POST`   | `/api/rooms`     | Add new room        | ✅ (Admin)    |
+| `PUT`    | `/api/rooms/:id` | Update room         | ✅ (Admin)    |
+| `DELETE` | `/api/rooms/:id` | Delete room         | ✅ (Admin)    |
 
 ### 👥 User Management
 
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| `GET` | `/api/users/profile` | Get user profile | ✅ |
-| `PUT` | `/api/users/profile` | Update profile | ✅ |
-| `GET` | `/api/users/bookings` | Get user bookings | ✅ |
+| Method | Endpoint              | Description       | Auth Required |
+| ------ | --------------------- | ----------------- | ------------- |
+| `GET`  | `/api/users/profile`  | Get user profile  | ✅            |
+| `PUT`  | `/api/users/profile`  | Update profile    | ✅            |
+| `GET`  | `/api/users/bookings` | Get user bookings | ✅            |
 
 ---
 
@@ -186,17 +187,17 @@ sequenceDiagram
     participant A as EasyStay API
     participant D as Database
     participant P as Payment Gateway
-    
+
     U->>A: 1. Browse Hotels
     A->>D: Query available hotels
     D-->>A: Return hotel list
     A-->>U: Display hotels
-    
+
     U->>A: 2. Select Room & Dates
     A->>D: Check availability
     D-->>A: Confirm availability
     A-->>U: Show booking form
-    
+
     U->>A: 3. Submit Booking
     A->>A: Validate booking data
     A->>P: Process payment
@@ -213,20 +214,20 @@ flowchart TD
     A[Admin Login] --> B{Authentication}
     B -->|Success| C[Dashboard]
     B -->|Failed| A
-    
+
     C --> D[Hotel Management]
     C --> E[Room Management]
     C --> F[Booking Management]
     C --> G[User Management]
-    
+
     D --> D1[Add Hotel]
     D --> D2[Edit Hotel]
     D --> D3[Delete Hotel]
-    
+
     E --> E1[Add Room]
     E --> E2[Update Room]
     E --> E3[Set Pricing]
-    
+
     F --> F1[View Bookings]
     F --> F2[Confirm Booking]
     F --> F3[Cancel Booking]
@@ -237,6 +238,7 @@ flowchart TD
 ## 📊 Database Schema
 
 ### 🏨 Hotel Model
+
 ```javascript
 {
   name: String,           // Hotel name
@@ -261,6 +263,7 @@ flowchart TD
 ```
 
 ### 🛏️ Room Model
+
 ```javascript
 {
   hotelId: ObjectId,      // Reference to Hotel
@@ -277,6 +280,7 @@ flowchart TD
 ```
 
 ### 👤 User Model
+
 ```javascript
 {
   firstName: String,
@@ -300,18 +304,21 @@ flowchart TD
 ## 🛡️ Security Features
 
 ### 🔐 Authentication & Authorization
+
 - **JWT-based authentication** with secure token management
 - **Role-based access control** (User, Admin)
 - **Password hashing** using bcrypt with salt rounds
 - **Input validation** and sanitization
 
 ### 🛡️ API Security
+
 - **Rate limiting** to prevent abuse
 - **CORS configuration** for cross-origin requests
 - **Helmet.js** for security headers
 - **Input validation** using express-validator
 
 ### 🔒 Data Protection
+
 - **Environment variables** for sensitive data
 - **MongoDB injection** prevention
 - **XSS protection** through input sanitization
@@ -334,6 +341,7 @@ npm run test:rooms
 ```
 
 ### Test Coverage Goals
+
 - **Unit Tests**: 90%+ coverage
 - **Integration Tests**: API endpoints
 - **E2E Tests**: Critical user journeys
@@ -343,6 +351,7 @@ npm run test:rooms
 ## 🚀 Deployment
 
 ### 🐳 Docker Deployment
+
 ```bash
 # Build and run with Docker
 docker-compose up --build
@@ -352,6 +361,7 @@ docker-compose -f docker-compose.prod.yml up -d
 ```
 
 ### ☁️ Cloud Deployment Options
+
 - **Heroku**: Easy deployment with MongoDB Atlas
 - **AWS**: EC2 + RDS/DocumentDB
 - **Digital Ocean**: Droplets + Managed Databases
@@ -362,12 +372,14 @@ docker-compose -f docker-compose.prod.yml up -d
 ## 📈 Performance Optimization
 
 ### 🚀 Backend Optimizations
+
 - **Database indexing** for faster queries
 - **Connection pooling** for MongoDB
 - **Caching strategies** with Redis
 - **Image optimization** and CDN integration
 
 ### 📊 Monitoring
+
 - **Application metrics** with custom dashboards
 - **Error tracking** and logging
 - **Performance monitoring** for API endpoints
@@ -379,6 +391,7 @@ docker-compose -f docker-compose.prod.yml up -d
 We welcome contributions! Please follow these steps:
 
 ### 🔄 Development Workflow
+
 ```bash
 # 1. Fork the repository
 # 2. Create feature branch
@@ -394,6 +407,7 @@ git push origin feature/amazing-feature
 ```
 
 ### 📋 Contribution Guidelines
+
 - Follow **ESLint** configuration
 - Write **comprehensive tests**
 - Update **documentation**
@@ -436,6 +450,6 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 **Made with ❤️ by the Santosh Patel**
 
-*Simplifying hotel bookings, one stay at a time.*
+_Simplifying hotel bookings, one stay at a time._
 
 </div>
