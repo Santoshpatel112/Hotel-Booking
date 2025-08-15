@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![EasyStay Logo](https://www.design.com/maker/drafts/d22a273b-35de-4c31-85f1-3bb06093d21b/share)
+![EasyStay Logo](https://dynamic.design.com/preview/logodraft/d22a273b-35de-4c31-85f1-3bb06093d21b/image/large.png)
 
 **Streamline your hotel booking experience with modern technology**
 
