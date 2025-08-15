@@ -423,7 +423,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 **Need help? We're here for you!**
 
 [![GitHub Issues](https://img.shields.io/badge/GitHub-Issues-red?style=flat&logo=github)](https://github.com/Santoshpatel112/Hotel-Booking/issues)
-[![Email](https://img.shields.io/badge/Email-Support-blue?style=flat&logo=gmail)](mailto:support@easystay.com)
+[![Email](https://img.shields.io/badge/Email-Support-blue?style=flat&logo=gmail)](mailto:santoshpatelvns5@gmail.com.com)
 [![Documentation](https://img.shields.io/badge/Docs-Wiki-green?style=flat&logo=gitbook)](https://github.com/Santoshpatel112/Hotel-Booking/wiki)
 
 **⭐ Star this repository if you find it helpful!**
@@ -434,7 +434,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 <div align="center">
 
-**Made with ❤️ by the EasyStay Team**
+**Made with ❤️ by the Santosh Patel**
 
 *Simplifying hotel bookings, one stay at a time.*
 
