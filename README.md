@@ -1,17 +1,38 @@
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=EasyStay&fontSize=80&fontColor=ffffff&animation=fadeIn" width="100%"/>
+
 # 🏨 EasyStay - Hotel Booking Management System
 
 <div align="center">
 
 ![EasyStay Logo](https://dynamic.design.com/preview/logodraft/d22a273b-35de-4c31-85f1-3bb06093d21b/image/large.png)
 
-**Streamline your hotel booking experience with modern technology**
+<h3>
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&duration=3000&pause=1000&color=2E86AB&center=true&vCenter=true&width=600&lines=Streamline+your+hotel+booking+experience;Modern+technology+meets+hospitality;Built+with+Node.js+%26+MongoDB;Secure+%7C+Scalable+%7C+Professional" alt="Typing SVG" /> 
+</h3>
 
-[![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white)](https://nodejs.org/)
-[![Express.js](https://img.shields.io/badge/Express.js-000000?style=flat&logo=express&logoColor=white)](https://expressjs.com/)
-[![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat&logo=mongodb&logoColor=white)](https://mongodb.com/)
-[![JWT](https://img.shields.io/badge/JWT-000000?style=flat&logo=jsonwebtokens&logoColor=white)](https://jwt.io/)
+<p align="center">
+  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js"/>
+  <img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express.js"/>
+  <img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB"/>
+  <img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" alt="JWT"/>
+</p>
 
-[🚀 Quick Start](#-quick-start) • [📖 Documentation](#-api-documentation) • [🏗️ Architecture](#️-system-architecture) • [🤝 Contributing](#-contributing)
+<p align="center">
+  <a href="#-quick-start">
+    <img src="https://img.shields.io/badge/🚀-Quick%20Start-blue?style=for-the-badge" alt="Quick Start"/>
+  </a>
+  <a href="#-api-documentation">
+    <img src="https://img.shields.io/badge/📖-Documentation-green?style=for-the-badge" alt="Documentation"/>
+  </a>
+  <a href="#️-system-architecture">
+    <img src="https://img.shields.io/badge/🏗️-Architecture-orange?style=for-the-badge" alt="Architecture"/>
+  </a>
+  <a href="#-contributing">
+    <img src="https://img.shields.io/badge/🤝-Contributing-purple?style=for-the-badge" alt="Contributing"/>
+  </a>
+</p>
+
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
 
 </div>
 
@@ -19,31 +40,78 @@
 
 ## 🌟 Overview
 
-**EasyStay** is a comprehensive hotel booking management system designed for modern hospitality businesses. Built with cutting-edge technologies, it provides seamless booking experiences for guests while offering powerful management tools for hotel administrators.
+<div align="center">
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=18&duration=2000&pause=500&color=F75C7E&center=true&vCenter=true&width=800&lines=Comprehensive+hotel+booking+management+system;Built+with+cutting-edge+technologies;Seamless+booking+experiences+for+guests;Powerful+management+tools+for+administrators" alt="Overview Typing"/>
+</div>
+
+**EasyStay** revolutionizes the hospitality industry with modern technology solutions that bridge the gap between guests and hotel management.
 
 ### ✨ Key Features
 
-```
-🔐 Secure Authentication     📱 Mobile-First Design     🏨 Multi-Hotel Support
-🛏️  Room Management         💳 Payment Integration     📊 Analytics Dashboard
-👥 User Profiles            🔍 Advanced Search         📧 Email Notifications
-⭐ Review System            📅 Booking Calendar        🌍 Multi-Language Support
-```
+<div align="center">
 
----
+|    🔐 **Security**    |  📱 **Experience**  |  🏨 **Management**  |  📊 **Analytics**   |
+| :-------------------: | :-----------------: | :-----------------: | :-----------------: |
+| Secure Authentication | Mobile-First Design | Multi-Hotel Support | Real-time Dashboard |
+|   JWT Token System    |    Responsive UI    |   Room Management   |  Booking Analytics  |
+|   Role-based Access   | Progressive Web App |    User Profiles    | Performance Metrics |
+|    Data Encryption    |   Offline Support   |   Advanced Search   |  Revenue Tracking   |
+
+</div>
+
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api?username=Santoshpatel112&show_icons=true&theme=radical&hide_border=true" width="48%" />
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=Santoshpatel112&theme=radical&hide_border=true" width="48%" />
+</p>
+
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
 
 ## 🎯 Problem Statement
 
-The hospitality industry faces challenges with:
+<div align="center">
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=16&duration=2500&pause=800&color=FF6B6B&center=true&vCenter=true&width=700&lines=Solving+hospitality+industry+challenges;Eliminating+fragmented+booking+systems;Reducing+operational+costs;Improving+user+experience" alt="Problem Statement"/>
+</div>
 
-- **Fragmented booking systems** leading to overbooking
-- **Poor user experience** causing booking abandonment
-- **Manual processes** increasing operational costs
-- **Limited real-time visibility** into room availability
+<table align="center">
+<tr>
+<td align="center" width="25%">
 
-**EasyStay solves these problems** by providing a unified, automated, and user-friendly platform.
+### 🔄 **Fragmented Systems**
 
----
+Overbooking issues due to disconnected platforms
+
+</td>
+<td align="center" width="25%">
+
+### 😞 **Poor UX**
+
+High abandonment rates from complex interfaces
+
+</td>
+<td align="center" width="25%">
+
+### 📝 **Manual Processes**
+
+Increased costs from inefficient workflows
+
+</td>
+<td align="center" width="25%">
+
+### 👁️ **Limited Visibility**
+
+No real-time room availability insights
+
+</td>
+</tr>
+</table>
+
+<div align="center">
+  <h3>
+    <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=20&duration=2000&pause=1000&color=4ECDC4&center=true&vCenter=true&width=600&lines=EasyStay+provides+the+solution!;Unified+%7C+Automated+%7C+User-friendly" alt="Solution"/>
+  </h3>
+</div>
+
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
 
 ## 🏗️ System Architecture
 
@@ -79,14 +147,21 @@ graph TB
 
 ## 🚀 Quick Start
 
-### Prerequisites
+<div align="center">
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=16&duration=2000&pause=1000&color=96CEB4&center=true&vCenter=true&width=600&lines=Get+started+in+minutes!;Clone+%E2%86%92+Install+%E2%86%92+Configure+%E2%86%92+Run;Ready+for+development!" alt="Quick Start"/>
+</div>
 
-```bash
-# Required software
-Node.js >= 16.0.0
-MongoDB >= 4.4.0
-npm >= 8.0.0
-```
+### 📋 Prerequisites
+
+<div align="center">
+
+|                                           Requirement                                           |  Version  |                        Download                        |
+| :---------------------------------------------------------------------------------------------: | :-------: | :----------------------------------------------------: |
+| ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white) | >= 16.0.0 |            [Download](https://nodejs.org/)             |
+| ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat&logo=mongodb&logoColor=white) | >= 4.4.0  | [Download](https://mongodb.com/try/download/community) |
+|       ![npm](https://img.shields.io/badge/npm-CB3837?style=flat&logo=npm&logoColor=white)       | >= 8.0.0  |                 Included with Node.js                  |
+
+</div>
 
 ### Installation
 
@@ -138,24 +213,34 @@ EMAIL_PASS=your_app_password
 
 ## 📖 API Documentation
 
+<div align="center">
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=18&duration=2000&pause=1000&color=45B7D1&center=true&vCenter=true&width=500&lines=Complete+API+Reference;RESTful+Endpoints;Secure+%26+Scalable" alt="API Documentation"/>
+</div>
+
 ### 🔐 Authentication Endpoints
 
-| Method | Endpoint             | Description       | Auth Required |
-| ------ | -------------------- | ----------------- | ------------- |
-| `POST` | `/api/auth/register` | User registration | ❌            |
-| `POST` | `/api/auth/login`    | User login        | ❌            |
-| `POST` | `/api/auth/logout`   | User logout       | ✅            |
-| `GET`  | `/api/auth/profile`  | Get user profile  | ✅            |
+<div align="center">
+
+| Method | Endpoint          | Description       | Auth Required |                            Status                             |
+| :----: | :---------------- | :---------------- | :-----------: | :-----------------------------------------------------------: |
+| `POST` | `/api/auth/`      | User registration |      ❌       | ![Active](https://img.shields.io/badge/Status-Active-success) |
+| `POST` | `/api/auth/login` | User login        |      ❌       | ![Active](https://img.shields.io/badge/Status-Active-success) |
+
+</div>
 
 ### 🏨 Hotel Management
 
-| Method   | Endpoint          | Description       | Auth Required |
-| -------- | ----------------- | ----------------- | ------------- |
-| `GET`    | `/api/hotels`     | Get all hotels    | ❌            |
-| `GET`    | `/api/hotels/:id` | Get hotel details | ❌            |
-| `POST`   | `/api/hotels`     | Create new hotel  | ✅ (Admin)    |
-| `PUT`    | `/api/hotels/:id` | Update hotel      | ✅ (Admin)    |
-| `DELETE` | `/api/hotels/:id` | Delete hotel      | ✅ (Admin)    |
+<div align="center">
+
+|  Method  | Endpoint                 | Description       | Auth Required |                            Status                             |
+| :------: | :----------------------- | :---------------- | :-----------: | :-----------------------------------------------------------: |
+|  `GET`   | `/api/hotels/getall`     | Get all hotels    |      ❌       | ![Active](https://img.shields.io/badge/Status-Active-success) |
+|  `GET`   | `/api/hotels/get/:id`    | Get hotel details |      ❌       | ![Active](https://img.shields.io/badge/Status-Active-success) |
+|  `POST`  | `/api/hotels/`           | Create new hotel  |   ✅ Admin    | ![Active](https://img.shields.io/badge/Status-Active-success) |
+|  `PUT`   | `/api/hotels/update/:id` | Update hotel      |   ✅ Admin    | ![Active](https://img.shields.io/badge/Status-Active-success) |
+| `DELETE` | `/api/hotels/delete/:id` | Delete hotel      |   ✅ Admin    | ![Active](https://img.shields.io/badge/Status-Active-success) |
+
+</div>
 
 ### 🛏️ Room Management
 
@@ -444,12 +529,20 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 </div>
 
----
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
 
 <div align="center">
 
-**Made with ❤️ by the Santosh Patel**
+<h2>
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&duration=3000&pause=1000&color=E74C3C&center=true&vCenter=true&width=600&lines=Made+with+❤️+by+Santosh+Patel;Simplifying+hotel+bookings;One+stay+at+a+time;Thank+you+for+visiting!" alt="Footer"/>
+</h2>
 
-_Simplifying hotel bookings, one stay at a time._
+<p align="center">
+  <img src="https://img.shields.io/badge/⭐-Star%20this%20repo-yellow?style=for-the-badge" alt="Star this repo"/>
+  <img src="https://img.shields.io/badge/🍴-Fork%20this%20repo-blue?style=for-the-badge" alt="Fork this repo"/>
+  <img src="https://img.shields.io/badge/📢-Share%20with%20friends-green?style=for-the-badge" alt="Share"/>
+</p>
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=100&section=footer" width="100%"/>
 
 </div>

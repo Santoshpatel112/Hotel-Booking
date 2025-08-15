@@ -2,6 +2,7 @@ import express from "express";
 const app = express();
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.js";
 import hotelRoutes from "./routes/hotel.js";
 import userRoutes from "./routes/user.js";
@@ -10,17 +11,29 @@ import roomRoutes from "./routes/rooms.js";
 dotenv.config();
 const PORT = process.env.PORT || 8000;
 
+// Middleware
+app.use(express.json()); // Parse JSON request bodies
+app.use(cookieParser()); // Parse cookies
 
-// Parse JSON request bodies
-app.use(express.json()); // middleware it take json data
-
-const connectDB=async()=>{
+const connectDB = async () => {
     try {
-        await mongoose.connect(process.env.MONGO_URL);
-        console.log("Connected to MongoDB");
+        await mongoose.connect(process.env.MONGO_URL, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+        console.log("✅ Connected to MongoDB Atlas");
     } catch (error) {
-        console.error(error);
-        throw error;
+        console.error("❌ MongoDB connection error:", error.message);
+        console.log("🔧 Trying to connect to local MongoDB...");
+        
+        // Fallback to local MongoDB
+        try {
+            await mongoose.connect("mongodb://localhost:27017/easystay");
+            console.log("✅ Connected to Local MongoDB");
+        } catch (localError) {
+            console.error("❌ Local MongoDB also failed:", localError.message);
+            console.log("💡 Please check your MongoDB setup");
+        }
     }
 }
 

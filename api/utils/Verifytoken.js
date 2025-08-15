@@ -9,7 +9,7 @@ export const Verifytoken = (req, res, next) => {
         });
     }
 
-    jwt.verify(token, process.env.Secret, (err, user) => {
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
         if (err) {
             return res.status(403).json({
                 message: "Token is not valid"
@@ -22,7 +22,7 @@ export const Verifytoken = (req, res, next) => {
 };
 
 export const verifyUser = (req, res, next) => {
-    Verifytoken(req, res,next, () => {
+    Verifytoken(req, res, () => {
         if (req.user.id === req.params.id || req.user.isAdmin) {
             next();
         } else {
@@ -36,7 +36,7 @@ export const verifyUser = (req, res, next) => {
 
 
 export const verifyAdmin = (req, res, next) => {
-    Verifytoken(req, res,next, () => {
+    Verifytoken(req, res, () => {
         if (req.user.isAdmin) {
             next(); // User is an admin, proceed to the next handler
         } else {

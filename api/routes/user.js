@@ -19,10 +19,10 @@ router.put('/:id', verifyUser, UpdateUser);
 // A route to delete a user
 router.delete('/:id', verifyUser, DeleteUser);
 
-// A route to get a single user by ID
-router.get('/:id',verifyUser, GetUserByID);
+// A route to get all users (must come before /:id route)
+router.get('/', verifyAdmin, getallUser);
 
-// A route to get all users
-router.get('/', verifyAdmin,getallUser);
+// A route to get a single user by ID
+router.get('/:id', verifyUser, GetUserByID);
 
 export default router;
