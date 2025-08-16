@@ -1,0 +1,467 @@
+.navbar {
+  height: 70px;
+  background: linear-gradient(135deg, #003580 0%, #0056b3 100%);
+  display: flex;
+  justify-content: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 53, 128, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.navContainer {
+  width: 100%;
+  max-width: 1200px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.logo:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.logoIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.logoIcon svg {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.logoText {
+  font-weight: 700;
+  font-size: 24px;
+  background: linear-gradient(45deg, #ffffff, #e3f2fd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+
+.navItems {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.navButton {
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.navButtonSecondary {
+  background: transparent;
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.navButtonSecondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px);
+}
+
+.navButtonPrimary {
+  background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+  color: white;
+  border: 2px solid transparent;
+}
+
+.navButtonPrimary:hover {
+  background: linear-gradient(45deg, #2563eb, #1e40af);
+  transform: translateY(-2px);
+}
+
+/* Mobile Menu Button */
+.mobileMenuButton {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.mobileMenuButton span {
+  width: 25px;
+  height: 3px;
+  background: white;
+  margin: 3px 0;
+  transition: 0.3s;
+  border-radius: 2px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .navContainer {
+    padding: 0 15px;
+  }
+  
+  .logo {
+    font-size: 20px;
+  }
+  
+  .mobileMenuButton {
+    display: flex;
+  }
+  
+  .navItems {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #003580 0%, #0056b3 100%);
+    flex-direction: column;
+    padding: 20px;
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(0, 53, 128, 0.3);
+  }
+  
+  .navItemsOpen {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .navButton {
+    width: 100%;
+    margin: 5px 0;
+    padding: 12px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    height: 60px;
+  }
+  
+  .logoText {
+    font-size: 18px;
+  }
+  
+  .logoIcon {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .logoIcon svg {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .navContainer {
+    padding: 0 10px;
+  }
+}
+/* Use
+r Menu */
+.userMenu {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.userProfile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.userAvatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.userName {
+  font-weight: 500;
+  color: white;
+}
+
+/* Enhanced Mobile menu button */
+.mobileMenuButton.open span:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+.mobileMenuButton.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.mobileMenuButton.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* Auth Modal Styles */
+.authModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+}
+
+.authModal {
+  background: white;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 450px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+  position: relative;
+}
+
+.authModalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 30px 20px 30px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.authModalHeader h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #9ca3af;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.closeButton:hover {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.authForm {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.inputGroup {
+  position: relative;
+}
+
+.inputGroup input {
+  width: 100%;
+  padding: 15px 20px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background: #f9fafb;
+  box-sizing: border-box;
+}
+
+.inputGroup input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.inputGroup input::placeholder {
+  color: #9ca3af;
+}
+
+.authSubmitButton {
+  background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+  color: white;
+  border: none;
+  padding: 15px 20px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.authSubmitButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+}
+
+.authSubmitButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.loadingSpinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.authFooter {
+  padding: 20px 30px 30px 30px;
+  text-align: center;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.authFooter p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.switchModeButton {
+  background: none;
+  border: none;
+  color: #3b82f6;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.switchModeButton:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+/* Enhanced Mobile Responsive */
+@media (max-width: 768px) {
+  .userMenu {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+  
+  .userProfile {
+    justify-content: center;
+    padding: 10px 0;
+  }
+  
+  .authModal {
+    margin: 10px;
+    max-width: none;
+    border-radius: 15px;
+  }
+  
+  .authModalHeader {
+    padding: 20px 20px 15px 20px;
+  }
+  
+  .authModalHeader h2 {
+    font-size: 20px;
+  }
+  
+  .authForm {
+    padding: 20px;
+    gap: 15px;
+  }
+  
+  .authFooter {
+    padding: 15px 20px 20px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .authModalOverlay {
+    padding: 10px;
+  }
+  
+  .authModal {
+    border-radius: 12px;
+  }
+  
+  .authModalHeader {
+    padding: 15px 15px 10px 15px;
+  }
+  
+  .authModalHeader h2 {
+    font-size: 18px;
+  }
+  
+  .authForm {
+    padding: 15px;
+  }
+  
+  .inputGroup input {
+    padding: 12px 15px;
+    font-size: 14px;
+  }
+  
+  .authSubmitButton {
+    padding: 12px 15px;
+    font-size: 14px;
+  }
+  
+  .authFooter {
+    padding: 10px 15px 15px 15px;
+  }
+}

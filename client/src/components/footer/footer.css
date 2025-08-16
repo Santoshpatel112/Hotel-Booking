@@ -1,0 +1,234 @@
+.footer {
+  width: 100%;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  margin-top: 80px;
+}
+
+.footerContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 20px 40px 20px;
+}
+
+.footerBrand {
+  text-align: center;
+  margin-bottom: 50px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.footerLogo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.footerBrandName {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 10px 0;
+  background: linear-gradient(45deg, #10b981, #059669);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.footerBrandDesc {
+  color: #6b7280;
+  font-size: 16px;
+  max-width: 400px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.fLists {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 40px;
+  margin-bottom: 50px;
+}
+
+.fListContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.fListTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 20px 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #10b981;
+  display: inline-block;
+}
+
+.fList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.fListItem {
+  margin-bottom: 12px;
+  color: #6b7280;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  padding: 5px 0;
+  border-radius: 4px;
+}
+
+.fListItem:hover {
+  color: #10b981;
+  padding-left: 5px;
+}
+
+.footerBottom {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+.footerBottomContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.fText {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.footerCredit {
+  display: flex;
+  align-items: center;
+}
+
+.creditText {
+  color: #374151;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.creditText:hover {
+  color: #10b981;
+}
+
+.creditText strong {
+  color: #10b981;
+  font-weight: 600;
+}
+
+.footerSocial {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.socialLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(16, 185, 129, 0.1);
+  border-radius: 50%;
+  text-decoration: none;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.socialLink:hover {
+  background: rgba(16, 185, 129, 0.2);
+  box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .footerContent {
+    padding: 40px 15px 30px 15px;
+  }
+  
+  .footerBrand {
+    margin-bottom: 40px;
+    padding-bottom: 30px;
+  }
+  
+  .footerBrandName {
+    font-size: 24px;
+  }
+  
+  .footerBrandDesc {
+    font-size: 14px;
+  }
+  
+  .fLists {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+  }
+  
+  .fListTitle {
+    font-size: 14px;
+  }
+  
+  .fListItem {
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+  
+  .footerBottomContent {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+    padding: 25px 15px;
+  }
+  
+  .footerSocial {
+    gap: 12px;
+  }
+  
+  .socialLink {
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footerContent {
+    padding: 30px 10px 20px 10px;
+  }
+  
+  .fLists {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+  }
+  
+  .fListTitle {
+    font-size: 13px;
+  }
+  
+  .fListItem {
+    font-size: 12px;
+  }
+  
+  .footerBottomContent {
+    padding: 20px 10px;
+  }
+  
+  .fText, .creditText {
+    font-size: 12px;
+  }
+}
