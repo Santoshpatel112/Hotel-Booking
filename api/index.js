@@ -21,19 +21,23 @@ const connectDB = async () => {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
-        console.log("✅ Connected to MongoDB Atlas");
+        
+        // Check which database we're connected to
+        const dbName = mongoose.connection.db.databaseName;
+        const host = mongoose.connection.host;
+        
+        if (host === 'localhost' || host === '127.0.0.1') {
+            console.log(`✅ Connected to Local MongoDB - Database: ${dbName}`);
+        } else {
+            console.log(`✅ Connected to MongoDB Atlas - Database: ${dbName}`);
+        }
+        
+        console.log(`🔗 Connection URL: ${host}:${mongoose.connection.port}/${dbName}`);
+        
     } catch (error) {
         console.error("❌ MongoDB connection error:", error.message);
-        console.log("🔧 Trying to connect to local MongoDB...");
-        
-        // Fallback to local MongoDB
-        try {
-            await mongoose.connect("mongodb://localhost:27017/easystay");
-            console.log("✅ Connected to Local MongoDB");
-        } catch (localError) {
-            console.error("❌ Local MongoDB also failed:", localError.message);
-            console.log("💡 Please check your MongoDB setup");
-        }
+        console.log("💡 Please check your MongoDB setup");
+        process.exit(1);
     }
 }
 

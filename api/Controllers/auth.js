@@ -3,6 +3,12 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 export const Register = async (req, res) => {
   try {
+    console.log("👤 Creating new user with data:", {
+      username: req.body.username,
+      email: req.body.email,
+      isAdmin: req.body.isAdmin || false
+    });
+
     const hashpassword = await bcrypt.hash(req.body.password, 10);
 
     const newuser = new User({
@@ -14,12 +20,17 @@ export const Register = async (req, res) => {
 
     await newuser.save();
 
+    console.log("✅ User registered successfully:", newuser._id);
+    console.log("👤 Username:", newuser.username);
+    console.log("📧 Email:", newuser.email);
+    console.log("🔑 Admin status:", newuser.isAdmin);
+
     return res.status(201).json({
       message: "User Created Successfully!",
       user: newuser,
     });
   } catch (error) {
-    console.error("Registration Error:", error);
+    console.error("❌ Registration Error:", error.message);
 
     return res.status(500).json({
       success: false,
@@ -32,8 +43,11 @@ export const Login = async (req, res) => {
   try {
     const { username, password } = req.body;
 
+    console.log("🔐 Login attempt for username:", username);
+
     // Check for required fields
     if (!username || !password) {
+      console.log("⚠️ Missing required fields");
       return res.status(400).json("All Field Required To filled");
     }
 
@@ -42,6 +56,7 @@ export const Login = async (req, res) => {
 
     // Handle case where user is not found
     if (!user) {
+      console.log("❌ User not found:", username);
       return res.status(404).json({ status: 404, message: "User Not Found" });
     }
 
@@ -50,6 +65,7 @@ export const Login = async (req, res) => {
 
     // Handle case where password does not match
     if (!ismatch) {
+      console.log("❌ Incorrect password for user:", username);
       return res.status(404).json({
         status: 404,
         message: "Incorrect password",
@@ -61,6 +77,11 @@ export const Login = async (req, res) => {
       { id: user._id, isAdmin: user.isAdmin },
       process.env.JWT_SECRET
     );
+
+    console.log("✅ Login successful for user:", username);
+    console.log("👤 User ID:", user._id);
+    console.log("🔑 Admin status:", user.isAdmin);
+    console.log("🎫 JWT token generated");
 
     // Send the token in a cookie and return a success JSON response
     return res
@@ -77,12 +98,12 @@ export const Login = async (req, res) => {
       });
   } catch (error) {
     // Log the error for debugging purposes
-    console.error("Login Error:", error);
+    console.error("❌ Login Error:", error.message);
 
     // Send a generic 500 server error response without trying to set a cookie
     return res.status(500).json({
       message: "An internal server error occurred.",
-      error: error.message, // It's better to send the error message than the whole object
+      error: error.message,
     });
   }
 };
