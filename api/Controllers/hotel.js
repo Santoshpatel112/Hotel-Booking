@@ -68,8 +68,12 @@ const GetHotelByID = async (req, res) => {
 };
 
 const getallHotel = async (req, res) => {
+  const { city, type, min, max, limit ,...others} = req.query;
   try {
-    const getall = await Hotel.find();
+    const getall = await Hotel.find({
+      ...others,
+      cheapestprice: { $gt: min || 1, $lt: max || 999 }
+    }).limit(limit);
     console.log(`📊 Found ${getall.length} hotels in database`);
 
     if (getall.length > 0) {
@@ -168,6 +172,44 @@ const testDatabase = async (req, res) => {
   }
 };
 
+const CountByType=async (req,res)=>{
+  try {
+    const HotelCount=await Hotel.countDocuments({type:"hotel"});
+  const apartmentCount=await Hotel.countDocuments({type:"apartment"});
+  const resortCount=await Hotel.countDocuments({type:"resort"});
+  const villaCount=await Hotel.countDocuments({type:"villa"});
+  const cabinCount= await Hotel.countDocuments({type:"cabin"});
+  
+  res.status(200).json([
+    {type:"hotel",count:HotelCount},
+    {type:"apartment",count:apartmentCount},
+    {type:"resort",count:resortCount},
+    {type:"villa",count:villaCount},
+    {type:"cabin",count:cabinCount},
+  ])
+  } catch (error) {
+    return res.status(500).json({
+      message: "Unable to count by type",
+      error: error.message,
+    });
+  }
+}
+const getFeaturedHotels = async (req, res) => {
+  try {
+    const { featured, limit } = req.query;
+    const hotels = await Hotel.find({ featured: featured === 'true' })
+      .limit(parseInt(limit) || 4);
+    
+    return res.status(200).json(hotels);
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error fetching featured hotels",
+      error: error.message
+    });
+  }
+};
+
+// Add to exports at the bottom:
 export default {
   CreateHotel,
   DeleteHotel,
@@ -177,4 +219,6 @@ export default {
   countByCity,
   countByCityDetailed,
   testDatabase,
+  CountByType,
+  getFeaturedHotels,
 };

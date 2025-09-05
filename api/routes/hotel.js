@@ -14,7 +14,10 @@ router.get("/get/:id", hotelController.GetHotelByID);
 //get all
 router.get("/getall", hotelController.getallHotel);
 router.get("/countByCity", hotelController.countByCity);
+router.get("/featured", hotelController.getFeaturedHotels);
 router.get("/countByCityDetailed", hotelController.countByCityDetailed);
+router.get("/countByType", hotelController.CountByType);
+
 router.get("/test-db", hotelController.testDatabase);
 // router.get('/countByType',getHotel);
 export default router;
