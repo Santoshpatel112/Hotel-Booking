@@ -314,27 +314,25 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { useAuth } from '../../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import "./navbar.css"
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authMode, setAuthMode] = useState('login');
-  const { user,logout, getCurrentUser } = useAuth();
+  const { user, logout, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const currentUser = getCurrentUser();
-    if (currentUser) {
-      // You might want to validate the token here
+    if (isAuthenticated()) {
+      // User is authenticated
+      console.log('User is authenticated:', user);
     }
-  }, [getCurrentUser]);
+  }, [user, isAuthenticated]);
 
-  const openAuth = (mode) => {
-    setAuthMode(mode);
-    setShowAuthModal(true);
-    setIsMenuOpen(false);
-  };
+
 
   const closeAuth = () => {
     setShowAuthModal(false);
@@ -410,7 +408,7 @@ const Navbar = () => {
                   whileHover={{ scale: 1.05, boxShadow: "0 5px 15px rgba(0,0,0,0.2)" }}
                   whileTap={{ scale: 0.95 }}
                   transition={{ duration: 0.2 }}
-                  onClick={() => openAuth('register')}
+                  onClick={() => navigate('/register')}
                 >
                   Register
                 </motion.button>
@@ -419,7 +417,7 @@ const Navbar = () => {
                   whileHover={{ scale: 1.05, boxShadow: "0 5px 15px rgba(59, 130, 246, 0.4)" }}
                   whileTap={{ scale: 0.95 }}
                   transition={{ duration: 0.2 }}
-                  onClick={() => openAuth('login')}
+                  onClick={() => navigate('/login')}
                 >
                   Login
                 </motion.button>
@@ -429,6 +427,7 @@ const Navbar = () => {
                 <motion.div 
                   className="userProfile"
                   whileHover={{ scale: 1.05 }}
+                  onClick={() => navigate('/profile')}
                 >
                   <div className="userAvatar">
                     {user?.username?.charAt(0) || user?.name?.charAt(0) || 'U'}
@@ -472,7 +471,7 @@ const AuthModal = ({ mode, onClose, onSuccess, onSwitchMode }) => {
     password: '',
     confirmPassword: ''
   });
-  const { signup, login, loading } = useAuth();
+  const { register, login, loading, clearError } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -482,25 +481,38 @@ const AuthModal = ({ mode, onClose, onSuccess, onSwitchMode }) => {
       return;
     }
 
-    let result;
-    if (mode === 'login') {
-      result = await login({
-        email: formData.email,
-        password: formData.password
-      });
-    } else {
-      result = await signup({
-        username: formData.username,
-        email: formData.email,
-        password: formData.password
-      });
-    }
+    try {
+      clearError(); // Clear any previous errors
+      
+      let result;
+      if (mode === 'login') {
+        result = await login({
+          email: formData.email,
+          password: formData.password
+        });
+      } else {
+        result = await register({
+          username: formData.username,
+          email: formData.email,
+          password: formData.password
+        });
+      }
 
-    if (result.success) {
-      alert(mode === 'login' ? 'Login successful!' : 'Registration successful!');
-      onSuccess();
-    } else {
-      alert(result.error);
+      if (result.success) {
+        alert(mode === 'login' ? 'Login successful!' : 'Registration successful!');
+        onSuccess();
+        // Reset form
+        setFormData({
+          username: '',
+          email: '',
+          password: '',
+          confirmPassword: ''
+        });
+      } else {
+        alert(result.error || 'An error occurred');
+      }
+    } catch (err) {
+      alert(err.message || 'An error occurred');
     }
   };
 

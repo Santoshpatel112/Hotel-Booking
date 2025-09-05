@@ -6,17 +6,42 @@ import { useState } from "react";
 import { format } from "date-fns";
 import { DateRange } from "react-date-range";
 import SearchItem from "../../components/searchItem/SearchItem";
+import useFetch from "../../hooks/useFetch";
 
 const List = () => {
   const location = useLocation();
-  const [destination] = useState(location.state.destination);
-  // Add setDate to component state
-  const [date, setDate] = useState();
-  
-  // Or if date is already defined, ensure setDate is properly destructured
-  
+  const [destination, setDestination] = useState(location.state?.destination || "");
+  const [propertyType, setPropertyType] = useState(location.state?.propertyType || "");
+  const [date, setDate] = useState(location.state?.date || [
+    {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: "selection",
+    },
+  ]);
   const [openDate, setOpenDate] = useState(false);
-  const [options] = useState(location.state.options);
+  const [options, setOptions] = useState(location.state?.options || {
+    adult: 1,
+    children: 0,
+    room: 1,
+  });
+  const [min, setMin] = useState(1);
+  const [max, setMax] = useState(999);
+
+  // Build query parameters for API call
+  const buildQueryString = () => {
+    const params = new URLSearchParams();
+    if (destination) params.append('city', destination);
+    if (propertyType) params.append('type', propertyType);
+    if (min) params.append('min', min);
+    if (max) params.append('max', max);
+    return params.toString();
+  };
+
+  // Fetch hotels based on search parameters
+  const { data, loading, error, refetch } = useFetch(
+    `/hotels/getall?${buildQueryString()}`
+  );
 
   return (
     <div>
@@ -28,7 +53,27 @@ const List = () => {
             <h1 className="lsTitle">Search</h1>
             <div className="lsItem">
               <label>Destination</label>
-              <input placeholder={destination} type="text" />
+              <input 
+                placeholder="Where are you going?" 
+                type="text" 
+                value={destination}
+                onChange={(e) => setDestination(e.target.value)}
+              />
+            </div>
+            <div className="lsItem">
+              <label>Property Type</label>
+              <select 
+                value={propertyType} 
+                onChange={(e) => setPropertyType(e.target.value)}
+                className="lsSelect"
+              >
+                <option value="">All Types</option>
+                <option value="hotel">Hotels</option>
+                <option value="apartment">Apartments</option>
+                <option value="resort">Resorts</option>
+                <option value="villa">Villas</option>
+                <option value="cabin">Cabins</option>
+              </select>
             </div>
             <div className="lsItem">
               <label>Check-in Date</label>
@@ -51,13 +96,23 @@ const List = () => {
                   <span className="lsOptionText">
                     Min price <small>per night</small>
                   </span>
-                  <input type="number" className="lsOptionInput" />
+                  <input 
+                    type="number" 
+                    className="lsOptionInput" 
+                    value={min}
+                    onChange={(e) => setMin(e.target.value)}
+                  />
                 </div>
                 <div className="lsOptionItem">
                   <span className="lsOptionText">
                     Max price <small>per night</small>
                   </span>
-                  <input type="number" className="lsOptionInput" />
+                  <input 
+                    type="number" 
+                    className="lsOptionInput" 
+                    value={max}
+                    onChange={(e) => setMax(e.target.value)}
+                  />
                 </div>
                 <div className="lsOptionItem">
                   <span className="lsOptionText">Adult</span>
@@ -65,7 +120,8 @@ const List = () => {
                     type="number"
                     min={1}
                     className="lsOptionInput"
-                    placeholder={options.adult}
+                    value={options.adult}
+                    onChange={(e) => setOptions({...options, adult: e.target.value})}
                   />
                 </div>
                 <div className="lsOptionItem">
@@ -74,7 +130,8 @@ const List = () => {
                     type="number"
                     min={0}
                     className="lsOptionInput"
-                    placeholder={options.children}
+                    value={options.children}
+                    onChange={(e) => setOptions({...options, children: e.target.value})}
                   />
                 </div>
                 <div className="lsOptionItem">
@@ -83,23 +140,26 @@ const List = () => {
                     type="number"
                     min={1}
                     className="lsOptionInput"
-                    placeholder={options.room}
+                    value={options.room}
+                    onChange={(e) => setOptions({...options, room: e.target.value})}
                   />
                 </div>
               </div>
             </div>
-            <button>Search</button>
+            <button onClick={refetch}>Search</button>
           </div>
           <div className="listResult">
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
+            {loading ? (
+              "Loading..."
+            ) : error ? (
+              "Error loading hotels"
+            ) : data?.hotels && data.hotels.length > 0 ? (
+              data.hotels.map((hotel) => (
+                <SearchItem key={hotel._id} item={hotel} />
+              ))
+            ) : (
+              <div>No hotels found</div>
+            )}
           </div>
         </div>
       </div>

@@ -98,12 +98,49 @@
   color: gray;
 }
 
+.siButtonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
 .siCheckButton{
   background-color: #0071c2;
   color: white;
   font-weight: bold;
-  padding: 10px 5px;
+  padding: 10px 16px;
   border: none;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  text-align: center;
+}
+
+.siCheckButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 113, 194, 0.3);
+}
+
+.siCheckButton.secondary {
+  background-color: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
+}
+
+.siCheckButton.secondary:hover {
+  background-color: #e5e7eb;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.siCheckButton.primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-weight: 600;
+}
+
+.siCheckButton.primary:hover {
+  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
 }

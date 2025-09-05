@@ -59,21 +59,57 @@ const DeleteHotel = async (req, res) => {
 const GetHotelByID = async (req, res) => {
   try {
     const getHotel = await Hotel.findById(req.params.id);
-    return res.status(200).json({ hotel: getHotel });
+    if (!getHotel) {
+      return res.status(404).json({ message: "Hotel not found" });
+    }
+    
+    // Transform data to match frontend expectations
+    const transformedHotel = {
+      ...getHotel.toObject(),
+      cheapestPrice: getHotel.prices,
+      cheapestprice: getHotel.prices,
+      desc: getHotel.description
+    };
+    
+    return res.status(200).json({ hotel: transformedHotel });
   } catch (error) {
     return res
       .status(400)
-      .json({ message: "Unable to find Somthing error " }, error);
+      .json({ message: "Unable to find hotel", error: error.message });
   }
 };
 
 const getallHotel = async (req, res) => {
   const { city, type, min, max, limit ,...others} = req.query;
   try {
-    const getall = await Hotel.find({
-      ...others,
-      cheapestprice: { $gt: min || 1, $lt: max || 999 }
-    }).limit(limit);
+    let query = {};
+    
+    // Add city filter if provided
+    if (city) {
+      query.city = { $regex: new RegExp(city, 'i') };
+    }
+    
+    // Add type filter if provided
+    if (type) {
+      query.type = type;
+    }
+    
+    // Add price range filter
+    if (min || max) {
+      query.prices = { 
+        $gte: parseInt(min) || 1, 
+        $lte: parseInt(max) || 999999 
+      };
+    }
+    
+    // Add any other query parameters
+    Object.keys(others).forEach(key => {
+      if (others[key] && key !== 'city' && key !== 'type' && key !== 'min' && key !== 'max') {
+        query[key] = others[key];
+      }
+    });
+    
+    const getall = await Hotel.find(query).limit(parseInt(limit) || 0);
     console.log(`📊 Found ${getall.length} hotels in database`);
 
     if (getall.length > 0) {
@@ -85,7 +121,15 @@ const getallHotel = async (req, res) => {
       console.log("⚠️ No hotels found in database");
     }
 
-    return res.status(200).json({ hotels: getall });
+    // Transform data to match frontend expectations
+    const transformedHotels = getall.map(hotel => ({
+      ...hotel.toObject(),
+      cheapestPrice: hotel.prices,
+      cheapestprice: hotel.prices,
+      desc: hotel.description
+    }));
+    
+    return res.status(200).json({ hotels: transformedHotels });
   } catch (err) {
     console.error("❌ Error fetching hotels:", err);
     return res
@@ -196,12 +240,17 @@ const CountByType=async (req,res)=>{
 }
 const getFeaturedHotels = async (req, res) => {
   try {
-    const { featured, limit } = req.query;
-    const hotels = await Hotel.find({ featured: featured === 'true' })
+    const { limit } = req.query;
+    const featuredHotels = await Hotel.find({ featured: true })
       .limit(parseInt(limit) || 4);
     
-    return res.status(200).json(hotels);
+    if (!featuredHotels || featuredHotels.length === 0) {
+      return res.status(404).json({ message: "No featured hotels found" });
+    }
+    
+    return res.status(200).json(featuredHotels);
   } catch (error) {
+    console.error("Featured hotels error:", error);
     return res.status(500).json({
       message: "Error fetching featured hotels",
       error: error.message

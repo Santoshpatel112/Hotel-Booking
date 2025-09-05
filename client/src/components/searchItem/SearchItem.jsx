@@ -1,39 +1,84 @@
 import "./searchItem.css";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import BookingModal from "../booking/BookingModal";
 
-const SearchItem = () => {
+const SearchItem = ({ item }) => {
+  const [showBookingModal, setShowBookingModal] = useState(false);
+  
+  if (!item) {
+    return (
+      <div className="searchItem">
+        <div className="siDesc">
+          <h1 className="siTitle">No hotel data available</h1>
+        </div>
+      </div>
+    );
+  }
+
+  const getRatingText = (rating) => {
+    if (rating >= 4.5) return "Excellent";
+    if (rating >= 4.0) return "Very Good";
+    if (rating >= 3.5) return "Good";
+    return "Fair";
+  };
+
   return (
     <div className="searchItem">
       <img
-        src="https://cf.bstatic.com/xdata/images/hotel/square600/261707778.webp?k=fa6b6128468ec15e81f7d076b6f2473fa3a80c255582f155cae35f9edbffdd78&o=&s=1"
-        alt=""
+        src={item.photos?.[0] || "https://via.placeholder.com/300x200"}
+        alt={item.name}
         className="siImg"
       />
       <div className="siDesc">
-        <h1 className="siTitle">Tower Street Apartments</h1>
-        <span className="siDistance">500m from center</span>
-        <span className="siTaxiOp">Free airport taxi</span>
+        <h1 className="siTitle">{item.name}</h1>
+        <span className="siDistance">{item.distance || '500m'} from center</span>
+        <span className="siTaxiOp">{item.freeAirportTaxi ? 'Free airport taxi' : 'Airport taxi available'}</span>
         <span className="siSubtitle">
-          Studio Apartment with Air conditioning
+          {item.desc || item.title || 'Comfortable accommodation with modern amenities'}
         </span>
         <span className="siFeatures">
-          Entire studio • 1 bathroom • 21m² 1 full bed
+          {item.type} • {item.city}
         </span>
-        <span className="siCancelOp">Free cancellation </span>
+        <span className="siCancelOp">Free cancellation</span>
         <span className="siCancelOpSubtitle">
           You can cancel later, so lock in this great price today!
         </span>
       </div>
       <div className="siDetails">
         <div className="siRating">
-          <span>Excellent</span>
-          <button>8.9</button>
+          <span>{getRatingText(item.rating)}</span>
+          <button>{item.rating || 'N/A'}</button>
         </div>
         <div className="siDetailTexts">
-          <span className="siPrice">$112</span>
+          <span className="siPrice">₹{item.cheapestPrice || item.cheapestprice}</span>
           <span className="siTaxOp">Includes taxes and fees</span>
-          <button className="siCheckButton">See availability</button>
+          <div className="siButtonGroup">
+            <Link to={`/hotels/${item._id}`}>
+              <button className="siCheckButton secondary">See details</button>
+            </Link>
+            <button 
+              className="siCheckButton primary" 
+              onClick={() => setShowBookingModal(true)}
+            >
+              Book Now
+            </button>
+          </div>
         </div>
       </div>
+      
+      <BookingModal
+        hotel={{
+          ...item,
+          prices: item.cheapestPrice || item.cheapestprice
+        }}
+        isOpen={showBookingModal}
+        onClose={() => setShowBookingModal(false)}
+        onSuccess={() => {
+          setShowBookingModal(false);
+          // You can add success handling here
+        }}
+      />
     </div>
   );
 };
