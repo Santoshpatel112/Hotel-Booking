@@ -9,10 +9,14 @@ import SearchItem from "../../components/searchItem/SearchItem";
 
 const List = () => {
   const location = useLocation();
-  const [destination, setDestination] = useState(location.state.destination);
-  const [date, setDate] = useState(location.state.date);
+  const [destination] = useState(location.state.destination);
+  // Add setDate to component state
+  const [date, setDate] = useState();
+  
+  // Or if date is already defined, ensure setDate is properly destructured
+  
   const [openDate, setOpenDate] = useState(false);
-  const [options, setOptions] = useState(location.state.options);
+  const [options] = useState(location.state.options);
 
   return (
     <div>
