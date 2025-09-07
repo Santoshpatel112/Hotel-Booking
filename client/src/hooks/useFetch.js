@@ -11,7 +11,7 @@ const useFetch=(url)=>{
      const fetchData=async ()=>{
         setLoading(true);
         try {
-            const res=await axios.get(`http://localhost:8800/api${url}`)
+            const res=await axios.get(`http://localhost:8000/api${url}`)
             setData(res.data)
         } catch (error) {
             setError(error);
@@ -27,7 +27,7 @@ const useFetch=(url)=>{
      const refetch = async () => {
        setLoading(true);
        try {
-         const res = await axios.get(`http://localhost:8800/api${url}`);
+         const res = await axios.get(`http://localhost:8000/api${url}`);
          if (res.status !== 200) throw new Error(res.statusText);
          setData(res.data);
        } catch (error) {
