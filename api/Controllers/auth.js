@@ -20,15 +20,28 @@ export const Register = async (req, res) => {
 
     await newuser.save();
 
+    // Create JWT token for the new user
+    const token = jwt.sign(
+      { id: newuser._id, isAdmin: newuser.isAdmin },
+      process.env.JWT_SECRET
+    );
+
     console.log("✅ User registered successfully:", newuser._id);
     console.log("👤 Username:", newuser.username);
     console.log("📧 Email:", newuser.email);
     console.log("🔑 Admin status:", newuser.isAdmin);
+    console.log("🎫 JWT token generated");
 
-    return res.status(201).json({
-      message: "User Created Successfully!",
-      user: newuser,
-    });
+    return res
+      .cookie("access_token", token, {
+        httpOnly: true,
+      })
+      .status(201)
+      .json({
+        message: "User Created Successfully!",
+        user: newuser,
+        token: token,
+      });
   } catch (error) {
     console.error("❌ Registration Error:", error.message);
 
@@ -41,23 +54,31 @@ export const Register = async (req, res) => {
 
 export const Login = async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
-    console.log("🔐 Login attempt for username:", username);
+    console.log("🔐 Login attempt for email:", email);
+    console.log("📝 Request body:", req.body);
 
     // Check for required fields
-    if (!username || !password) {
+    if (!email || !password) {
       console.log("⚠️ Missing required fields");
-      return res.status(400).json("All Field Required To filled");
+      return res.status(400).json({
+        success: false,
+        message: "Email and password are required"
+      });
     }
 
-    // Find the user by username
-    const user = await User.findOne({ username: username });
+    // Find the user by email
+    const user = await User.findOne({ email: email });
 
     // Handle case where user is not found
     if (!user) {
-      console.log("❌ User not found:", username);
-      return res.status(404).json({ status: 404, message: "User Not Found" });
+      console.log("❌ User not found:", email);
+      return res.status(404).json({ 
+        success: false,
+        status: 404, 
+        message: "User with this email does not exist" 
+      });
     }
 
     // Compare the provided password with the stored hashed password
@@ -65,9 +86,10 @@ export const Login = async (req, res) => {
 
     // Handle case where password does not match
     if (!ismatch) {
-      console.log("❌ Incorrect password for user:", username);
-      return res.status(404).json({
-        status: 404,
+      console.log("❌ Incorrect password for user:", email);
+      return res.status(401).json({
+        success: false,
+        status: 401,
         message: "Incorrect password",
       });
     }
@@ -78,7 +100,7 @@ export const Login = async (req, res) => {
       process.env.JWT_SECRET
     );
 
-    console.log("✅ Login successful for user:", username);
+    console.log("✅ Login successful for user:", email);
     console.log("👤 User ID:", user._id);
     console.log("🔑 Admin status:", user.isAdmin);
     console.log("🎫 JWT token generated");
@@ -95,6 +117,7 @@ export const Login = async (req, res) => {
         status: 200,
         message: "Login Successfully",
         user: user,
+        token: token,
       });
   } catch (error) {
     // Log the error for debugging purposes
