@@ -1,5 +1,6 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
+
 
 // Example route for hotel types
 router.get("/", (req, res) => {

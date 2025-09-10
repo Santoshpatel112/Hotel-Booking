@@ -11,7 +11,7 @@ import {
   faCircleXmark,
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 
@@ -58,6 +58,36 @@ const Hotel = () => {
     setSlideNumber(newSlideNumber)
   };
   
+  useEffect(() => {
+    if (open) {
+      document.body.classList.add('slider-open');
+    } else {
+      document.body.classList.remove('slider-open');
+    }
+    
+    // Cleanup
+    return () => {
+      document.body.classList.remove('slider-open');
+    };
+  }, [open]);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (!open) return;
+      
+      if (e.key === 'Escape') {
+        setOpen(false);
+      } else if (e.key === 'ArrowLeft') {
+        handleMove('l');
+      } else if (e.key === 'ArrowRight') {
+        handleMove('r');
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [open, slideNumber, photos.length]);
+
   if (loading) return <div>Loading hotel details...</div>;
   if (error) return <div>Error loading hotel details</div>;
   if (!hotel?.hotel) return <div>Hotel not found</div>;
@@ -70,25 +100,50 @@ const Hotel = () => {
       <Header type="list" />
       <div className="hotelContainer">
         {open && (
-          <div className="slider">
-            <FontAwesomeIcon
-              icon={faCircleXmark}
-              className="close"
-              onClick={() => setOpen(false)}
-            />
-            <FontAwesomeIcon
-              icon={faCircleArrowLeft}
-              className="arrow"
-              onClick={() => handleMove("l")}
-            />
+          <div 
+            className="slider"
+            onClick={(e) => {
+              // Close when clicking on the dark background
+              if (e.target === e.currentTarget) {
+                setOpen(false);
+              }
+            }}
+          >
             <div className="sliderWrapper">
-              <img src={photos[slideNumber].src} alt="" className="sliderImg" />
+              <FontAwesomeIcon
+                icon={faCircleXmark}
+                className="close"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setOpen(false);
+                }}
+                aria-label="Close gallery"
+              />
+              <FontAwesomeIcon
+                icon={faCircleArrowLeft}
+                className="arrow"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleMove("l");
+                }}
+                aria-label="Previous image"
+              />
+              <img 
+                src={photos[slideNumber].src} 
+                alt={`${hotelData.name} - ${slideNumber + 1} of ${photos.length}`} 
+                className="sliderImg" 
+                onClick={(e) => e.stopPropagation()}
+              />
+              <FontAwesomeIcon
+                icon={faCircleArrowRight}
+                className="arrow"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleMove("r");
+                }}
+                aria-label="Next image"
+              />
             </div>
-            <FontAwesomeIcon
-              icon={faCircleArrowRight}
-              className="arrow"
-              onClick={() => handleMove("r")}
-            />
           </div>
         )}
         <div className="hotelWrapper">
@@ -111,12 +166,16 @@ const Hotel = () => {
           </span>
           <div className="hotelImages">
             {photos.map((photo, i) => (
-              <div className="hotelImgWrapper" key={i}>
+              <div 
+                className="hotelImgWrapper" 
+                key={i}
+                onClick={() => handleOpen(i)}
+              >
                 <img
-                  onClick={() => handleOpen(i)}
                   src={photo.src}
-                  alt=""
+                  alt={`${hotelData.name} - ${i + 1}`}
                   className="hotelImg"
+                  loading="lazy"
                 />
               </div>
             ))}
