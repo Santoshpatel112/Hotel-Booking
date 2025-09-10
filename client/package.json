@@ -7,13 +7,17 @@
     "@fortawesome/free-regular-svg-icons": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.1.18",
+    "@shadcn/ui": "^0.0.4",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.1.1",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.11.0",
+    "chart.js": "^4.5.0",
     "date-fns": "^2.28.0",
     "framer-motion": "^12.23.12",
+    "lucide-react": "^0.543.0",
     "react": "^18.0.0",
+    "react-chartjs-2": "^5.3.0",
     "react-date-range": "^1.4.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.3.0",
@@ -44,5 +48,10 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:5000/api"
+  "proxy": "http://localhost:5000/api",
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.13"
+  }
 }
