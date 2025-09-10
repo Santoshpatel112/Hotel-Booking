@@ -16,10 +16,10 @@ import { useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 
 const Hotel = () => {
+  const [showBookingModal, setShowBookingModal] = useState(false);
   const { id } = useParams();
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
-  const [showBookingModal, setShowBookingModal] = useState(false);
   
   const { data: hotel, loading, error } = useFetch(`/hotels/get/${id}`);
   
@@ -159,9 +159,20 @@ const Hotel = () => {
         }}
         isOpen={showBookingModal}
         onClose={() => setShowBookingModal(false)}
-        onSuccess={() => {
-          setShowBookingModal(false);
-          // You can add success handling here
+        onSuccess={(bookingDetails) => {
+          fetch("/bookings", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(bookingDetails),
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log("Booking successful:", data);
+            setShowBookingModal(false);
+          })
+          .catch(error => {
+            console.error("Error booking hotel:", error);
+          });
         }}
       />
     </div>

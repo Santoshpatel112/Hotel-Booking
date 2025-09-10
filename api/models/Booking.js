@@ -105,7 +105,6 @@ const BookingSchema = new mongoose.Schema({
     },
     bookingReference: {
         type: String,
-        unique: true,
         required: true,
     },
     source: {
@@ -159,7 +158,7 @@ BookingSchema.pre('save', function(next) {
 // Indexes for better query performance
 BookingSchema.index({ user: 1, createdAt: -1 });
 BookingSchema.index({ hotel: 1, checkInDate: 1, checkOutDate: 1 });
-BookingSchema.index({ bookingReference: 1 });
+BookingSchema.index({ bookingReference: 1 }, { unique: true });
 BookingSchema.index({ status: 1, paymentStatus: 1 });
 BookingSchema.index({ checkInDate: 1, checkOutDate: 1 });
 

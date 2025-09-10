@@ -12,6 +12,7 @@ import Profile from "./pages/profile/Profile";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthContextProvider } from "./context/AuthContext";
+import PropertyTypeDetails from "./pages/propertyTypeDetails/PropertyTypeDetails";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
               <AdminDashboard/>
             </ProtectedRoute>
           }/>
+          <Route path="/properties/:type" element={<PropertyTypeDetails />} />
         </Routes>
       </BrowserRouter>
     </AuthContextProvider>

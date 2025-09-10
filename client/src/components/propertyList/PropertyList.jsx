@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 const PropertyList = () => {
   const navigate = useNavigate();
   
-  // Property type images mapping
   const propertyImages = {
     hotel: "https://cf.bstatic.com/xdata/images/xphoto/square300/57584488.webp?k=bf724e4e9b9b75480bbe7fc675460a089ba6414fe4693b83ea3fdd8e938832a6&o=",
     apartment: "https://cf.bstatic.com/static/img/theme-index/carousel_320x240/card-image-apartments_300/9f60235dc09a3ac3f0a93adbc901c61ecd1ce72e.jpg",
@@ -18,18 +17,7 @@ const PropertyList = () => {
   const { data, error, loading } = useFetch("/hotels/countByType");
 
   const handlePropertyClick = (type) => {
-    navigate("/hotels", { 
-      state: { 
-        destination: "", 
-        propertyType: type,
-        date: [{
-          startDate: new Date(),
-          endDate: new Date(),
-          key: "selection"
-        }],
-        options: { adult: 1, children: 0, room: 1 } 
-      } 
-    });
+    navigate(`/properties/${type}`, { state: { propertyType: type } });
   };
 
   if (loading) {
@@ -61,32 +49,38 @@ const PropertyList = () => {
 
   return (
     <div className="pList">
-      {data && data.map((property, index) => {
-        const image = propertyImages[property.type] || propertyImages.hotel;
-        const capitalizedType = property.type.charAt(0).toUpperCase() + property.type.slice(1);
-        
-        return (
-          <motion.div 
-            className="pListItem" 
-            key={property.type}
-            onClick={() => handlePropertyClick(property.type)}
-            whileHover={{ scale: 1.02, y: -5 }}
-            whileTap={{ scale: 0.98 }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: index * 0.1 }}
-          >
-            <img src={image} alt={capitalizedType} className="pListImg" />
-            <div className="pListTitles">
-              <h1>{capitalizedType}s</h1>
-              <h2>{property.count} {property.count === 1 ? 'property' : 'properties'}</h2>
-            </div>
-            <div className="pListOverlay">
-              <span>Browse {capitalizedType}s</span>
-            </div>
-          </motion.div>
-        );
-      })}
+      {data && data.length > 0 ? (
+        data.map((property, index) => {
+          const image = propertyImages[property.type] || propertyImages.hotel;
+          const capitalizedType = property.type.charAt(0).toUpperCase() + property.type.slice(1);
+          
+          return (
+            <motion.div 
+              className="pListItem" 
+              key={property.type}
+              onClick={() => handlePropertyClick(property.type)}
+              whileHover={{ scale: 1.02, y: -5 }}
+              whileTap={{ scale: 0.98 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
+            >
+              <img src={image} alt={capitalizedType} className="pListImg" />
+              <div className="pListTitles">
+                <h1>{capitalizedType}s</h1>
+                <h2>{property.count} {property.count === 1 ? 'property' : 'properties'}</h2>
+              </div>
+              <div className="pListOverlay">
+                <span>Browse {capitalizedType}s</span>
+              </div>
+            </motion.div>
+          );
+        })
+      ) : (
+        <div className="no-data-message">
+          <h3>No properties found</h3>
+        </div>
+      )}
     </div>
   );
 };

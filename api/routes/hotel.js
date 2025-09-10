@@ -17,7 +17,19 @@ router.get("/countByCity", hotelController.countByCity);
 router.get("/featured", hotelController.getFeaturedHotels);
 router.get("/countByCityDetailed", hotelController.countByCityDetailed);
 router.get("/countByType", hotelController.CountByType);
-
+router.get("/properties/:type", async (req, res) => {
+    const type = req.params.type.toLowerCase(); // Ensure case-insensitive matching
+    try {
+        const properties = await Hotel.find({ type });
+        if (!properties.length) {
+            return res.status(404).json({ message: `No properties found for type: ${type}` });
+        }
+        res.status(200).json(properties);
+    } catch (err) {
+        console.error("Error fetching properties:", err.message); // Log error for debugging
+        res.status(500).json({ message: "Error fetching properties.", error: err.message });
+    }
+});
 router.get("/test-db", hotelController.testDatabase);
 // router.get('/countByType',getHotel);
 export default router;
