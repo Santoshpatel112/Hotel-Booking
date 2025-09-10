@@ -1,16 +1,18 @@
-const express = require("express");
-const router = express.Router();
-const verifyAdmin = require("../utils/VerifyAdmin");
-const Booking = require("../models/Booking");
 
-// Admin dashboard route
+import express from "express";
+import verifyAdmin from "../utils/VerifyAdmin.js";
+import Booking from "../models/Booking.js";
+const router = express.Router();
+
+// Admin Dashboard Route
+// Admin Dashboard Route
 router.get("/admin-dashboard", verifyAdmin, async (req, res) => {
   try {
-    const bookings = await Booking.find(); // Example: Fetch all bookings
+    const bookings = await Booking.find();
     res.status(200).json(bookings);
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-module.exports = router;
+export default router;

@@ -9,6 +9,10 @@ import hotelRoutes from "./routes/hotel.js";
 import userRoutes from "./routes/user.js";
 import roomRoutes from "./routes/rooms.js";
 import bookingRoutes from "./routes/booking.js";
+import dashboardRoutes from "./routes/dashboard.js";
+import propertyTypeRoutes from "./routes/propertyType.js";
+import hotelTypeRoutes from "./routes/hotelType.js";
+// import roomTypeRoutes from "./routes/roomType.js";
 
 dotenv.config();
 const PORT = process.env.PORT || 8000;
@@ -67,6 +71,10 @@ app.use("/api/hotels", hotelRoutes);
 app.use("/api/users",userRoutes);
 app.use("/api/rooms",roomRoutes);
 app.use("/api/bookings",bookingRoutes);
+app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/property-types", propertyTypeRoutes);
+app.use("/api/hotel-types", hotelTypeRoutes);
+// app.use("/api/room-types", roomTypeRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

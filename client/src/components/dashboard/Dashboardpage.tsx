@@ -2,42 +2,43 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import BookingChart from "../charts/BookingChart";
 
-const data = [
-  { month: "January", bookings: 30 },
-  { month: "February", bookings: 45 },
-  { month: "March", bookings: 60 },
-];
-
 const DashboardPage = () => {
-  const [data, setData] = useState([]);
+  const [dashboardData, setDashboardData] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setIsAdmin(false);
+        return;
+      }
+
       try {
-        const token = localStorage.getItem("token"); // Assuming token is stored in localStorage
-        const res = await axios.get("/api/dashboard/admin-dashboard", {
+        const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+        const res = await axios.get(`${BASE_URL}/api/dashboard/admin-dashboard`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setData(res.data);
-        setIsAdmin(true); // If the request succeeds, user is admin
+        setDashboardData(res.data);
+        setIsAdmin(true);
       } catch (err) {
         console.error(err);
-        setIsAdmin(false); // If the request fails, user is not admin
+        setIsAdmin(false);
       }
     };
     fetchData();
   }, []);
 
   if (!isAdmin) {
-    return <div>Access Denied</div>;
+    return <div>You do not have admin access. Please log in as an admin.</div>;
   }
 
   return (
     <div>
       <h1>Admin Dashboard</h1>
+      <BookingChart data={dashboardData} />
       <ul>
-        {data.map((booking) => (
+        {dashboardData.map((booking) => (
           <li key={booking._id}>{booking.name}</li>
         ))}
       </ul>

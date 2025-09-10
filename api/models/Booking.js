@@ -163,3 +163,4 @@ BookingSchema.index({ status: 1, paymentStatus: 1 });
 BookingSchema.index({ checkInDate: 1, checkOutDate: 1 });
 
 export const Booking = mongoose.model("Booking", BookingSchema);
+export default Booking;
