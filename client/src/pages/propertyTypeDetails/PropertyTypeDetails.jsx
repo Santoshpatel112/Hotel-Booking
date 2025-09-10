@@ -11,14 +11,13 @@ const PropertyTypeDetails = () => {
     useEffect(() => {
         const fetchProperties = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/api/hotel/properties/${type}`); // Ensure correct URL
+                const response = await fetch("http://localhost:5000/api/hotel/properties/" + type);
                 if (!response.ok) {
                     throw new Error(`Failed to fetch properties: ${response.statusText}`);
                 }
                 const data = await response.json();
                 setProperties(data);
             } catch (err) {
-                console.error("Error fetching properties:", err.message); // Log error for debugging
                 setError(err.message);
             } finally {
                 setLoading(false);
