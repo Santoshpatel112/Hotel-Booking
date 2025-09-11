@@ -37,32 +37,32 @@ const Login = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    
     if (!formData.email) {
       newErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Email is invalid';
     }
-    
     if (!formData.password) {
       newErrors.password = 'Password is required';
     } else if (formData.password.length < 6) {
       newErrors.password = 'Password must be at least 6 characters';
     }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     if (!validateForm()) return;
-
     try {
       const result = await login(formData);
       if (result.success) {
-        navigate(from, { replace: true });
+        // Redirect admin to /admin, others to previous page
+        if (result.user?.isAdmin) {
+  navigate('/admin', { replace: true });
+} else {
+  navigate(from, { replace: true });
+}
       }
     } catch (err) {
       console.error('Login error:', err);
@@ -87,25 +87,7 @@ const Login = () => {
               transition={{ delay: 0.2, type: "spring" }}
             >
               <div className="logoIcon">
-                <svg width="48" height="48" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <defs>
-                    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#a7f3d0" />
-                      <stop offset="50%" stopColor="#34d399" />
-                      <stop offset="100%" stopColor="#10b981" />
-                    </linearGradient>
-                  </defs>
-                  <path d="M50 5 L85 25 L70 40 L50 30 L30 40 L15 25 Z" fill="url(#logoGradient)" />
-                  <path d="M15 25 L30 40 L30 70 L50 80 L70 70 L70 40 L85 25 L85 55 L70 70 L50 80 L30 70 L15 55 Z" fill="url(#logoGradient)" opacity="0.8" />
-                  <rect x="20" y="60" width="25" height="25" fill="url(#logoGradient)" rx="2" />
-                  <rect x="55" y="60" width="25" height="25" fill="url(#logoGradient)" rx="2" />
-                  <rect x="25" y="65" width="6" height="6" fill="white" rx="1" />
-                  <rect x="34" y="65" width="6" height="6" fill="white" rx="1" />
-                  <rect x="60" y="65" width="6" height="6" fill="white" rx="1" />
-                  <rect x="69" y="65" width="6" height="6" fill="white" rx="1" />
-                  <rect x="28" y="75" width="8" height="10" fill="white" rx="1" />
-                  <rect x="63" y="75" width="8" height="10" fill="white" rx="1" />
-                </svg>
+                {/* SVG logo */}
               </div>
               <h1>EasyStay</h1>
             </motion.div>
