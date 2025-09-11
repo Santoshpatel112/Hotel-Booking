@@ -1,9 +1,6 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { Users, DollarSign, Activity, ShoppingCart } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
-import './admin.css';
 
 // Import UI components
 import Sidebar from '../../components/ui/Sidebar';
@@ -13,15 +10,12 @@ import ActivityFeed from '../../components/ui/ActivityFeed';
 import AnalyticsChart from '../../components/ui/AnalyticsChart';
 import UserTable from '../../components/ui/UserTable';
 
-const AdminDashboard = () => {
-  const { user } = useAuth();
-  const navigate = useNavigate();
+const Dashboard = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  
   // Simulate loading state
-  useEffect(() => {
+  useState(() => {
     setLoading(true);
     const timer = setTimeout(() => {
       setLoading(false);
@@ -29,13 +23,6 @@ const AdminDashboard = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // Check admin access
-  useEffect(() => {
-    if (!user?.isAdmin) {
-      navigate('/');
-    }
-  }, [user, navigate]);
-  
   return (
     <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
       {/* Sidebar */}
@@ -51,7 +38,7 @@ const AdminDashboard = () => {
           <div className="max-w-7xl mx-auto">
             {/* Page Title */}
             <div className="mb-6">
-              <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Admin Dashboard</h1>
+              <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Dashboard</h1>
               <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Welcome to your booking management dashboard</p>
             </div>
             
@@ -120,4 +107,4 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default Dashboard;
