@@ -1,6 +1,8 @@
-require('dotenv').config();
-const Razorpay = require('razorpay');
-const express = require('express');
+import dotenv from 'dotenv';
+import Razorpay from 'razorpay';
+import express from 'express';
+
+dotenv.config();
 const router = express.Router();
 
 const razorpayInstance = new Razorpay({
@@ -24,4 +26,4 @@ router.post('/create-order', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
