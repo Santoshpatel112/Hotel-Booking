@@ -98,6 +98,7 @@ export const Login = async (req, res) => {
     let isAdmin = user.isAdmin;
     const adminEmails = [
       'santoshpatelvns5@gmail.com',
+      'admin123@gmail.com',
       'admin@easystay.com',
       'admin@booking.com'
     ];
