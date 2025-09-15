@@ -263,12 +263,16 @@ const AdvancedSearchFilters = ({
               <span>When</span>
             </label>
             <div
-              className="date-selector"
+              className={`date-selector ${datePickerOpen ? 'active' : ''}`}
               onClick={() => setDatePickerOpen(!datePickerOpen)}
             >
               <span>
                 {format(searchData.checkIn, 'MMM dd')} - {format(searchData.checkOut, 'MMM dd')}
               </span>
+              <FontAwesomeIcon 
+                icon={datePickerOpen ? faChevronUp : faChevronDown} 
+                className="dropdown-icon"
+              />
             </div>
             
             <AnimatePresence>
@@ -279,6 +283,16 @@ const AdvancedSearchFilters = ({
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                 >
+                  <div className="date-picker-header">
+                    <h3>Select Dates</h3>
+                    <button
+                      type="button"
+                      className="close-btn"
+                      onClick={() => setDatePickerOpen(false)}
+                    >
+                      <FontAwesomeIcon icon={faTimes} />
+                    </button>
+                  </div>
                   <DateRange
                     ranges={[{
                       startDate: searchData.checkIn,
@@ -289,7 +303,17 @@ const AdvancedSearchFilters = ({
                     minDate={new Date()}
                     rangeColors={['#667eea']}
                     className="date-range-picker"
+                    showDateDisplay={false}
                   />
+                  <div className="date-picker-footer">
+                    <button
+                      type="button"
+                      className="done-btn"
+                      onClick={() => setDatePickerOpen(false)}
+                    >
+                      Done
+                    </button>
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
