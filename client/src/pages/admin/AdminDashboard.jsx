@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // Use React Icons instead to avoid lucide-react webpack issues
@@ -21,8 +20,6 @@ import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { hotelAPI } from '../../services/api';
 import { 
-  LineChart, 
-  Line, 
   AreaChart, 
   Area, 
   PieChart as RechartsPieChart, 
@@ -93,7 +90,7 @@ const AdminDashboard = () => {
     danger: '#ef4444'
   };
 
-  const fetchDashboardData = async () => {
+  const fetchDashboardData = useCallback(async () => {
     try {
       setLoading(true);
       const hotelsResponse = await hotelAPI.getAllHotels();
@@ -140,7 +137,7 @@ const AdminDashboard = () => {
       setLoading(false);
       setRefreshing(false);
     }
-  };
+  }, [colors.danger, colors.success, colors.warning]);
 
   const toggleDarkMode = () => {
     const newMode = !darkMode;
@@ -164,11 +161,11 @@ const AdminDashboard = () => {
   useEffect(() => {
     if (darkMode) document.documentElement.classList.add('dark');
     else document.documentElement.classList.remove('dark');
-  }, []);
+  }, [darkMode]);
   
   useEffect(() => {
     fetchDashboardData();
-  }, []);
+  }, [fetchDashboardData]);
 
   useEffect(() => {
     if (!user?.isAdmin) navigate('/');
