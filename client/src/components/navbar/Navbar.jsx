@@ -424,6 +424,18 @@ const Navbar = () => {
               </>
             ) : (
               <div className="userMenu">
+                {/* Admin Dashboard Button */}
+                {user?.isAdmin && (
+                  <motion.button 
+                    className="navButton adminDashboardBtn"
+                    whileHover={{ scale: 1.05, boxShadow: "0 5px 15px rgba(139, 69, 19, 0.4)" }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ duration: 0.2 }}
+                    onClick={() => navigate('/admin')}
+                  >
+                    🏢 Admin Dashboard
+                  </motion.button>
+                )}
                 <motion.div 
                   className="userProfile"
                   whileHover={{ scale: 1.05 }}
@@ -433,6 +445,7 @@ const Navbar = () => {
                     {user?.username?.charAt(0) || user?.name?.charAt(0) || 'U'}
                   </div>
                   <span className="userName">{user?.username || user?.name || 'User'}</span>
+                  {user?.isAdmin && <span className="adminBadge">ADMIN</span>}
                 </motion.div>
                 <motion.button 
                   className="navButton navButtonSecondary"
