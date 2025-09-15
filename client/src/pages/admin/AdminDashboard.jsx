@@ -29,8 +29,7 @@ import {
   XAxis, 
   YAxis, 
   CartesianGrid, 
-  Tooltip, 
-  Legend 
+  Tooltip 
 } from 'recharts';
 import toast, { Toaster } from 'react-hot-toast';
 import './admin-modern.css';
@@ -315,7 +314,7 @@ const AdminDashboard = () => {
             <AnimatePresence mode="wait">
               {activeTab === 'dashboard' && (
                 <motion.div key="dashboard" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-                  {/* Enhanced Stats Grid */}
+                  {/* Stats Grid */}
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {[
                       { title: 'Total Users', value: dashboardData.totalUsers, icon: FaUsers, bgColor: 'from-blue-500 to-blue-600', iconBg: 'bg-blue-100 dark:bg-blue-900/20', iconColor: 'text-blue-600 dark:text-blue-400' },
@@ -335,9 +334,7 @@ const AdminDashboard = () => {
                             darkMode ? 'bg-gray-800/90 border-gray-700/50' : 'bg-white/90 border-gray-200/50'
                           }`}
                         >
-                          {/* Gradient background overlay */}
                           <div className={`absolute inset-0 bg-gradient-to-br ${stat.bgColor} opacity-5`}></div>
-                          
                           <div className="relative flex items-center justify-between">
                             <div className="flex-1">
                               <p className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">{stat.title}</p>
@@ -380,114 +377,7 @@ const AdminDashboard = () => {
                     })}
                   </div>
                   
-                  {/* Enhanced Charts */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <motion.div 
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.5 }}
-                      className={`chart-container modern-card ${darkMode ? 'bg-gray-800/90 border-gray-700/50' : 'bg-white/90 border-gray-200/50'}`}
-                    >
-                      <div className="flex items-center justify-between mb-6">
-                        <h3 className="text-xl font-bold text-gray-900 dark:text-white">Booking Trends</h3>
-                        <div className="flex items-center space-x-2">
-                          <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                          <span className="text-sm text-gray-500 dark:text-gray-400">Weekly Data</span>
-                        </div>
-                      </div>
-                      <ResponsiveContainer width="100%" height={320}>
-                        <AreaChart data={dashboardData.bookingTrends}>
-                          <defs>
-                            <linearGradient id="colorBookings" x1="0" y1="0" x2="0" y2="1">
-                              <stop offset="5%" stopColor={colors.primary} stopOpacity={0.3}/>
-                              <stop offset="95%" stopColor={colors.primary} stopOpacity={0.05}/>
-                            </linearGradient>
-                          </defs>
-                          <XAxis 
-                            dataKey="date" 
-                            axisLine={false}
-                            tickLine={false}
-                            tick={{ fontSize: 12, fill: darkMode ? '#9CA3AF' : '#6B7280' }}
-                          />
-                          <YAxis 
-                            axisLine={false}
-                            tickLine={false}
-                            tick={{ fontSize: 12, fill: darkMode ? '#9CA3AF' : '#6B7280' }}
-                          />
-                          <CartesianGrid strokeDasharray="3 3" stroke={darkMode ? '#374151' : '#E5E7EB'} />
-                          <Tooltip 
-                            contentStyle={{
-                              backgroundColor: darkMode ? '#1F2937' : '#FFFFFF',
-                              border: `1px solid ${darkMode ? '#374151' : '#E5E7EB'}`,
-                              borderRadius: '12px',
-                              boxShadow: '0 10px 25px rgba(0,0,0,0.1)'
-                            }}
-                          />
-                          <Area 
-                            type="monotone" 
-                            dataKey="bookings" 
-                            stroke={colors.primary} 
-                            strokeWidth={3}
-                            fill="url(#colorBookings)"
-                          />
-                        </AreaChart>
-                      </ResponsiveContainer>
-                    </motion.div>
-                    
-                    <motion.div 
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.6 }}
-                      className={`chart-container modern-card ${darkMode ? 'bg-gray-800/90 border-gray-700/50' : 'bg-white/90 border-gray-200/50'}`}
-                    >
-                      <div className="flex items-center justify-between mb-6">
-                        <h3 className="text-xl font-bold text-gray-900 dark:text-white">Booking Status</h3>
-                        <div className="flex items-center space-x-4">
-                          {dashboardData.bookingStatusData.map((entry, index) => (
-                            <div key={index} className="flex items-center space-x-2">
-                              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: entry.color }}></div>
-                              <span className="text-xs text-gray-500 dark:text-gray-400">{entry.name}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                      <ResponsiveContainer width="100%" height={320}>
-                        <RechartsPieChart>
-                          <defs>
-                            {dashboardData.bookingStatusData.map((entry, index) => (
-                              <linearGradient key={index} id={`gradient-${index}`} x1="0" y1="0" x2="1" y2="1">
-                                <stop offset="0%" stopColor={entry.color} stopOpacity={1}/>
-                                <stop offset="100%" stopColor={entry.color} stopOpacity={0.7}/>
-                              </linearGradient>
-                            ))}
-                          </defs>
-                          <Pie 
-                            data={dashboardData.bookingStatusData} 
-                            cx="50%" 
-                            cy="50%" 
-                            innerRadius={70} 
-                            outerRadius={130} 
-                            paddingAngle={8} 
-                            dataKey="value"
-                          >
-                            {dashboardData.bookingStatusData.map((entry, index) => (
-                              <Cell key={`cell-${index}`} fill={`url(#gradient-${index})`} />
-                            ))}
-                          </Pie>
-                          <Tooltip 
-                            contentStyle={{
-                              backgroundColor: darkMode ? '#1F2937' : '#FFFFFF',
-                              border: `1px solid ${darkMode ? '#374151' : '#E5E7EB'}`,
-                              borderRadius: '12px',
-                              boxShadow: '0 10px 25px rgba(0,0,0,0.1)'
-                            }}
-                          />
-                        </RechartsPieChart>
-                      </ResponsiveContainer>
-                    </motion.div>
-                  </div>
-                  
-                  {/* Enhanced Activity Feed */}
+                  {/* Activity Feed */}
                   <motion.div 
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}

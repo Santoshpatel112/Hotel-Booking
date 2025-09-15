@@ -9,7 +9,7 @@ import List from "./pages/list/List";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Profile from "./pages/profile/Profile";
-import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthContextProvider } from "./context/AuthContext";
 import PropertyTypeDetails from "./pages/propertyTypeDetails/PropertyTypeDetails";
