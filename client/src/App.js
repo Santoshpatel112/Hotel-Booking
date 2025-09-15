@@ -37,6 +37,11 @@ function App() {
               <AdminDashboard/>
             </ProtectedRoute>
           }/>
+          <Route path="/admin/*" element={
+            <ProtectedRoute requireAdmin={true}>
+              <AdminDashboard/>
+            </ProtectedRoute>
+          }/>
           <Route path="/properties/:type" element={<PropertyTypeDetails />} />
         </Routes>
       </BrowserRouter>
