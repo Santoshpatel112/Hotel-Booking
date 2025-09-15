@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Users, DollarSign, Activity, ShoppingCart, Building, Bed } from 'lucide-react';
+import { Users, DollarSign, Activity, ShoppingCart, Building, Bed, TrendingUp, AlertCircle } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { hotelAPI, userAPI } from '../../services/api';
 import './admin.css';
 
 // Import UI components
@@ -20,21 +21,69 @@ const AdminDashboard = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [dashboardData, setDashboardData] = useState({
+    totalUsers: 0,
+    totalHotels: 0,
+    totalBookings: 0,
+    revenue: 0,
+    recentActivity: []
+  });
+  const [error, setError] = useState(null);
 
+  // Fetch dashboard data
+  const fetchDashboardData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      // Fetch hotels data
+      const hotelsResponse = await hotelAPI.getAllHotels();
+      const hotels = hotelsResponse.data || [];
+      
+      // Calculate dashboard metrics
+      const totalHotels = hotels.length;
+      const totalBookings = Math.floor(totalHotels * 15.5); // Simulated
+      const revenue = hotels.reduce((sum, hotel) => {
+        return sum + (hotel.cheapestPrice || hotel.cheapestprice || 0);
+      }, 0);
+      
+      // Simulate recent activity
+      const recentActivity = [
+        { id: 1, type: 'booking', message: 'New booking at ' + (hotels[0]?.name || 'Hotel ABC'), time: '2 min ago' },
+        { id: 2, type: 'user', message: 'New user registration', time: '5 min ago' },
+        { id: 3, type: 'review', message: 'New review received', time: '10 min ago' },
+        { id: 4, type: 'booking', message: 'Booking confirmed', time: '15 min ago' },
+      ];
+      
+      setDashboardData({
+        totalUsers: Math.floor(totalHotels * 8.3), // Simulated
+        totalHotels,
+        totalBookings,
+        revenue,
+        recentActivity
+      });
+      
+      console.log('📊 Dashboard data loaded:', { totalHotels, totalBookings, revenue });
+    } catch (err) {
+      console.error('❌ Error fetching dashboard data:', err);
+      setError('Failed to load dashboard data');
+    } finally {
+      setLoading(false);
+    }
+  };
   
   // Simulate loading state
   useEffect(() => {
-    setLoading(true);
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-    return () => clearTimeout(timer);
+    fetchDashboardData();
   }, []);
 
   // Check admin access
   useEffect(() => {
     if (!user?.isAdmin) {
+      console.log('⚠️ Non-admin user attempting to access dashboard:', user);
       navigate('/');
+    } else {
+      console.log('✅ Admin access granted:', user.email);
     }
   }, [user, navigate]);
   
@@ -95,15 +144,35 @@ const AdminDashboard = () => {
               <>
                 {/* Page Title */}
                 <div className="mb-6">
-                  <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Admin Dashboard</h1>
-                  <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Welcome to your booking management dashboard</p>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Admin Dashboard</h1>
+                      <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                        Welcome back, {user?.username || user?.email}! Here's what's happening.
+                      </p>
+                    </div>
+                    <button 
+                      onClick={fetchDashboardData}
+                      className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                      disabled={loading}
+                    >
+                      <TrendingUp size={16} />
+                      {loading ? 'Refreshing...' : 'Refresh Data'}
+                    </button>
+                  </div>
+                  {error && (
+                    <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700">
+                      <AlertCircle size={16} />
+                      {error}
+                    </div>
+                  )}
                 </div>
                 
                 {/* Stats Cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                   <StatsCard 
                     title="Total Users" 
-                    value="1,234" 
+                    value={dashboardData.totalUsers.toLocaleString()} 
                     icon={<Users size={20} />} 
                     change="12" 
                     changeType="increase" 
@@ -111,23 +180,23 @@ const AdminDashboard = () => {
                   />
                   <StatsCard 
                     title="Revenue" 
-                    value="$12,345" 
+                    value={`₹${dashboardData.revenue.toLocaleString()}`} 
                     icon={<DollarSign size={20} />} 
                     change="8" 
                     changeType="increase" 
                     loading={loading}
                   />
                   <StatsCard 
-                    title="Active Sessions" 
-                    value="42" 
-                    icon={<Activity size={20} />} 
+                    title="Total Hotels" 
+                    value={dashboardData.totalHotels.toLocaleString()} 
+                    icon={<Building size={20} />} 
                     change="5" 
-                    changeType="decrease" 
+                    changeType="increase" 
                     loading={loading}
                   />
                   <StatsCard 
-                    title="Sales" 
-                    value="256" 
+                    title="Total Bookings" 
+                    value={dashboardData.totalBookings.toLocaleString()} 
                     icon={<ShoppingCart size={20} />} 
                     change="18" 
                     changeType="increase" 
