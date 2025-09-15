@@ -80,7 +80,7 @@ const GetHotelByID = async (req, res) => {
 };
 
 const getallHotel = async (req, res) => {
-  const { city, type, min, max, limit ,...others} = req.query;
+  const { city, type, min, max, limit, sortBy, ...others} = req.query;
   try {
     let query = {};
     
@@ -104,21 +104,48 @@ const getallHotel = async (req, res) => {
     
     // Add any other query parameters
     Object.keys(others).forEach(key => {
-      if (others[key] && key !== 'city' && key !== 'type' && key !== 'min' && key !== 'max') {
+      if (others[key] && key !== 'city' && key !== 'type' && key !== 'min' && key !== 'max' && key !== 'sortBy') {
         query[key] = others[key];
       }
     });
     
-    const getall = await Hotel.find(query).limit(parseInt(limit) || 0);
+    console.log(`🔍 Search query:`, query);
+    console.log(`📍 City filter: ${city}`);
+    console.log(`💰 Price range: ${min || 'any'} - ${max || 'any'}`);
+    
+    // Build sort criteria
+    let sortCriteria = {};
+    switch(sortBy) {
+      case 'price_low':
+        sortCriteria = { prices: 1 };
+        break;
+      case 'price_high':
+        sortCriteria = { prices: -1 };
+        break;
+      case 'rating':
+        sortCriteria = { rating: -1 };
+        break;
+      case 'newest':
+        sortCriteria = { createdAt: -1 };
+        break;
+      default:
+        sortCriteria = { featured: -1, rating: -1 }; // Default to featured first, then by rating
+    }
+    
+    const getall = await Hotel.find(query)
+      .sort(sortCriteria)
+      .limit(parseInt(limit) || 0);
+      
     console.log(`📊 Found ${getall.length} hotels in database`);
 
     if (getall.length > 0) {
       console.log("🏨 Hotels found:");
       getall.forEach((hotel, index) => {
-        console.log(`  ${index + 1}. ${hotel.name} in ${hotel.city}`);
+        console.log(`  ${index + 1}. ${hotel.name} in ${hotel.city} - ₹${hotel.prices}`);
       });
     } else {
-      console.log("⚠️ No hotels found in database");
+      console.log("⚠️ No hotels found matching criteria");
+      console.log(`   Query used:`, JSON.stringify(query, null, 2));
     }
 
     // Transform data to match frontend expectations
@@ -126,15 +153,30 @@ const getallHotel = async (req, res) => {
       ...hotel.toObject(),
       cheapestPrice: hotel.prices,
       cheapestprice: hotel.prices,
-      desc: hotel.description
+      desc: hotel.description,
+      rating: hotel.rating || 4.0, // Default rating if not present
+      amenities: hotel.amenities || [], // Default empty array if not present
+      photos: hotel.photos || [] // Default empty array if not present
     }));
     
-    return res.status(200).json({ hotels: transformedHotels });
+    return res.status(200).json({ 
+      data: transformedHotels, // Use 'data' key to match frontend expectations
+      hotels: transformedHotels, // Keep 'hotels' for backward compatibility
+      count: transformedHotels.length,
+      query: query,
+      sortBy: sortBy
+    });
   } catch (err) {
     console.error("❌ Error fetching hotels:", err);
     return res
       .status(500)
-      .json({ message: "Unable to find hotels", error: err.message });
+      .json({ 
+        message: "Unable to find hotels", 
+        error: err.message,
+        data: [],
+        hotels: [],
+        count: 0
+      });
   }
 };
 
