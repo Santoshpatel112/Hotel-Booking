@@ -2,7 +2,9 @@ import axios from 'axios';
 
 // Create axios instance with default configuration
 const api = axios.create({
-  baseURL: 'http://localhost:8000/api',
+  baseURL: process.env.NODE_ENV === 'production' 
+    ? 'http://localhost:8000/api' 
+    : '/api', // Use proxy in development
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
