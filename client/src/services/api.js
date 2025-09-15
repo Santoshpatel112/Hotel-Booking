@@ -39,7 +39,24 @@ api.interceptors.response.use(
 // Hotel API functions
 export const hotelAPI = {
   // Get all hotels with query parameters
-  getAllHotels: (params = {}) => api.get('/hotels/getall', { params }),
+  getAllHotels: async (params = {}) => {
+    try {
+      console.log('🔍 Searching hotels with params:', params);
+      const response = await api.get('/hotels/getall', { params });
+      console.log('📦 API Response:', response.data);
+      
+      // Handle both response formats for backward compatibility
+      const hotels = response.data.data || response.data.hotels || response.data || [];
+      
+      return {
+        ...response,
+        data: hotels // Ensure consistent data structure
+      };
+    } catch (error) {
+      console.error('❌ Hotel search error:', error);
+      throw error;
+    }
+  },
   
   // Get hotel by ID
   getHotelById: (id) => api.get(`/hotels/get/${id}`),
