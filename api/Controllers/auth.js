@@ -44,10 +44,21 @@ export const Register = async (req, res) => {
       });
   } catch (error) {
     console.error("❌ Registration Error:", error.message);
+    console.error("❌ Full error:", error);
+
+    // Check for specific MongoDB errors
+    if (error.code === 11000) {
+      const field = Object.keys(error.keyPattern)[0];
+      return res.status(400).json({
+        success: false,
+        message: `A user with this ${field} already exists. Please use a different ${field}.`,
+      });
+    }
 
     return res.status(500).json({
       success: false,
       message: "An internal server error occurred. Please try again later.",
+      error: process.env.NODE_ENV === "development" ? error.message : undefined
     });
   }
 };
@@ -68,16 +79,41 @@ export const Login = async (req, res) => {
       });
     }
 
-    // Find the user by email
-    const user = await User.findOne({ email: email });
+    // Admin emails and credentials
+    const adminAccounts = {
+      'santoshpatelvns5@gmail.com': 'your_password_here', // Replace with actual password
+      'admin123@gmail.com': 'admin123',
+      'admin@easystay.com': 'admin123',
+      'admin@booking.com': 'admin123'
+    };
 
-    // Handle case where user is not found
+    // Find the user by email
+    let user = await User.findOne({ email: email });
+
+    // If user doesn't exist and it's an admin email, create the admin user
+    if (!user && adminAccounts[email.toLowerCase()]) {
+      console.log("👤 Creating admin user:", email);
+      
+      const hashPassword = await bcrypt.hash(adminAccounts[email.toLowerCase()], 10);
+      
+      user = new User({
+        username: email.split('@')[0], // Use email prefix as username
+        email: email,
+        password: hashPassword,
+        isAdmin: true,
+      });
+      
+      await user.save();
+      console.log("✅ Admin user created successfully:", email);
+    }
+
+    // Handle case where user is still not found
     if (!user) {
       console.log("❌ User not found:", email);
       return res.status(404).json({ 
         success: false,
         status: 404, 
-        message: "User with this email does not exist" 
+        message: "User with this email does not exist. Please register first or contact admin." 
       });
     }
 
@@ -96,12 +132,7 @@ export const Login = async (req, res) => {
 
     // Check if user should be admin based on specific email
     let isAdmin = user.isAdmin;
-    const adminEmails = [
-      'santoshpatelvns5@gmail.com',
-      'admin123@gmail.com',
-      'admin@easystay.com',
-      'admin@booking.com'
-    ];
+    const adminEmails = Object.keys(adminAccounts);
     
     if (adminEmails.includes(email.toLowerCase())) {
       isAdmin = true;
