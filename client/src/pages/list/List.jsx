@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import { DateRange } from "react-date-range";
@@ -48,6 +48,7 @@ const List = () => {
   const [error, setError] = useState(null);
   const [viewMode, setViewMode] = useState('grid'); // grid or list
   const [sortBy, setSortBy] = useState('relevance');
+  const [navigating, setNavigating] = useState(null); // Track which hotel is being navigated to
   const [filters, setFilters] = useState({
     minPrice: undefined,
     maxPrice: undefined,
@@ -117,7 +118,7 @@ const List = () => {
   }, [destination, filters.minPrice, filters.maxPrice, sortBy]);
 
   // Handle advanced search
-  const handleAdvancedSearch = (searchData) => {
+  const handleAdvancedSearch = useCallback((searchData) => {
     setDestination(searchData.destination);
     setDates([{
       startDate: searchData.checkIn,
@@ -131,12 +132,21 @@ const List = () => {
     });
     setSearchParams(searchData);
     fetchHotels(searchData);
-  };
+  }, []);
+
+  // Handle hotel navigation with loading state
+  const handleHotelNavigation = useCallback((hotelId) => {
+    setNavigating(hotelId);
+    // Add a small delay to show loading state
+    setTimeout(() => {
+      navigate(`/hotels/${hotelId}`);
+    }, 100);
+  }, [navigate]);
 
   // Handle filter changes
-  const handleFilterChange = (newFilters) => {
+  const handleFilterChange = useCallback((newFilters) => {
     setFilters(prev => ({ ...prev, ...newFilters }));
-  };
+  }, []);
 
   return (
     <div className="list">
@@ -244,9 +254,13 @@ const List = () => {
                         <div className="image-overlay">
                           <button 
                             className="quick-view-btn"
-                            onClick={() => navigate(`/hotels/${item._id}`)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleHotelNavigation(item._id);
+                            }}
+                            disabled={navigating === item._id}
                           >
-                            Quick View
+                            {navigating === item._id ? 'Loading...' : 'Quick View'}
                           </button>
                         </div>
                       </div>
@@ -300,9 +314,13 @@ const List = () => {
                           
                           <button 
                             className="view-details-btn"
-                            onClick={() => navigate(`/hotels/${item._id}`)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleHotelNavigation(item._id);
+                            }}
+                            disabled={navigating === item._id}
                           >
-                            View Details
+                            {navigating === item._id ? 'Loading...' : 'View Details'}
                           </button>
                         </div>
                       </div>
