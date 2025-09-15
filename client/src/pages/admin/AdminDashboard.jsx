@@ -172,26 +172,30 @@ const AdminDashboard = () => {
   }, [user, navigate]);
   
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
+    <div className={`min-h-screen transition-colors duration-300 admin-dashboard ${darkMode ? 'dark bg-gray-900' : 'bg-gradient-to-br from-gray-50 to-gray-100'}`}>
       <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
       
       <div className="flex h-screen">
         {/* Modern Sidebar */}
         <motion.div 
-          className={`${collapsed ? 'w-16' : 'w-64'} ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border-r transition-all duration-300 flex flex-col shadow-lg`}
+          className={`${collapsed ? 'w-16' : 'w-64'} ${darkMode ? 'bg-gray-800/95 border-gray-700/50' : 'bg-white/95 border-gray-200/50'} border-r transition-all duration-300 flex flex-col shadow-xl backdrop-blur-lg glass-effect`}
           initial={{ x: -100 }}
           animate={{ x: 0 }}
         >
-          <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+          <div className="p-4 border-b border-gray-200/30 dark:border-gray-700/30">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                <FaBuilding className="w-6 h-6 text-white" />
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 flex items-center justify-center shadow-lg">
+                <FaBuilding className="w-5 h-5 text-white" />
               </div>
               {!collapsed && (
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2 }}
+                >
                   <h1 className="text-lg font-bold text-gray-900 dark:text-white">BookingApp</h1>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">Admin Panel</p>
-                </div>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">Admin Panel</p>
+                </motion.div>
               )}
             </div>
           </div>
@@ -209,31 +213,54 @@ const AdminDashboard = () => {
                   <motion.button
                     key={item.id}
                     onClick={() => setActiveTab(item.id)}
-                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors ${
-                      activeTab === item.id ? 'bg-blue-500 text-white shadow-lg' : 
-                      darkMode ? 'text-gray-300 hover:bg-gray-700 hover:text-white' : 'text-gray-600 hover:bg-gray-100'
+                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all duration-300 font-medium ${
+                      activeTab === item.id ? 
+                        'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/25 transform scale-[1.02]' : 
+                        darkMode ? 'text-gray-300 hover:bg-gray-700/50 hover:text-white hover:scale-[1.01]' : 'text-gray-600 hover:bg-gray-100/80 hover:scale-[1.01]'
                     }`}
-                    whileHover={{ scale: 1.02 }}
+                    whileHover={{ scale: activeTab === item.id ? 1.02 : 1.01 }}
                     whileTap={{ scale: 0.98 }}
                   >
                     <Icon className="w-5 h-5" />
-                    {!collapsed && <span className="font-medium">{item.label}</span>}
+                    {!collapsed && (
+                      <motion.span 
+                        className="font-semibold"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.1 }}
+                      >
+                        {item.label}
+                      </motion.span>
+                    )}
                   </motion.button>
                 );
               })}
             </div>
           </nav>
           
-          <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+          <div className="p-4 border-t border-gray-200/30 dark:border-gray-700/30">
             <motion.button
               onClick={toggleDarkMode}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
-                darkMode ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-600 hover:bg-gray-100'
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 font-medium ${
+                darkMode ? 'text-gray-300 hover:bg-gray-700/50 hover:text-white' : 'text-gray-600 hover:bg-gray-100/80'
               }`}
               whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
-              {darkMode ? <FaSun className="w-5 h-5" /> : <FaMoon className="w-5 h-5" />}
-              {!collapsed && <span className="font-medium">Theme</span>}
+              <div className={`w-5 h-5 transition-transform duration-300 ${
+                darkMode ? 'rotate-0' : 'rotate-180'
+              }`}>
+                {darkMode ? <FaSun className="w-5 h-5" /> : <FaMoon className="w-5 h-5" />}
+              </div>
+              {!collapsed && (
+                <motion.span 
+                  className="font-semibold"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                >
+                  {darkMode ? 'Light Mode' : 'Dark Mode'}
+                </motion.span>
+              )}
             </motion.button>
           </div>
         </motion.div>
@@ -241,21 +268,44 @@ const AdminDashboard = () => {
         {/* Main Content */}
         <div className="flex-1 flex flex-col overflow-hidden">
           <motion.header 
-            className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border-b px-6 py-4 flex items-center justify-between shadow-sm`}
+            className={`${darkMode ? 'bg-gray-800/95 border-gray-700/50' : 'bg-white/95 border-gray-200/50'} border-b px-6 py-4 flex items-center justify-between shadow-sm backdrop-blur-lg glass-effect`}
             initial={{ y: -50 }}
             animate={{ y: 0 }}
           >
             <div className="flex items-center gap-4">
-              <motion.button onClick={() => setCollapsed(!collapsed)} className={`p-2 rounded-lg ${darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}>
+              <motion.button 
+                onClick={() => setCollapsed(!collapsed)} 
+                className={`p-3 rounded-xl transition-all duration-300 ${
+                  darkMode ? 'hover:bg-gray-700/50 bg-gray-700/30' : 'hover:bg-gray-100/80 bg-gray-100/50'
+                }`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 <FaChartBar className="w-5 h-5 text-gray-600 dark:text-gray-300" />
               </motion.button>
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}</h1>
-                <p className="text-sm text-gray-500 dark:text-gray-400">Welcome back, {user?.username}!</p>
-              </div>
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
+                </h1>
+                <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">Welcome back, {user?.username}!</p>
+              </motion.div>
             </div>
-            <motion.button onClick={handleRefresh} className={`p-2 rounded-lg ${darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}>
-              <motion.div animate={{ rotate: refreshing ? 360 : 0 }} transition={{ duration: 1, repeat: refreshing ? Infinity : 0 }}>
+            <motion.button 
+              onClick={handleRefresh} 
+              className={`p-3 rounded-xl transition-all duration-300 ${
+                darkMode ? 'hover:bg-gray-700/50 bg-gray-700/30' : 'hover:bg-gray-100/80 bg-gray-100/50'
+              }`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <motion.div 
+                animate={{ rotate: refreshing ? 360 : 0 }} 
+                transition={{ duration: 1, repeat: refreshing ? Infinity : 0, ease: 'linear' }}
+              >
                 <FaSync className="w-5 h-5 text-gray-600 dark:text-gray-300" />
               </motion.div>
             </motion.button>
@@ -265,92 +315,244 @@ const AdminDashboard = () => {
             <AnimatePresence mode="wait">
               {activeTab === 'dashboard' && (
                 <motion.div key="dashboard" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-                  {/* Stats Grid */}
+                  {/* Enhanced Stats Grid */}
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {[
-                      { title: 'Total Users', value: dashboardData.totalUsers, icon: FaUsers, bgColor: 'bg-blue-100 dark:bg-blue-900/20', iconColor: 'text-blue-600 dark:text-blue-400' },
-                      { title: 'Revenue', value: `₹${dashboardData.revenue.toLocaleString()}`, icon: FaDollarSign, bgColor: 'bg-green-100 dark:bg-green-900/20', iconColor: 'text-green-600 dark:text-green-400' },
-                      { title: 'Bookings', value: dashboardData.totalBookings, icon: FaCalendar, bgColor: 'bg-orange-100 dark:bg-orange-900/20', iconColor: 'text-orange-600 dark:text-orange-400' },
-                      { title: 'Hotels', value: dashboardData.totalHotels, icon: FaBuilding, bgColor: 'bg-purple-100 dark:bg-purple-900/20', iconColor: 'text-purple-600 dark:text-purple-400' }
+                      { title: 'Total Users', value: dashboardData.totalUsers, icon: FaUsers, bgColor: 'from-blue-500 to-blue-600', iconBg: 'bg-blue-100 dark:bg-blue-900/20', iconColor: 'text-blue-600 dark:text-blue-400' },
+                      { title: 'Revenue', value: `₹${dashboardData.revenue.toLocaleString()}`, icon: FaDollarSign, bgColor: 'from-emerald-500 to-emerald-600', iconBg: 'bg-emerald-100 dark:bg-emerald-900/20', iconColor: 'text-emerald-600 dark:text-emerald-400' },
+                      { title: 'Bookings', value: dashboardData.totalBookings, icon: FaCalendar, bgColor: 'from-orange-500 to-orange-600', iconBg: 'bg-orange-100 dark:bg-orange-900/20', iconColor: 'text-orange-600 dark:text-orange-400' },
+                      { title: 'Hotels', value: dashboardData.totalHotels, icon: FaBuilding, bgColor: 'from-purple-500 to-purple-600', iconBg: 'bg-purple-100 dark:bg-purple-900/20', iconColor: 'text-purple-600 dark:text-purple-400' }
                     ].map((stat, index) => {
                       const Icon = stat.icon;
                       return (
                         <motion.div 
                           key={stat.title}
-                          whileHover={{ scale: 1.02 }} 
-                          className={`p-6 rounded-xl shadow-sm border ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: index * 0.1 }}
+                          whileHover={{ scale: 1.02, y: -5 }} 
+                          className={`relative p-6 rounded-2xl shadow-lg border modern-card metric-card overflow-hidden ${
+                            darkMode ? 'bg-gray-800/90 border-gray-700/50' : 'bg-white/90 border-gray-200/50'
+                          }`}
                         >
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <p className="text-sm font-medium text-gray-500 dark:text-gray-400">{stat.title}</p>
-                              <p className="text-2xl font-bold text-gray-900 dark:text-white">{loading ? '...' : stat.value}</p>
-                              <p className="text-xs text-green-500 flex items-center mt-1">
-                                <FaArrowUp className="w-3 h-3 mr-1" />+12% growth
+                          {/* Gradient background overlay */}
+                          <div className={`absolute inset-0 bg-gradient-to-br ${stat.bgColor} opacity-5`}></div>
+                          
+                          <div className="relative flex items-center justify-between">
+                            <div className="flex-1">
+                              <p className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">{stat.title}</p>
+                              <p className="text-3xl font-bold text-gray-900 dark:text-white mt-2">
+                                {loading ? (
+                                  <div className="w-16 h-8 bg-gray-200 dark:bg-gray-700 rounded loading-skeleton"></div>
+                                ) : (
+                                  <motion.span
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    transition={{ delay: (index * 0.1) + 0.2, type: 'spring' }}
+                                  >
+                                    {stat.value}
+                                  </motion.span>
+                                )}
                               </p>
+                              <motion.div 
+                                className="flex items-center mt-3"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: (index * 0.1) + 0.4 }}
+                              >
+                                <div className="flex items-center px-2 py-1 bg-emerald-100 dark:bg-emerald-900/30 rounded-full">
+                                  <FaArrowUp className="w-3 h-3 text-emerald-600 dark:text-emerald-400 mr-1" />
+                                  <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400">+12%</span>
+                                </div>
+                                <span className="text-xs text-gray-500 dark:text-gray-400 ml-2 font-medium">vs last month</span>
+                              </motion.div>
                             </div>
-                            <div className={`w-12 h-12 ${stat.bgColor} rounded-lg flex items-center justify-center`}>
-                              <Icon className={`w-6 h-6 ${stat.iconColor}`} />
-                            </div>
+                            <motion.div 
+                              className={`w-16 h-16 ${stat.iconBg} rounded-2xl flex items-center justify-center shadow-lg`}
+                              whileHover={{ rotate: 5, scale: 1.1 }}
+                              transition={{ type: 'spring', stiffness: 300 }}
+                            >
+                              <Icon className={`w-8 h-8 ${stat.iconColor}`} />
+                            </motion.div>
                           </div>
                         </motion.div>
                       );
                     })}
                   </div>
                   
-                  {/* Charts */}
+                  {/* Enhanced Charts */}
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <motion.div className={`p-6 rounded-xl shadow-sm border ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
-                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Booking Trends</h3>
-                      <ResponsiveContainer width="100%" height={300}>
+                    <motion.div 
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.5 }}
+                      className={`chart-container modern-card ${darkMode ? 'bg-gray-800/90 border-gray-700/50' : 'bg-white/90 border-gray-200/50'}`}
+                    >
+                      <div className="flex items-center justify-between mb-6">
+                        <h3 className="text-xl font-bold text-gray-900 dark:text-white">Booking Trends</h3>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                          <span className="text-sm text-gray-500 dark:text-gray-400">Weekly Data</span>
+                        </div>
+                      </div>
+                      <ResponsiveContainer width="100%" height={320}>
                         <AreaChart data={dashboardData.bookingTrends}>
-                          <XAxis dataKey="date" />
-                          <YAxis />
-                          <CartesianGrid strokeDasharray="3 3" />
-                          <Tooltip />
-                          <Area type="monotone" dataKey="bookings" stroke={colors.primary} fill={`${colors.primary}20`} />
+                          <defs>
+                            <linearGradient id="colorBookings" x1="0" y1="0" x2="0" y2="1">
+                              <stop offset="5%" stopColor={colors.primary} stopOpacity={0.3}/>
+                              <stop offset="95%" stopColor={colors.primary} stopOpacity={0.05}/>
+                            </linearGradient>
+                          </defs>
+                          <XAxis 
+                            dataKey="date" 
+                            axisLine={false}
+                            tickLine={false}
+                            tick={{ fontSize: 12, fill: darkMode ? '#9CA3AF' : '#6B7280' }}
+                          />
+                          <YAxis 
+                            axisLine={false}
+                            tickLine={false}
+                            tick={{ fontSize: 12, fill: darkMode ? '#9CA3AF' : '#6B7280' }}
+                          />
+                          <CartesianGrid strokeDasharray="3 3" stroke={darkMode ? '#374151' : '#E5E7EB'} />
+                          <Tooltip 
+                            contentStyle={{
+                              backgroundColor: darkMode ? '#1F2937' : '#FFFFFF',
+                              border: `1px solid ${darkMode ? '#374151' : '#E5E7EB'}`,
+                              borderRadius: '12px',
+                              boxShadow: '0 10px 25px rgba(0,0,0,0.1)'
+                            }}
+                          />
+                          <Area 
+                            type="monotone" 
+                            dataKey="bookings" 
+                            stroke={colors.primary} 
+                            strokeWidth={3}
+                            fill="url(#colorBookings)"
+                          />
                         </AreaChart>
                       </ResponsiveContainer>
                     </motion.div>
                     
-                    <motion.div className={`p-6 rounded-xl shadow-sm border ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
-                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Booking Status</h3>
-                      <ResponsiveContainer width="100%" height={300}>
+                    <motion.div 
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.6 }}
+                      className={`chart-container modern-card ${darkMode ? 'bg-gray-800/90 border-gray-700/50' : 'bg-white/90 border-gray-200/50'}`}
+                    >
+                      <div className="flex items-center justify-between mb-6">
+                        <h3 className="text-xl font-bold text-gray-900 dark:text-white">Booking Status</h3>
+                        <div className="flex items-center space-x-4">
+                          {dashboardData.bookingStatusData.map((entry, index) => (
+                            <div key={index} className="flex items-center space-x-2">
+                              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: entry.color }}></div>
+                              <span className="text-xs text-gray-500 dark:text-gray-400">{entry.name}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <ResponsiveContainer width="100%" height={320}>
                         <RechartsPieChart>
-                          <Pie data={dashboardData.bookingStatusData} cx="50%" cy="50%" innerRadius={60} outerRadius={120} paddingAngle={5} dataKey="value">
+                          <defs>
                             {dashboardData.bookingStatusData.map((entry, index) => (
-                              <Cell key={`cell-${index}`} fill={entry.color} />
+                              <linearGradient key={index} id={`gradient-${index}`} x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stopColor={entry.color} stopOpacity={1}/>
+                                <stop offset="100%" stopColor={entry.color} stopOpacity={0.7}/>
+                              </linearGradient>
+                            ))}
+                          </defs>
+                          <Pie 
+                            data={dashboardData.bookingStatusData} 
+                            cx="50%" 
+                            cy="50%" 
+                            innerRadius={70} 
+                            outerRadius={130} 
+                            paddingAngle={8} 
+                            dataKey="value"
+                          >
+                            {dashboardData.bookingStatusData.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={`url(#gradient-${index})`} />
                             ))}
                           </Pie>
-                          <Tooltip />
-                          <Legend />
+                          <Tooltip 
+                            contentStyle={{
+                              backgroundColor: darkMode ? '#1F2937' : '#FFFFFF',
+                              border: `1px solid ${darkMode ? '#374151' : '#E5E7EB'}`,
+                              borderRadius: '12px',
+                              boxShadow: '0 10px 25px rgba(0,0,0,0.1)'
+                            }}
+                          />
                         </RechartsPieChart>
                       </ResponsiveContainer>
                     </motion.div>
                   </div>
                   
-                  {/* Activity Feed */}
-                  <motion.div className={`p-6 rounded-xl shadow-sm border ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Recent Activity</h3>
-                      <button className="text-sm text-blue-500 hover:text-blue-600 flex items-center gap-1">
-                        <FaEye className="w-4 h-4" />View All
-                      </button>
+                  {/* Enhanced Activity Feed */}
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.7 }}
+                    className={`modern-card ${darkMode ? 'bg-gray-800/90 border-gray-700/50' : 'bg-white/90 border-gray-200/50'}`}
+                  >
+                    <div className="flex items-center justify-between mb-6">
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white">Recent Activity</h3>
+                      <motion.button 
+                        className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-xl transition-all duration-300"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <FaEye className="w-4 h-4" />
+                        View All
+                      </motion.button>
                     </div>
                     <div className="space-y-4">
-                      {dashboardData.recentActivity.map((activity) => (
-                        <div key={activity.id} className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50">
-                          <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                            activity.status === 'success' ? 'bg-green-100' : activity.status === 'warning' ? 'bg-orange-100' : 'bg-blue-100'
-                          }`}>
-                            {activity.type === 'booking' ? <FaCalendar className="w-5 h-5" /> : 
-                             activity.type === 'user' ? <FaUsers className="w-5 h-5" /> : <FaCheckCircle className="w-5 h-5" />}
-                          </div>
+                      {dashboardData.recentActivity.map((activity, index) => (
+                        <motion.div 
+                          key={activity.id} 
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.8 + (index * 0.1) }}
+                          className={`activity-item flex items-center gap-4 p-4 rounded-xl transition-all duration-300 hover:scale-[1.02] ${
+                            darkMode ? 'hover:bg-gray-700/30' : 'hover:bg-gray-50/80'
+                          }`}
+                        >
+                          <motion.div 
+                            className={`w-12 h-12 rounded-xl flex items-center justify-center shadow-md ${
+                              activity.status === 'success' ? 'bg-gradient-to-br from-emerald-100 to-emerald-200 dark:from-emerald-900/30 dark:to-emerald-800/30' : 
+                              activity.status === 'warning' ? 'bg-gradient-to-br from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/30' : 
+                              'bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30'
+                            }`}
+                            whileHover={{ rotate: 5, scale: 1.1 }}
+                          >
+                            {activity.type === 'booking' ? 
+                              <FaCalendar className={`w-5 h-5 ${
+                                activity.status === 'success' ? 'text-emerald-600 dark:text-emerald-400' :
+                                activity.status === 'warning' ? 'text-orange-600 dark:text-orange-400' :
+                                'text-blue-600 dark:text-blue-400'
+                              }`} /> : 
+                             activity.type === 'user' ? 
+                              <FaUsers className="w-5 h-5 text-blue-600 dark:text-blue-400" /> : 
+                              <FaCheckCircle className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                            }
+                          </motion.div>
                           <div className="flex-1">
-                            <p className="text-sm font-medium text-gray-900 dark:text-white">{activity.message}</p>
-                            <p className="text-xs text-gray-500 dark:text-gray-400">{activity.time}</p>
+                            <p className="text-sm font-semibold text-gray-900 dark:text-white">{activity.message}</p>
+                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{activity.time}</p>
                           </div>
-                          {activity.amount && <span className="text-sm font-medium text-green-500">{activity.amount}</span>}
-                        </div>
+                          {activity.amount && (
+                            <motion.div
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              transition={{ delay: 1 + (index * 0.1), type: 'spring' }}
+                              className="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 rounded-full"
+                            >
+                              <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400">{activity.amount}</span>
+                            </motion.div>
+                          )}
+                        </motion.div>
+                      ))}
+                    </div>
+                  </motion.div>
                       ))}
                     </div>
                   </motion.div>
