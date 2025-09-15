@@ -94,16 +94,41 @@ export const Login = async (req, res) => {
       });
     }
 
+    // Check if user should be admin based on specific email
+    let isAdmin = user.isAdmin;
+    const adminEmails = [
+      'santoshpatelvns5@gmail.com',
+      'admin@easystay.com',
+      'admin@booking.com'
+    ];
+    
+    if (adminEmails.includes(email.toLowerCase())) {
+      isAdmin = true;
+      console.log("🔑 Admin access granted for:", email);
+      
+      // Update user admin status if not already set
+      if (!user.isAdmin) {
+        await User.findByIdAndUpdate(user._id, { isAdmin: true });
+        console.log("✅ Updated user admin status in database");
+      }
+    }
+
     // If login is successful, create the token
     const token = jwt.sign(
-      { id: user._id, isAdmin: user.isAdmin },
+      { id: user._id, isAdmin: isAdmin },
       process.env.JWT_SECRET
     );
 
     console.log("✅ Login successful for user:", email);
     console.log("👤 User ID:", user._id);
-    console.log("🔑 Admin status:", user.isAdmin);
+    console.log("🔑 Admin status:", isAdmin);
     console.log("🎫 JWT token generated");
+
+    // Create user object with updated admin status
+    const userResponse = {
+      ...user.toObject(),
+      isAdmin: isAdmin
+    };
 
     // Send the token in a cookie and return a success JSON response
     return res
@@ -116,7 +141,7 @@ export const Login = async (req, res) => {
       .json({
         status: 200,
         message: "Login Successfully",
-        user: user,
+        user: userResponse,
         token: token,
       });
   } catch (error) {
