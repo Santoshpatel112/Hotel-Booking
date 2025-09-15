@@ -102,6 +102,77 @@
   transform: translateY(-2px);
 }
 
+/* Admin Dashboard Button */
+.adminDashboardBtn {
+  background: linear-gradient(45deg, #d97706, #92400e) !important;
+  color: white !important;
+  border: 2px solid transparent;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.adminDashboardBtn:hover {
+  background: linear-gradient(45deg, #b45309, #78350f) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(217, 119, 6, 0.4) !important;
+}
+
+/* Admin Badge */
+.adminBadge {
+  background: linear-gradient(45deg, #dc2626, #b91c1c);
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-left: 8px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* User Menu Improvements */
+.userMenu {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.userProfile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.userProfile:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.userAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.userName {
+  color: white;
+  font-weight: 500;
+  font-size: 14px;
+}
+
 /* Mobile Menu Button */
 .mobileMenuButton {
   display: none;
@@ -158,6 +229,22 @@
     width: 100%;
     margin: 5px 0;
     padding: 12px 20px;
+  }
+  
+  .userMenu {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+  
+  .adminDashboardBtn {
+    width: 100%;
+    margin: 5px 0;
+  }
+  
+  .userProfile {
+    justify-content: center;
+    width: 100%;
   }
 }
 
