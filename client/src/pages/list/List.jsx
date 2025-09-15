@@ -70,6 +70,8 @@ const List = () => {
     setError(null);
     
     try {
+      console.log('🔍 Starting hotel search with data:', searchData);
+      
       const params = {
         city: searchData.destination || destination,
         min: searchData.minPrice || filters.minPrice || 0,
@@ -78,11 +80,29 @@ const List = () => {
         ...searchData
       };
       
+      // Remove undefined/null values
+      Object.keys(params).forEach(key => {
+        if (params[key] === undefined || params[key] === null || params[key] === '') {
+          delete params[key];
+        }
+      });
+      
+      console.log('📍 Final search params:', params);
+      
       const response = await hotelAPI.getAllHotels(params);
-      setFilteredHotels(response.data || []);
+      const hotelsData = response.data || [];
+      
+      console.log(`🏨 Received ${hotelsData.length} hotels from API`);
+      
+      if (hotelsData.length > 0) {
+        console.log('First hotel sample:', hotelsData[0]);
+      }
+      
+      setFilteredHotels(hotelsData);
     } catch (err) {
-      console.error('Error fetching hotels:', err);
-      setError(err.response?.data?.message || 'Failed to fetch hotels');
+      console.error('❌ Error fetching hotels:', err);
+      const errorMessage = err.response?.data?.message || err.message || 'Failed to fetch hotels';
+      setError(errorMessage);
       setFilteredHotels([]);
     } finally {
       setLoading(false);
