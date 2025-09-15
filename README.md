@@ -1,503 +1,506 @@
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=EasyStay&fontSize=80&fontColor=ffffff&animation=fadeIn" width="100%"/>
-
-# 🏨 EasyStay - Hotel Booking Management System
+# 🏨 BOOKINGAPP - Enterprise Hotel Management & Analytics Platform
 
 <div align="center">
 
+![BOOKINGAPP](https://img.shields.io/badge/BOOKINGAPP-Hotel%20Management%20Platform-blue?style=for-the-badge&logo=building&logoColor=white)
+![Version](https://img.shields.io/badge/Version-2.0.0-green?style=for-the-badge)
+![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
 
-![EasyStay Logo](https://dynamic.design.com/preview/logodraft/d22a273b-35de-4c31-85f1-3bb06093d21b/image/large.png)
+**Modern hotel booking and management system designed for hospitality industry professionals**
 
-<h3>
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&duration=3000&pause=1000&color=2E86AB&center=true&vCenter=true&width=600&lines=Streamline+your+hotel+booking+experience;Modern+technology+meets+hospitality;Built+with+Node.js+%26+MongoDB;Secure+%7C+Scalable+%7C+Professional" alt="Typing SVG" /> 
-</h3>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js"/>
-  <img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express.js"/>
-  <img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB"/>
-  <img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" alt="JWT"/>
-</p>
-
-<p align="center">
-  <a href="#-quick-start">
-    <img src="https://img.shields.io/badge/🚀-Quick%20Start-blue?style=for-the-badge" alt="Quick Start"/>
-  </a>
-  <a href="#-api-documentation">
-    <img src="https://img.shields.io/badge/📖-Documentation-green?style=for-the-badge" alt="Documentation"/>
-  </a>
-  <a href="#️-system-architecture">
-    <img src="https://img.shields.io/badge/🏗️-Architecture-orange?style=for-the-badge" alt="Architecture"/>
-  </a>
-  <a href="#-contributing">
-    <img src="https://img.shields.io/badge/🤝-Contributing-purple?style=for-the-badge" alt="Contributing"/>
-  </a>
-</p>
-
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
+[🚀 Quick Start](#-installation-instructions) | [📊 Features](#-key-features) | [🔧 Tech Stack](#-tech-stack) | [📈 Analytics](#-interactive-charts-analytics)
 
 </div>
 
 ---
 
-## 🌟 Overview
+## 📋 Project Overview
 
-<div align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=18&duration=2000&pause=500&color=F75C7E&center=true&vCenter=true&width=800&lines=Comprehensive+hotel+booking+management+system;Built+with+cutting-edge+technologies;Seamless+booking+experiences+for+guests;Powerful+management+tools+for+administrators" alt="Overview Typing"/>
-</div>
+**BOOKINGAPP** is a comprehensive hotel management platform built for hospitality industry professionals. It provides real-time booking management, advanced analytics, and interactive data visualization to optimize hotel operations and revenue management.
 
-**EasyStay** revolutionizes the hospitality industry with modern technology solutions that bridge the gap between guests and hotel management.
+### **Target Industry Use Cases:**
+- **Hotel Chains** - Multi-property management and analytics
+- **Independent Hotels** - Streamlined booking and guest management  
+- **Property Managers** - Centralized operations dashboard
+- **Revenue Managers** - Real-time analytics and reporting
+- **Hotel Administrators** - User and system management
 
-### ✨ Key Features
+---
 
-<div align="center">
+## ✨ Key Features
 
-|    🔐 **Security**    |  📱 **Experience**  |  🏨 **Management**  |  📊 **Analytics**   |
-| :-------------------: | :-----------------: | :-----------------: | :-----------------: |
-| Secure Authentication | Mobile-First Design | Multi-Hotel Support | Real-time Dashboard |
-|   JWT Token System    |    Responsive UI    |   Room Management   |  Booking Analytics  |
-|   Role-based Access   | Progressive Web App |    User Profiles    | Performance Metrics |
-|    Data Encryption    |   Offline Support   |   Advanced Search   |  Revenue Tracking   |
+### 🎯 **Core Functionality**
+- ✅ **Real-time Booking Management** - Live reservation tracking and updates
+- ✅ **Multi-role User System** - Guest, Staff, and Administrator access levels
+- ✅ **Advanced Search & Filtering** - Location, price, amenities, and availability
+- ✅ **Secure Payment Processing** - Integrated payment gateway support
+- ✅ **Mobile-responsive Design** - Optimized for all devices and screen sizes
 
-</div>
+### 📊 **Analytics & Reporting**
+- ✅ **Interactive Dashboard** - Real-time KPI monitoring and visualization
+- ✅ **Revenue Analytics** - Daily, weekly, and monthly revenue tracking
+- ✅ **Booking Trend Analysis** - Occupancy patterns and demand forecasting
+- ✅ **Performance Metrics** - User engagement and conversion analytics
+- ✅ **Export Capabilities** - PDF and Excel report generation
 
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=Santoshpatel112&show_icons=true&theme=radical&hide_border=true" width="48%" />
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=Santoshpatel112&theme=radical&hide_border=true" width="48%" />
-</p>
+### 🎨 **Modern UI/UX**
+- ✅ **Dark/Light Theme Toggle** - Professional appearance with user preferences
+- ✅ **Interactive Charts** - Recharts-powered data visualization
+- ✅ **Smooth Animations** - Framer Motion enhanced user experience
+- ✅ **Responsive Tables** - Sortable, filterable data grids
+- ✅ **Real-time Notifications** - Toast messages and status updates
 
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
+---
 
-## 🎯 Problem Statement
-
-<div align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=16&duration=2500&pause=800&color=FF6B6B&center=true&vCenter=true&width=700&lines=Solving+hospitality+industry+challenges;Eliminating+fragmented+booking+systems;Reducing+operational+costs;Improving+user+experience" alt="Problem Statement"/>
-</div>
-
-<table align="center">
-<tr>
-<td align="center" width="25%">
-
-### 🔄 **Fragmented Systems**
-
-Overbooking issues due to disconnected platforms
-
-</td>
-<td align="center" width="25%">
-
-### 😞 **Poor UX**
-
-High abandonment rates from complex interfaces
-
-</td>
-<td align="center" width="25%">
-
-### 📝 **Manual Processes**
-
-Increased costs from inefficient workflows
-
-</td>
-<td align="center" width="25%">
-
-### 👁️ **Limited Visibility**
-
-No real-time room availability insights
-
-</td>
-</tr>
-</table>
-
-<div align="center">
-  <h3>
-    <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=20&duration=2000&pause=1000&color=4ECDC4&center=true&vCenter=true&width=600&lines=EasyStay+provides+the+solution!;Unified+%7C+Automated+%7C+User-friendly" alt="Solution"/>
-  </h3>
-</div>
-
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
-
-## 🏗️ System Architecture
+## 👤 User Interaction Workflow
 
 ```mermaid
-graph TB
-    A[Client Applications] --> B[API Gateway]
-    B --> C[Authentication Service]
-    B --> D[Booking Service]
-    B --> E[Hotel Management Service]
-    B --> F[User Service]
-
-    C --> G[(MongoDB - Users)]
-    D --> H[(MongoDB - Bookings)]
-    E --> I[(MongoDB - Hotels)]
-    F --> G
-
-    D --> J[Payment Gateway]
-    D --> K[Email Service]
-    E --> L[Image Storage]
+flowchart TD
+    A[User Access] --> B{User Type?}
+    
+    B -->|Guest| C[Browse Hotels]
+    B -->|Staff| D[Staff Dashboard]
+    B -->|Admin| E[Admin Dashboard]
+    
+    C --> F[Search & Filter]
+    F --> G[Select Hotel]
+    G --> H[Make Booking]
+    H --> I[Payment Processing]
+    I --> J[Confirmation]
+    
+    D --> K[Manage Bookings]
+    K --> L[Update Status]
+    L --> M[Generate Reports]
+    
+    E --> N[System Analytics]
+    N --> O[User Management]
+    O --> P[Data Visualization]
+    P --> Q[Export Reports]
+    
+    J --> R[Email Confirmation]
+    M --> S[Staff Reports]
+    Q --> T[Executive Reports]
+    
+    style E fill:#3b82f6,stroke:#1e40af,color:#fff
+    style N fill:#10b981,stroke:#059669,color:#fff
+    style P fill:#f59e0b,stroke:#d97706,color:#fff
 ```
-
-### 🔧 Technology Stack
-
-| Layer              | Technology           | Purpose                         |
-| ------------------ | -------------------- | ------------------------------- |
-| **Backend**        | Node.js + Express.js | RESTful API development         |
-| **Database**       | MongoDB + Mongoose   | Data persistence & modeling     |
-| **Authentication** | JWT + bcrypt         | Secure user authentication      |
-| **Validation**     | Express Validator    | Input validation & sanitization |
-| **Security**       | Helmet + CORS        | API security & protection       |
 
 ---
 
-## 🚀 Quick Start
+## 🗃️ Data Structure
+
+### **Hotel Data Schema**
+| Field | Type | Description | Example |
+|-------|------|-------------|---------|
+| `hotel_id` | String | Unique identifier | "HTL001" |
+| `name` | String | Hotel name | "Grand Plaza Hotel" |
+| `location` | Object | Address details | `{city: "Mumbai", state: "MH"}` |
+| `price_range` | Object | Room pricing | `{min: 2500, max: 8500}` |
+| `amenities` | Array | Available services | `["WiFi", "Pool", "Spa"]` |
+| `rating` | Number | Average rating | 4.5 |
+| `availability` | Number | Available rooms | 12 |
+| `created_at` | Date | Registration date | "2024-01-15T10:30:00Z" |
+
+### **Booking Data Schema**
+| Field | Type | Description | Example |
+|-------|------|-------------|---------|
+| `booking_id` | String | Unique booking ID | "BKG001234" |
+| `user_id` | String | Customer ID | "USR789" |
+| `hotel_id` | String | Hotel reference | "HTL001" |
+| `check_in` | Date | Arrival date | "2024-03-15" |
+| `check_out` | Date | Departure date | "2024-03-18" |
+| `guests` | Number | Number of guests | 2 |
+| `room_type` | String | Room category | "Deluxe Suite" |
+| `total_amount` | Number | Total cost | 15750.00 |
+| `status` | String | Booking status | "confirmed" |
+| `payment_status` | String | Payment state | "completed" |
+
+### **Sample Industry Data**
+```json
+{
+  "daily_metrics": {
+    "date": "2024-03-15",
+    "total_bookings": 45,
+    "revenue": 125000,
+    "occupancy_rate": 78.5,
+    "avg_daily_rate": 2777.78,
+    "cancellation_rate": 5.2
+  },
+  "booking_channels": {
+    "direct": 35,
+    "online_travel_agencies": 60,
+    "walk_ins": 5
+  },
+  "performance_kpis": {
+    "conversion_rate": 12.8,
+    "average_stay_duration": 2.1,
+    "customer_satisfaction": 4.3
+  }
+}
+```
+
+---
+
+## ⚙️ Processing Workflow Diagram
+
+```mermaid
+flowchart LR
+    A[Data Input] --> B[Validation Layer]
+    B --> C{Data Valid?}
+    
+    C -->|Yes| D[Data Processing]
+    C -->|No| E[Error Handling]
+    E --> F[User Notification]
+    F --> A
+    
+    D --> G[Database Update]
+    G --> H[Analytics Engine]
+    H --> I[Chart Generation]
+    I --> J[Dashboard Update]
+    
+    J --> K[Real-time Visualization]
+    K --> L[Export Options]
+    
+    L --> M[PDF Reports]
+    L --> N[Excel Exports]
+    L --> O[API Endpoints]
+    
+    style D fill:#3b82f6,stroke:#1e40af,color:#fff
+    style I fill:#10b981,stroke:#059669,color:#fff
+    style K fill:#f59e0b,stroke:#d97706,color:#fff
+    
+    subgraph "Data Processing Pipeline"
+        D
+        G
+        H
+    end
+    
+    subgraph "Visualization Layer"
+        I
+        J
+        K
+    end
+    
+    subgraph "Export Layer"
+        M
+        N
+        O
+    end
+```
+
+---
+
+## 📈 Interactive Charts & Analytics
+
+### **Supported Chart Types**
 
 <div align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=16&duration=2000&pause=1000&color=96CEB4&center=true&vCenter=true&width=600&lines=Get+started+in+minutes!;Clone+%E2%86%92+Install+%E2%86%92+Configure+%E2%86%92+Run;Ready+for+development!" alt="Quick Start"/>
+
+| Chart Type | Use Case | Interactivity | Data Source |
+|:----------:|:--------:|:-------------:|:-----------:|
+| 📊 **Bar Charts** | Revenue comparison, booking counts | Hover tooltips, click to drill-down | Daily/Monthly aggregates |
+| 📈 **Line Charts** | Trend analysis, performance tracking | Zoom, pan, data point details | Time-series data |
+| 🥧 **Pie Charts** | Market share, booking distribution | Segment highlighting, legends | Categorical breakdowns |
+| 📊 **Area Charts** | Cumulative metrics, capacity utilization | Interactive legends, stacking | Multi-dimensional data |
+
 </div>
 
-### 📋 Prerequisites
+### **Dashboard Analytics Preview**
+
+```typescript
+// Interactive Chart Configuration
+const chartConfig = {
+  revenue_chart: {
+    type: 'bar',
+    data: 'monthly_revenue',
+    interactive: true,
+    exports: ['PNG', 'PDF', 'Excel']
+  },
+  booking_trends: {
+    type: 'area',
+    data: 'daily_bookings',
+    real_time: true,
+    refresh_interval: 30000
+  },
+  occupancy_distribution: {
+    type: 'pie',
+    data: 'room_categories',
+    animations: 'enabled',
+    legend: 'interactive'
+  }
+};
+```
+
+### **Real-time Dashboard Features**
+- 🔄 **Auto-refresh** - Live data updates every 30 seconds
+- 🎯 **Click-to-filter** - Interactive chart filtering and drilling
+- 📱 **Responsive design** - Optimized for mobile and tablet viewing
+- 🎨 **Theme support** - Dark/light mode compatibility
+- 📊 **Export options** - PDF, Excel, and image downloads
+
+---
+
+## 🛠️ Tech Stack
 
 <div align="center">
 
-|                                           Requirement                                           |  Version  |                        Download                        |
-| :---------------------------------------------------------------------------------------------: | :-------: | :----------------------------------------------------: |
-| ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white) | >= 16.0.0 |            [Download](https://nodejs.org/)             |
-| ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat&logo=mongodb&logoColor=white) | >= 4.4.0  | [Download](https://mongodb.com/try/download/community) |
-|       ![npm](https://img.shields.io/badge/npm-CB3837?style=flat&logo=npm&logoColor=white)       | >= 8.0.0  |                 Included with Node.js                  |
+### **Frontend Architecture**
+| Component | Technology | Version | Purpose |
+|:---------:|:----------:|:-------:|:-------:|
+| 🎨 **Framework** | React.js | 18.x | Component-based UI |
+| 🎭 **Animations** | Framer Motion | 12.x | Smooth transitions |
+| 📊 **Charts** | Recharts | 3.x | Data visualization |
+| 🎨 **Icons** | React Icons (FA) | 5.x | Consistent iconography |
+| 🍞 **Notifications** | React Hot Toast | 2.x | User feedback |
+| 🌐 **Routing** | React Router | 6.x | Navigation management |
+
+### **Backend Architecture**
+| Component | Technology | Version | Purpose |
+|:---------:|:----------:|:-------:|:-------:|
+| ⚡ **Runtime** | Node.js | 16.x+ | JavaScript runtime |
+| 🌐 **Framework** | Express.js | 4.x | RESTful API |
+| 🗄️ **Database** | MongoDB | 4.4+ | Document storage |
+| 🔐 **Authentication** | JWT + bcrypt | Latest | Secure auth |
+| 🛡️ **Security** | CORS + Helmet | Latest | API protection |
+| 🔄 **Proxy** | http-proxy-middleware | 2.x | Request routing |
 
 </div>
 
-### Installation
+---
 
+## 🚀 Installation Instructions
+
+### **Prerequisites**
+- ✅ Node.js 16.0+ ([Download](https://nodejs.org/))
+- ✅ MongoDB 4.4+ ([Download](https://mongodb.com/try/download/community))
+- ✅ npm 8.0+ (included with Node.js)
+- ✅ Git ([Download](https://git-scm.com/))
+
+### **Step 1: Clone Repository**
 ```bash
-# 1. Clone the repository
-git clone https://github.com/Santoshpatel112/Hotel-Booking.git
-cd Hotel-Booking
+# Clone the repository
+git clone https://github.com/YOUR_USERNAME/BOOKINGAPP.git
+cd BOOKINGAPP
+```
 
-# 2. Install dependencies
+### **Step 2: Backend Setup**
+```bash
+# Navigate to backend directory
 cd api
+
+# Install dependencies
 npm install
 
-# 3. Environment setup
+# Create environment file
 cp .env.example .env
-# Edit .env with your configuration
 
-# 4. Start MongoDB service
+# Configure environment variables
+# Edit .env file with your MongoDB connection string
+```
+
+### **Environment Configuration (.env)**
+```env
+# Database Configuration
+MONGO_URL=mongodb://localhost:27017/bookingapp
+DB_NAME=bookingapp
+
+# JWT Configuration
+JWT_SECRET=your_super_secret_jwt_key_here
+JWT_EXPIRE=7d
+
+# Server Configuration
+PORT=8000
+NODE_ENV=development
+
+# Email Configuration (Optional)
+EMAIL_SERVICE=gmail
+EMAIL_USER=your.email@gmail.com
+EMAIL_PASS=your_app_password
+```
+
+### **Step 3: Frontend Setup**
+```bash
+# Open new terminal and navigate to frontend
+cd client
+
+# Install dependencies
+npm install
+
+# Clear any existing cache (PowerShell)
+if (Test-Path "node_modules\.cache") { Remove-Item -Recurse -Force "node_modules\.cache" }
+if (Test-Path ".eslintcache") { Remove-Item -Force ".eslintcache" }
+```
+
+### **Step 4: Database Setup**
+```bash
+# Start MongoDB service
 # Windows: net start MongoDB
 # macOS: brew services start mongodb-community
 # Linux: sudo systemctl start mongod
 
-# 5. Run the application
+# Verify MongoDB is running
+mongosh
+# Should connect successfully
+```
+
+### **Step 5: Start Application**
+```bash
+# Terminal 1: Start backend server
+cd api
 npm start
-```
+# Backend running on http://localhost:8000
 
-### 🔧 Environment Configuration
-
-```env
-# Database
-MONGODB_URI=mongodb://localhost:27017/easystay
-DB_NAME=easystay
-
-# Authentication
-JWT_SECRET=your_super_secret_jwt_key
-JWT_EXPIRE=7d
-
-# Server
-PORT=5000
-NODE_ENV=development
-
-# Email Service (Optional)
-EMAIL_HOST=smtp.gmail.com
-EMAIL_PORT=587
-EMAIL_USER=your_email@gmail.com
-EMAIL_PASS=your_app_password
+# Terminal 2: Start frontend server
+cd client  
+npm start
+# Frontend running on http://localhost:3000
 ```
 
 ---
 
-## 📖 API Documentation
+## 💼 Usage Example
 
-<div align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=18&duration=2000&pause=1000&color=45B7D1&center=true&vCenter=true&width=500&lines=Complete+API+Reference;RESTful+Endpoints;Secure+%26+Scalable" alt="API Documentation"/>
-</div>
+### **Admin Dashboard Access**
+1. **Navigate** to `http://localhost:3000`
+2. **Login** with admin credentials:
+   - Email: `admin123@gmail.com`
+   - Password: `admin123`
+3. **Click** "Admin Dashboard" button in navbar
+4. **Explore** interactive charts and analytics
 
-### 🔐 Authentication Endpoints
+### **Sample API Requests**
+```bash
+# Get all hotels
+curl -X GET http://localhost:8000/api/hotels
 
-<div align="center">
+# Create new booking
+curl -X POST http://localhost:8000/api/bookings \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -d '{
+    "hotel_id": "HTL001",
+    "check_in": "2024-03-15",
+    "check_out": "2024-03-18",
+    "guests": 2,
+    "room_type": "deluxe"
+  }'
 
-| Method | Endpoint          | Description       | Auth Required |                            Status                             |
-| :----: | :---------------- | :---------------- | :-----------: | :-----------------------------------------------------------: |
-| `POST` | `/api/auth/`      | User registration |      ❌       | ![Active](https://img.shields.io/badge/Status-Active-success) |
-| `POST` | `/api/auth/login` | User login        |      ❌       | ![Active](https://img.shields.io/badge/Status-Active-success) |
+# Get booking analytics
+curl -X GET http://localhost:8000/api/analytics/bookings \
+  -H "Authorization: Bearer YOUR_ADMIN_TOKEN"
+```
 
-</div>
-
-### 🏨 Hotel Management
-
-<div align="center">
-
-|  Method  | Endpoint                 | Description       | Auth Required |                            Status                             |
-| :------: | :----------------------- | :---------------- | :-----------: | :-----------------------------------------------------------: |
-|  `GET`   | `/api/hotels/getall`     | Get all hotels    |      ❌       | ![Active](https://img.shields.io/badge/Status-Active-success) |
-|  `GET`   | `/api/hotels/get/:id`    | Get hotel details |      ❌       | ![Active](https://img.shields.io/badge/Status-Active-success) |
-|  `POST`  | `/api/hotels/`           | Create new hotel  |   ✅ Admin    | ![Active](https://img.shields.io/badge/Status-Active-success) |
-|  `PUT`   | `/api/hotels/update/:id` | Update hotel      |   ✅ Admin    | ![Active](https://img.shields.io/badge/Status-Active-success) |
-| `DELETE` | `/api/hotels/delete/:id` | Delete hotel      |   ✅ Admin    | ![Active](https://img.shields.io/badge/Status-Active-success) |
-
-</div>
-
-### 🛏️ Room Management
-
-| Method   | Endpoint         | Description         | Auth Required |
-| -------- | ---------------- | ------------------- | ------------- |
-| `GET`    | `/api/rooms`     | Get available rooms | ❌            |
-| `GET`    | `/api/rooms/:id` | Get room details    | ❌            |
-| `POST`   | `/api/rooms`     | Add new room        | ✅ (Admin)    |
-| `PUT`    | `/api/rooms/:id` | Update room         | ✅ (Admin)    |
-| `DELETE` | `/api/rooms/:id` | Delete room         | ✅ (Admin)    |
-
-### 👥 User Management
-
-| Method | Endpoint              | Description       | Auth Required |
-| ------ | --------------------- | ----------------- | ------------- |
-| `GET`  | `/api/users/profile`  | Get user profile  | ✅            |
-| `PUT`  | `/api/users/profile`  | Update profile    | ✅            |
-| `GET`  | `/api/users/bookings` | Get user bookings | ✅            |
+### **Dashboard Features Demo**
+```javascript
+// Example: Real-time chart data update
+const updateDashboard = () => {
+  // Fetch latest metrics
+  const metrics = await api.get('/analytics/real-time');
+  
+  // Update chart data
+  setChartData({
+    revenue: metrics.daily_revenue,
+    bookings: metrics.booking_count,
+    occupancy: metrics.occupancy_rate
+  });
+  
+  // Show success notification
+  toast.success('Dashboard updated successfully');
+};
+```
 
 ---
 
-## 🔄 Application Workflow
-
-### 📋 User Journey
+## 📊 System Architecture
 
 ```mermaid
-sequenceDiagram
-    participant U as User
-    participant A as EasyStay API
-    participant D as Database
-    participant P as Payment Gateway
-
-    U->>A: 1. Browse Hotels
-    A->>D: Query available hotels
-    D-->>A: Return hotel list
-    A-->>U: Display hotels
-
-    U->>A: 2. Select Room & Dates
-    A->>D: Check availability
-    D-->>A: Confirm availability
-    A-->>U: Show booking form
-
-    U->>A: 3. Submit Booking
-    A->>A: Validate booking data
-    A->>P: Process payment
-    P-->>A: Payment confirmation
-    A->>D: Save booking
-    D-->>A: Booking saved
-    A-->>U: Booking confirmation
+graph TB
+    subgraph "Client Layer"
+        A[React Frontend]
+        B[Admin Dashboard]
+        C[Mobile App]
+    end
+    
+    subgraph "API Gateway"
+        D[Express.js Server]
+        E[Authentication Middleware]
+        F[CORS & Security]
+    end
+    
+    subgraph "Business Logic"
+        G[Booking Controller]
+        H[User Controller]
+        I[Analytics Controller]
+        J[Hotel Controller]
+    end
+    
+    subgraph "Data Layer"
+        K[(MongoDB)]
+        L[User Collection]
+        M[Booking Collection]
+        N[Hotel Collection]
+    end
+    
+    subgraph "External Services"
+        O[Payment Gateway]
+        P[Email Service]
+        Q[File Storage]
+    end
+    
+    A --> D
+    B --> D
+    C --> D
+    
+    D --> E
+    E --> F
+    F --> G
+    F --> H
+    F --> I
+    F --> J
+    
+    G --> K
+    H --> K
+    I --> K
+    J --> K
+    
+    K --> L
+    K --> M
+    K --> N
+    
+    G --> O
+    H --> P
+    J --> Q
+    
+    style A fill:#3b82f6,stroke:#1e40af,color:#fff
+    style B fill:#10b981,stroke:#059669,color:#fff
+    style K fill:#f59e0b,stroke:#d97706,color:#fff
 ```
-
-### 🏨 Admin Workflow
-
-```mermaid
-flowchart TD
-    A[Admin Login] --> B{Authentication}
-    B -->|Success| C[Dashboard]
-    B -->|Failed| A
-
-    C --> D[Hotel Management]
-    C --> E[Room Management]
-    C --> F[Booking Management]
-    C --> G[User Management]
-
-    D --> D1[Add Hotel]
-    D --> D2[Edit Hotel]
-    D --> D3[Delete Hotel]
-
-    E --> E1[Add Room]
-    E --> E2[Update Room]
-    E --> E3[Set Pricing]
-
-    F --> F1[View Bookings]
-    F --> F2[Confirm Booking]
-    F --> F3[Cancel Booking]
-```
-
----
-
-## 📊 Database Schema
-
-### 🏨 Hotel Model
-
-```javascript
-{
-  name: String,           // Hotel name
-  description: String,    // Hotel description
-  address: {
-    street: String,
-    city: String,
-    state: String,
-    country: String,
-    zipCode: String
-  },
-  amenities: [String],    // Pool, WiFi, Gym, etc.
-  images: [String],       // Image URLs
-  rating: Number,         // Average rating
-  contact: {
-    phone: String,
-    email: String
-  },
-  createdAt: Date,
-  updatedAt: Date
-}
-```
-
-### 🛏️ Room Model
-
-```javascript
-{
-  hotelId: ObjectId,      // Reference to Hotel
-  roomNumber: String,     // Room identifier
-  type: String,           // Single, Double, Suite
-  capacity: Number,       // Max occupancy
-  price: Number,          // Price per night
-  amenities: [String],    // Room-specific amenities
-  images: [String],       // Room images
-  isAvailable: Boolean,   // Availability status
-  createdAt: Date,
-  updatedAt: Date
-}
-```
-
-### 👤 User Model
-
-```javascript
-{
-  firstName: String,
-  lastName: String,
-  email: String,          // Unique identifier
-  password: String,       // Hashed password
-  phone: String,
-  role: String,           // 'user' | 'admin'
-  profile: {
-    avatar: String,
-    dateOfBirth: Date,
-    preferences: [String]
-  },
-  createdAt: Date,
-  updatedAt: Date
-}
-```
-
----
-
-## 🛡️ Security Features
-
-### 🔐 Authentication & Authorization
-
-- **JWT-based authentication** with secure token management
-- **Role-based access control** (User, Admin)
-- **Password hashing** using bcrypt with salt rounds
-- **Input validation** and sanitization
-
-### 🛡️ API Security
-
-- **Rate limiting** to prevent abuse
-- **CORS configuration** for cross-origin requests
-- **Helmet.js** for security headers
-- **Input validation** using express-validator
-
-### 🔒 Data Protection
-
-- **Environment variables** for sensitive data
-- **MongoDB injection** prevention
-- **XSS protection** through input sanitization
-
----
-
-## 🧪 Testing
-
-```bash
-# Run all tests
-npm test
-
-# Run tests with coverage
-npm run test:coverage
-
-# Run specific test suite
-npm run test:auth
-npm run test:hotels
-npm run test:rooms
-```
-
-### Test Coverage Goals
-
-- **Unit Tests**: 90%+ coverage
-- **Integration Tests**: API endpoints
-- **E2E Tests**: Critical user journeys
-
----
-
-## 🚀 Deployment
-
-### 🐳 Docker Deployment
-
-```bash
-# Build and run with Docker
-docker-compose up --build
-
-# Production deployment
-docker-compose -f docker-compose.prod.yml up -d
-```
-
-### ☁️ Cloud Deployment Options
-
-- **Heroku**: Easy deployment with MongoDB Atlas
-- **AWS**: EC2 + RDS/DocumentDB
-- **Digital Ocean**: Droplets + Managed Databases
-- **Vercel**: Serverless deployment
-
----
-
-## 📈 Performance Optimization
-
-### 🚀 Backend Optimizations
-
-- **Database indexing** for faster queries
-- **Connection pooling** for MongoDB
-- **Caching strategies** with Redis
-- **Image optimization** and CDN integration
-
-### 📊 Monitoring
-
-- **Application metrics** with custom dashboards
-- **Error tracking** and logging
-- **Performance monitoring** for API endpoints
 
 ---
 
 ## 🤝 Contributing
 
-We welcome contributions! Please follow these steps:
+We welcome contributions from the hospitality and development community!
 
-### 🔄 Development Workflow
+### **How to Contribute**
+1. 🍴 **Fork** the repository
+2. 🌿 **Create** feature branch (`git checkout -b feature/hotel-analytics`)
+3. 💾 **Commit** changes (`git commit -m 'Add advanced analytics'`)
+4. 📤 **Push** to branch (`git push origin feature/hotel-analytics`)
+5. 🔄 **Create** Pull Request
 
-```bash
-# 1. Fork the repository
-# 2. Create feature branch
-git checkout -b feature/amazing-feature
+### **Development Guidelines**
+- ✅ Follow existing code style and patterns
+- ✅ Add tests for new features
+- ✅ Update documentation for API changes
+- ✅ Ensure responsive design compatibility
+- ✅ Test on multiple browsers and devices
 
-# 3. Make changes and commit
-git commit -m "Add amazing feature"
-
-# 4. Push to branch
-git push origin feature/amazing-feature
-
-# 5. Create Pull Request
-```
-
-### 📋 Contribution Guidelines
-
-- Follow **ESLint** configuration
-- Write **comprehensive tests**
-- Update **documentation**
-- Use **conventional commits**
+### **Reporting Issues**
+- 🐛 **Bug Reports** - Use GitHub Issues with detailed reproduction steps
+- 💡 **Feature Requests** - Describe use case and expected behavior
+- 📚 **Documentation** - Help improve setup and usage guides
 
 ---
 
@@ -505,45 +508,26 @@ git push origin feature/amazing-feature
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
+### **MIT License Summary**
+- ✅ Commercial use allowed
+- ✅ Modification allowed
+- ✅ Distribution allowed
+- ✅ Private use allowed
+- ❌ No warranty provided
+- ❌ No liability assumed
+
 ---
-
-## 🙏 Acknowledgments
-
-- **Express.js** community for the robust framework
-- **MongoDB** for flexible data modeling
-- **JWT** for secure authentication
-- **Open source contributors** who make development easier
-
----
-
-## 📞 Support & Contact
 
 <div align="center">
 
-**Need help? We're here for you!**
+### 🎉 **Ready to Transform Your Hotel Management?**
 
-[![GitHub Issues](https://img.shields.io/badge/GitHub-Issues-red?style=flat&logo=github)](https://github.com/Santoshpatel112/Hotel-Booking/issues)
-[![Email](https://img.shields.io/badge/Email-Support-blue?style=flat&logo=gmail)](mailto:santoshpatelvns5@gmail.com.com)
-[![Documentation](https://img.shields.io/badge/Docs-Wiki-green?style=flat&logo=gitbook)](https://github.com/Santoshpatel112/Hotel-Booking/wiki)
+**[🚀 Get Started Now](#-installation-instructions)** | **[📊 View Demo](http://localhost:3000)** | **[📞 Contact Support](mailto:support@bookingapp.com)**
 
-**⭐ Star this repository if you find it helpful!**
+---
 
-</div>
+**Built with ❤️ for the Hospitality Industry** | **© 2024 BOOKINGAPP** | **Version 2.0.0**
 
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
-
-<div align="center">
-
-<h2>
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&duration=3000&pause=1000&color=E74C3C&center=true&vCenter=true&width=600&lines=Made+with+❤️+by+Santosh+Patel;Simplifying+hotel+bookings;One+stay+at+a+time;Thank+you+for+visiting!" alt="Footer"/>
-</h2>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/⭐-Star%20this%20repo-yellow?style=for-the-badge" alt="Star this repo"/>
-  <img src="https://img.shields.io/badge/🍴-Fork%20this%20repo-blue?style=for-the-badge" alt="Fork this repo"/>
-  <img src="https://img.shields.io/badge/📢-Share%20with%20friends-green?style=for-the-badge" alt="Share"/>
-</p>
-
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=100&section=footer" width="100%"/>
+⭐ **Star this repository if it helped your hotel business!**
 
 </div>
