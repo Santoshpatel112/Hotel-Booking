@@ -472,7 +472,7 @@
   top: calc(100% + 12px);
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: 9999; /* Increased z-index for visibility */
   background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(20px);
   border-radius: 20px;
@@ -483,6 +483,11 @@
   border: 1px solid rgba(0, 0, 0, 0.05);
   overflow: hidden;
   transform-origin: top center;
+}
+
+/* Ensure date picker parent has higher z-index when active */
+.headerSearchItem.dateItem.active {
+  z-index: 10000;
 }
 
 .datePickerHeader,
@@ -583,7 +588,7 @@
   position: absolute;
   top: 100%;
   right: 0;
-  z-index: 1000;
+  z-index: 9999; /* Increased z-index for visibility */
   background: white;
   border-radius: 12px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
@@ -591,6 +596,11 @@
   margin-top: 8px;
   overflow: hidden;
   min-width: 320px;
+}
+
+/* Ensure guest selector parent has higher z-index when active */
+.headerSearchItem.guestItem.active {
+  z-index: 10000;
 }
 
 .guestOptions {
