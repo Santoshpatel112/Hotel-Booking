@@ -3,11 +3,26 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import { DateRange } from "react-date-range";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar, faMapMarkerAlt, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { 
+  faStar, 
+  faMapMarkerAlt, 
+  faSearch, 
+  faFilter,
+  faSort,
+  faThLarge,
+  faList,
+  faWifi,
+  faParking,
+  faSwimmingPool,
+  faDumbbell,
+  faUtensils,
+  faTimes
+} from "@fortawesome/free-solid-svg-icons";
 import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
 import SearchItem from "../../components/searchItem/SearchItem";
-import useFetch from "../../hooks/useFetch";
+import AdvancedSearchFilters from "../../components/search/AdvancedSearchFilters";
+import { hotelAPI } from "../../services/api";
 import "./list.css";
 
 const List = () => {
@@ -26,31 +41,81 @@ const List = () => {
     children: 0,
     room: 1,
   });
-  const [min, setMin] = useState(undefined);
-  const [max, setMax] = useState(undefined);
-  const [openDate, setOpenDate] = useState(false);
-  const [openOptions, setOpenOptions] = useState(false);
+  
+  // Enhanced state management
   const [filteredHotels, setFilteredHotels] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [viewMode, setViewMode] = useState('grid'); // grid or list
+  const [sortBy, setSortBy] = useState('relevance');
+  const [filters, setFilters] = useState({
+    minPrice: undefined,
+    maxPrice: undefined,
+    propertyTypes: [],
+    amenities: [],
+    starRating: [],
+    guestRating: 0,
+  });
+  const [searchParams, setSearchParams] = useState({
+    destination: destination,
+    checkIn: dates[0]?.startDate,
+    checkOut: dates[0]?.endDate,
+    guests: { adults: options.adult, children: options.children },
+    rooms: options.room
+  });
 
-  const { data, loading, error, refetch } = useFetch(
-    `/hotels?city=${destination}&min=${min || 0}&max=${max || 99999}`
-  );
-
-  useEffect(() => {
-    if (data) {
-      setFilteredHotels(data);
+  // Fetch hotels function
+  const fetchHotels = async (searchData = {}) => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const params = {
+        city: searchData.destination || destination,
+        min: searchData.minPrice || filters.minPrice || 0,
+        max: searchData.maxPrice || filters.maxPrice || 99999,
+        sortBy: searchData.sortBy || sortBy,
+        ...searchData
+      };
+      
+      const response = await hotelAPI.getAllHotels(params);
+      setFilteredHotels(response.data || []);
+    } catch (err) {
+      console.error('Error fetching hotels:', err);
+      setError(err.response?.data?.message || 'Failed to fetch hotels');
+      setFilteredHotels([]);
+    } finally {
+      setLoading(false);
     }
-  }, [data]);
-
-  const handleSearch = () => {
-    refetch();
   };
 
-  const handleOption = (name, operation) => {
-    setOptions((prev) => ({
-      ...prev,
-      [name]: operation === "i" ? options[name] + 1 : options[name] - 1,
-    }));
+  // Initial load
+  useEffect(() => {
+    if (destination) {
+      fetchHotels();
+    }
+  }, [destination, filters.minPrice, filters.maxPrice, sortBy]);
+
+  // Handle advanced search
+  const handleAdvancedSearch = (searchData) => {
+    setDestination(searchData.destination);
+    setDates([{
+      startDate: searchData.checkIn,
+      endDate: searchData.checkOut,
+      key: 'selection'
+    }]);
+    setOptions({
+      adult: searchData.guests.adults,
+      children: searchData.guests.children,
+      room: searchData.rooms
+    });
+    setSearchParams(searchData);
+    fetchHotels(searchData);
+  };
+
+  // Handle filter changes
+  const handleFilterChange = (newFilters) => {
+    setFilters(prev => ({ ...prev, ...newFilters }));
   };
 
   return (
@@ -58,172 +123,168 @@ const List = () => {
       <Navbar />
       <div className="listContainer">
         <div className="listWrapper">
-          <div className="listSearch">
-            <h1 className="lsTitle">Search</h1>
-            <div className="lsItem">
-              <label>Destination</label>
-              <input
-                type="text"
-                placeholder={destination || "Where are you going?"}
-                value={destination}
-                onChange={(e) => setDestination(e.target.value)}
-              />
-            </div>
-            <div className="lsItem">
-              <label>Check-in - Check-out</label>
-              <span onClick={() => setOpenDate(!openDate)}>
-                {`${format(dates[0].startDate, "MM/dd/yyyy")} to ${format(
-                  dates[0].endDate,
-                  "MM/dd/yyyy"
-                )}`}
-              </span>
-              {openDate && (
-                <DateRange
-                  onChange={(item) => setDates([item.selection])}
-                  minDate={new Date()}
-                  ranges={dates}
-                  className="dateRange"
-                />
+          {/* Enhanced Search Section */}
+          <div className="search-section">
+            <AdvancedSearchFilters
+              onSearch={handleAdvancedSearch}
+              onFilterChange={handleFilterChange}
+              initialFilters={{
+                destination: destination,
+                checkIn: dates[0]?.startDate,
+                checkOut: dates[0]?.endDate,
+                guests: { adults: options.adult, children: options.children },
+                rooms: options.room,
+                priceRange: [filters.minPrice || 1000, filters.maxPrice || 20000],
+                ...filters
+              }}
+              className="list-search-filters"
+            />
+          </div>
+
+          {/* Results Header */}
+          <div className="results-header">
+            <div className="results-info">
+              <h2>
+                {destination ? `Hotels in ${destination}` : 'Search Results'}
+                {filteredHotels.length > 0 && (
+                  <span className="count"> ({filteredHotels.length} properties)</span>
+                )}
+              </h2>
+              {searchParams.checkIn && searchParams.checkOut && (
+                <p className="search-dates">
+                  {format(searchParams.checkIn, 'MMM dd')} - {format(searchParams.checkOut, 'MMM dd')} • 
+                  {searchParams.guests.adults + searchParams.guests.children} guests • 
+                  {searchParams.rooms} {searchParams.rooms === 1 ? 'room' : 'rooms'}
+                </p>
               )}
             </div>
-            <div className="lsItem">
-              <label>Options</label>
-              <div className="lsOptions">
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Min price (per night)</span>
-                  <input
-                    type="number"
-                    className="lsOptionInput"
-                    onChange={(e) => setMin(e.target.value)}
-                    value={min || ""}
-                  />
-                </div>
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Max price (per night)</span>
-                  <input
-                    type="number"
-                    className="lsOptionInput"
-                    onChange={(e) => setMax(e.target.value)}
-                    value={max || ""}
-                  />
-                </div>
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Adult</span>
-                  <div className="lsOptionCounter">
-                    <button
-                      disabled={options.adult <= 1}
-                      className="optionCounterButton"
-                      onClick={() => handleOption("adult", "d")}
-                    >
-                      -
-                    </button>
-                    <span className="optionCounterNumber">{options.adult}</span>
-                    <button
-                      className="optionCounterButton"
-                      onClick={() => handleOption("adult", "i")}
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Children</span>
-                  <div className="lsOptionCounter">
-                    <button
-                      disabled={options.children <= 0}
-                      className="optionCounterButton"
-                      onClick={() => handleOption("children", "d")}
-                    >
-                      -
-                    </button>
-                    <span className="optionCounterNumber">{options.children}</span>
-                    <button
-                      className="optionCounterButton"
-                      onClick={() => handleOption("children", "i")}
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Room</span>
-                  <div className="lsOptionCounter">
-                    <button
-                      disabled={options.room <= 1}
-                      className="optionCounterButton"
-                      onClick={() => handleOption("room", "d")}
-                    >
-                      -
-                    </button>
-                    <span className="optionCounterNumber">{options.room}</span>
-                    <button
-                      className="optionCounterButton"
-                      onClick={() => handleOption("room", "i")}
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
+            
+            <div className="results-controls">
+              <div className="sort-controls">
+                <FontAwesomeIcon icon={faSort} />
+                <select 
+                  value={sortBy} 
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="sort-select"
+                >
+                  <option value="relevance">Best Match</option>
+                  <option value="price_low">Price: Low to High</option>
+                  <option value="price_high">Price: High to Low</option>
+                  <option value="rating">Guest Rating</option>
+                  <option value="distance">Distance</option>
+                </select>
+              </div>
+              
+              <div className="view-controls">
+                <button 
+                  className={`view-btn ${viewMode === 'grid' ? 'active' : ''}`}
+                  onClick={() => setViewMode('grid')}
+                  title="Grid View"
+                >
+                  <FontAwesomeIcon icon={faThLarge} />
+                </button>
+                <button 
+                  className={`view-btn ${viewMode === 'list' ? 'active' : ''}`}
+                  onClick={() => setViewMode('list')}
+                  title="List View"
+                >
+                  <FontAwesomeIcon icon={faList} />
+                </button>
               </div>
             </div>
-            <button className="searchButton" onClick={handleSearch}>
-              <FontAwesomeIcon icon={faSearch} /> Search
-            </button>
           </div>
+
+          {/* Results Section */}
           <div className="listResult">
             {loading ? (
               <div className="loading-container">
                 <div className="spinner"></div>
-                <p>Loading properties...</p>
+                <p>Searching for the best properties...</p>
               </div>
             ) : error ? (
               <div className="error-container">
-                <h2>Error loading properties</h2>
-                <p>{error.message || "Please try again later"}</p>
-                <button onClick={refetch} className="retry-button">
-                  Retry
+                <h2>Oops! Something went wrong</h2>
+                <p>{error}</p>
+                <button onClick={() => fetchHotels()} className="retry-button">
+                  <FontAwesomeIcon icon={faSearch} /> Try Again
                 </button>
               </div>
             ) : filteredHotels.length > 0 ? (
-              <div className="hotel-grid">
+              <div className={`hotel-${viewMode === 'grid' ? 'grid' : 'list'}`}>
                 {filteredHotels.map((item) => (
-                  <div className="hotel-card" key={item._id}>
+                  <div className={`hotel-card ${viewMode}`} key={item._id}>
                     <div className="hotel-card-inner">
                       <div className="hotel-image">
                         <img
                           src={item.photos?.[0] || "https://via.placeholder.com/300x200?text=No+Image"}
                           alt={item.name}
+                          loading="lazy"
                         />
                         {item.featured && <span className="featured-badge">Featured</span>}
+                        <div className="image-overlay">
+                          <button 
+                            className="quick-view-btn"
+                            onClick={() => navigate(`/hotels/${item._id}`)}
+                          >
+                            Quick View
+                          </button>
+                        </div>
                       </div>
+                      
                       <div className="hotel-details">
-                        <h3 className="hotel-name">{item.name}</h3>
+                        <div className="hotel-header">
+                          <h3 className="hotel-name">{item.name}</h3>
+                          <div className="hotel-rating">
+                            <div className="rating-badge">
+                              <span>{item.rating?.toFixed(1) || '4.5'}</span>
+                              <FontAwesomeIcon icon={faStar} className="star-icon" />
+                            </div>
+                            <span className="rating-text">
+                              {item.rating >= 4.5 ? 'Excellent' : 
+                               item.rating >= 4.0 ? 'Very Good' : 
+                               item.rating >= 3.0 ? 'Good' : 'Average'}
+                            </span>
+                          </div>
+                        </div>
+                        
                         <div className="hotel-location">
                           <FontAwesomeIcon icon={faMapMarkerAlt} />
                           <span>{item.city}, {item.country}</span>
                         </div>
+                        
                         <div className="hotel-type">{item.type}</div>
-                        <div className="hotel-price">
-                          <span className="price">₹{item.cheapestPrice || item.cheapestprice}</span>
-                          <span className="period">per night</span>
-                        </div>
-                        <div className="hotel-rating">
-                          <div className="rating-badge">
-                            <span>{item.rating?.toFixed(1) || '4.5'}</span>
-                            <FontAwesomeIcon icon={faStar} className="star-icon" />
+                        
+                        {item.amenities && (
+                          <div className="hotel-amenities">
+                            {item.amenities.slice(0, 4).map((amenity, index) => (
+                              <span key={index} className="amenity-tag">
+                                {amenity === 'wifi' && <FontAwesomeIcon icon={faWifi} />}
+                                {amenity === 'parking' && <FontAwesomeIcon icon={faParking} />}
+                                {amenity === 'pool' && <FontAwesomeIcon icon={faSwimmingPool} />}
+                                {amenity === 'gym' && <FontAwesomeIcon icon={faDumbbell} />}
+                                {amenity === 'restaurant' && <FontAwesomeIcon icon={faUtensils} />}
+                                {amenity.charAt(0).toUpperCase() + amenity.slice(1)}
+                              </span>
+                            ))}
+                            {item.amenities.length > 4 && (
+                              <span className="amenity-more">+{item.amenities.length - 4} more</span>
+                            )}
                           </div>
-                          <span className="rating-text">
-                            {item.rating >= 4.5 ? 'Excellent' : 
-                             item.rating >= 4.0 ? 'Very Good' : 
-                             item.rating >= 3.0 ? 'Good' : 'Average'}
-                          </span>
+                        )}
+                        
+                        <div className="hotel-footer">
+                          <div className="hotel-price">
+                            <span className="price">₹{item.cheapestPrice || item.cheapestprice}</span>
+                            <span className="period">per night</span>
+                          </div>
+                          
+                          <button 
+                            className="view-details-btn"
+                            onClick={() => navigate(`/hotels/${item._id}`)}
+                          >
+                            View Details
+                          </button>
                         </div>
-                        <button 
-                          className="view-details-btn"
-                          onClick={() => navigate(`/hotels/${item._id}`)}
-                        >
-                          View Details
-                        </button>
                       </div>
                     </div>
                   </div>
@@ -231,8 +292,20 @@ const List = () => {
               </div>
             ) : (
               <div className="no-results">
+                <div className="no-results-icon">
+                  <FontAwesomeIcon icon={faSearch} />
+                </div>
                 <h2>No properties found</h2>
-                <p>Try adjusting your search or filter to find what you're looking for.</p>
+                <p>We couldn't find any properties matching your search criteria.</p>
+                <div className="suggestions">
+                  <h4>Try:</h4>
+                  <ul>
+                    <li>Adjusting your price range</li>
+                    <li>Changing your dates</li>
+                    <li>Reducing the number of guests</li>
+                    <li>Removing some filters</li>
+                  </ul>
+                </div>
               </div>
             )}
           </div>
