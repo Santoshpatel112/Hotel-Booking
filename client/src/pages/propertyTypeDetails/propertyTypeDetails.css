@@ -1,53 +1,634 @@
 .propertyTypeDetailsContainer {
-    padding: 20px;
-    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
 }
 
-.header {
+/* Hero Section */
+.property-hero {
+    position: relative;
+    padding: 120px 20px 80px;
     text-align: center;
-    font-size: 24px;
-    margin-bottom: 20px;
+    color: white;
+    overflow: hidden;
 }
 
-.propertiesGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(2px);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-icon {
+    font-size: 80px;
+    margin-bottom: 24px;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.hero-title {
+    font-size: 48px;
+    font-weight: 700;
+    margin: 0 0 16px 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    line-height: 1.2;
+}
+
+.hero-description {
+    font-size: 20px;
+    margin: 0 0 32px 0;
+    opacity: 0.95;
+    line-height: 1.5;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-stats {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 24px;
+    max-width: 300px;
+    margin: 0 auto;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.stats-count {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.stats-text {
+    font-size: 16px;
+    margin-top: 8px;
+    opacity: 0.9;
+}
+
+/* Controls Section */
+.controls-section {
+    padding: 40px 20px;
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.controls-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
     gap: 20px;
 }
 
-.propertyCard {
-    border: 1px solid #ddd;
-    border-radius: 8px;
+.view-controls {
+    display: flex;
+    gap: 12px;
+}
+
+.view-button {
+    padding: 12px 20px;
+    border: 2px solid #e5e7eb;
+    background: white;
+    color: #374151;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.view-button:hover {
+    border-color: #10b981;
+    color: #10b981;
+}
+
+.view-button.active {
+    background: #10b981;
+    border-color: #10b981;
+    color: white;
+}
+
+.filter-controls {
+    display: flex;
+    gap: 16px;
+}
+
+.filter-select,
+.sort-select {
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    background: white;
+    color: #374151;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 160px;
+}
+
+.filter-select:focus,
+.sort-select:focus {
+    outline: none;
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+/* Properties Section */
+.properties-section {
+    padding: 40px 20px 80px;
+}
+
+.properties-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.properties-container.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.properties-container.list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Property Cards */
+.property-card {
+    background: white;
+    border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    padding: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.propertyImage {
+.property-card:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    transform: translateY(-8px);
+}
+
+.property-card.list {
+    display: flex;
+    flex-direction: row;
+    max-height: 250px;
+}
+
+.property-card.list .property-image-container {
+    width: 300px;
+    flex-shrink: 0;
+}
+
+.property-card.list .property-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.property-image-container {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+}
+
+.property-image {
     width: 100%;
-    height: 200px;
+    height: 100%;
     object-fit: cover;
+    transition: transform 0.4s ease;
 }
 
-.bookNowButton {
-    background-color: #007bff;
+.property-card:hover .property-image {
+    transform: scale(1.1);
+}
+
+.featured-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    z-index: 2;
+}
+
+.property-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.9) 0%, rgba(5, 150, 105, 0.9) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.3s ease;
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.property-card:hover .property-overlay {
+    opacity: 1;
+}
+
+.property-content {
+    padding: 24px;
+}
+
+.property-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.property-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0;
+    line-height: 1.3;
+    flex: 1;
+    margin-right: 16px;
+}
+
+.property-rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: #f3f4f6;
+    padding: 4px 8px;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.rating-stars {
+    font-size: 12px;
+}
+
+.rating-number {
+    font-size: 12px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.property-location {
+    color: #6b7280;
+    font-size: 14px;
+    margin: 0 0 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.property-description {
+    color: #4b5563;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0 0 16px 0;
+}
+
+.property-amenities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.amenity {
+    background: #f0fdf4;
+    color: #166534;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.property-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 16px;
+    border-top: 1px solid #f3f4f6;
+}
+
+.property-price {
+    display: flex;
+    flex-direction: column;
+}
+
+.price-label {
+    font-size: 12px;
+    color: #6b7280;
+    margin-bottom: 2px;
+}
+
+.price-amount {
+    font-size: 24px;
+    font-weight: 700;
+    color: #10b981;
+    line-height: 1;
+}
+
+.price-period {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.book-button {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
     cursor: pointer;
-    border-radius: 4px;
-    margin-top: 10px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.bookNowButton:hover {
-    background-color: #0056b3;
+.book-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
 }
 
-.footer {
+/* Loading States */
+.loading-container,
+.error-container,
+.no-results-container {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.loading-content,
+.error-content,
+.no-results-content {
     text-align: center;
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #f8f9fa;
-    border-top: 1px solid #ddd;
+    max-width: 500px;
+}
+
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid #f3f4f6;
+    border-top: 4px solid #10b981;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 24px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.error-icon,
+.no-results-icon {
+    font-size: 64px;
+    margin-bottom: 24px;
+}
+
+.loading-content h2,
+.error-content h2,
+.no-results-content h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0 0 16px 0;
+}
+
+.loading-content p,
+.error-content p,
+.no-results-content p {
+    font-size: 16px;
+    color: #6b7280;
+    margin: 0 0 24px 0;
+    line-height: 1.5;
+}
+
+.error-details {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 16px 0;
+}
+
+.error-details small {
+    color: #dc2626;
+    font-size: 12px;
+}
+
+.error-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.retry-button,
+.back-button,
+.explore-button {
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.retry-button,
+.explore-button {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+}
+
+.back-button {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.retry-button:hover,
+.explore-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
+.back-button:hover {
+    background: #e5e7eb;
+}
+
+.suggestions {
+    text-align: left;
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 24px 0;
+}
+
+.suggestions h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #374151;
+    margin: 0 0 12px 0;
+}
+
+.suggestions ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.suggestions li {
+    padding: 6px 0;
+    color: #6b7280;
+    position: relative;
+    padding-left: 20px;
+}
+
+.suggestions li:before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #10b981;
+    font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .hero-title {
+        font-size: 36px;
+    }
+    
+    .hero-description {
+        font-size: 18px;
+    }
+    
+    .properties-container.grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 24px;
+    }
+    
+    .controls-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .view-controls,
+    .filter-controls {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .property-hero {
+        padding: 80px 20px 60px;
+    }
+    
+    .hero-icon {
+        font-size: 60px;
+    }
+    
+    .hero-title {
+        font-size: 28px;
+    }
+    
+    .hero-description {
+        font-size: 16px;
+    }
+    
+    .properties-container.grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .property-card.list {
+        flex-direction: column;
+        max-height: none;
+    }
+    
+    .property-card.list .property-image-container {
+        width: 100%;
+        height: 200px;
+    }
+    
+    .filter-controls {
+        flex-direction: column;
+    }
+    
+    .filter-select,
+    .sort-select {
+        min-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .property-hero {
+        padding: 60px 16px 40px;
+    }
+    
+    .hero-title {
+        font-size: 24px;
+    }
+    
+    .properties-section {
+        padding: 20px 16px 40px;
+    }
+    
+    .property-content {
+        padding: 20px;
+    }
+    
+    .property-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .property-name {
+        margin-right: 0;
+    }
+    
+    .property-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+    
+    .error-actions {
+        flex-direction: column;
+    }
 }

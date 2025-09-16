@@ -1,7 +1,7 @@
 import "./hotel.css";
+import "./hotel.css";
 import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
-import MailList from "../../components/mailList/MailList";
 import Footer from "../../components/footer/Footer";
 import BookingModal from "../../components/booking/BookingModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -147,23 +147,28 @@ const Hotel = () => {
           </div>
         )}
         <div className="hotelWrapper">
-          <button 
-            className="bookNow"
-            onClick={() => setShowBookingModal(true)}
-          >
-            Reserve or Book Now!
-          </button>
-          <h1 className="hotelTitle">{hotelData.name}</h1>
-          <div className="hotelAddress">
-            <FontAwesomeIcon icon={faLocationDot} />
-            <span>{hotelData.address || `${hotelData.city}, ${hotelData.country || 'India'}`}</span>
+          <div className="hotelHeader">
+            <div className="hotelHeaderLeft">
+              <h1 className="hotelTitle">{hotelData.name}</h1>
+              <div className="hotelAddress">
+                <FontAwesomeIcon icon={faLocationDot} />
+                <span>{hotelData.address || `${hotelData.city}, ${hotelData.country || 'India'}`}</span>
+              </div>
+              <span className="hotelDistance">
+                {hotelData.distance || 'Convenient location'} – {hotelData.distance || '500m'} from center
+              </span>
+              <span className="hotelPriceHighlight">
+                Book a stay over ₹{hotelData.cheapestPrice || hotelData.cheapestprice} at this property {hotelData.freeAirportTaxi && 'and get a free airport taxi'}
+              </span>
+            </div>
+            <button 
+              className="bookNow"
+              onClick={() => setShowBookingModal(true)}
+            >
+              Reserve or Book Now!
+            </button>
           </div>
-          <span className="hotelDistance">
-            {hotelData.distance || 'Convenient location'} – {hotelData.distance || '500m'} from center
-          </span>
-          <span className="hotelPriceHighlight">
-            Book a stay over ₹{hotelData.cheapestPrice || hotelData.cheapestprice} at this property {hotelData.freeAirportTaxi && 'and get a free airport taxi'}
-          </span>
+          
           <div className="hotelImages">
             {photos.map((photo, i) => (
               <div 
@@ -177,12 +182,16 @@ const Hotel = () => {
                   className="hotelImg"
                   loading="lazy"
                 />
+                <div className="imageOverlay">
+                  <span>View Gallery</span>
+                </div>
               </div>
             ))}
           </div>
+          
           <div className="hotelDetails">
             <div className="hotelDetailsTexts">
-              <h1 className="hotelTitle">Stay in the heart of {hotelData.city}</h1>
+              <h1>Stay in the heart of {hotelData.city}</h1>
               <p className="hotelDesc">
                 {hotelData.desc || hotelData.description || 
                 `Experience comfortable accommodation at ${hotelData.name} in ${hotelData.city}. 
@@ -196,18 +205,19 @@ const Hotel = () => {
                 {hotelData.title || `Located in ${hotelData.city}, this property offers great value!`}
               </span>
               <h2>
-                <b>₹{hotelData.cheapestPrice || hotelData.cheapestprice}</b> per night
+                <span className="currency">₹</span>
+                <b>{hotelData.cheapestPrice || hotelData.cheapestprice}</b>
+                <span className="currency">per night</span>
               </h2>
-              <div className="hotelRating">
-                {hotelData.rating && (
-                  <span>Rating: {hotelData.rating}/5</span>
-                )}
-              </div>
+              {hotelData.rating && (
+                <div className="hotelRating">
+                  <span>★ {hotelData.rating}/5 Rating</span>
+                </div>
+              )}
               <button onClick={() => setShowBookingModal(true)}>Reserve or Book Now!</button>
             </div>
           </div>
         </div>
-        <MailList />
         <Footer />
       </div>
       

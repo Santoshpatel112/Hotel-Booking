@@ -2,6 +2,7 @@ import express from "express";
 const router = express.Router();
 import hotelController from "../Controllers/hotel.js";
 import { verifyAdmin } from "../utils/Verifytoken.js";
+import { Hotel } from "../models/Hotel.js";
 // create
 
 router.post("/", verifyAdmin, hotelController.CreateHotel);

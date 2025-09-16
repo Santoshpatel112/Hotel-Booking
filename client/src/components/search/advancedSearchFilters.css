@@ -226,7 +226,7 @@
   left: 50%;
   transform: translateX(-50%);
   margin-top: 8px;
-  z-index: 9999; /* Increased z-index for desktop visibility */
+  z-index: 99999; /* Further increased z-index for desktop visibility */
   background: white;
   border-radius: 16px;
   overflow: hidden;
@@ -236,7 +236,7 @@
 
 /* Ensure date field has proper z-index when active */
 .date-field.active {
-  z-index: 10000;
+  z-index: 100000;
 }
 
 /* Guests Field */
