@@ -1,13 +1,11 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { format } from "date-fns";
-import { DateRange } from "react-date-range";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { 
   faStar, 
   faMapMarkerAlt, 
   faSearch, 
-  faFilter,
   faSort,
   faThLarge,
   faList,
@@ -15,13 +13,11 @@ import {
   faParking,
   faSwimmingPool,
   faDumbbell,
-  faUtensils,
-  faTimes
+  faUtensils
 } from "@fortawesome/free-solid-svg-icons";
 import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
 import SearchItem from "../../components/searchItem/SearchItem";
-import AdvancedSearchFilters from "../../components/search/AdvancedSearchFilters";
 import { hotelAPI } from "../../services/api";
 import "./list.css";
 
@@ -117,23 +113,6 @@ const List = () => {
     }
   }, [destination, filters.minPrice, filters.maxPrice, sortBy]);
 
-  // Handle advanced search
-  const handleAdvancedSearch = useCallback((searchData) => {
-    setDestination(searchData.destination);
-    setDates([{
-      startDate: searchData.checkIn,
-      endDate: searchData.checkOut,
-      key: 'selection'
-    }]);
-    setOptions({
-      adult: searchData.guests.adults,
-      children: searchData.guests.children,
-      room: searchData.rooms
-    });
-    setSearchParams(searchData);
-    fetchHotels(searchData);
-  }, []);
-
   // Handle hotel navigation with loading state
   const handleHotelNavigation = useCallback((hotelId) => {
     setNavigating(hotelId);
@@ -153,23 +132,6 @@ const List = () => {
       <Navbar />
       <div className="listContainer">
         <div className="listWrapper">
-          {/* Enhanced Search Section */}
-          <div className="search-section">
-            <AdvancedSearchFilters
-              onSearch={handleAdvancedSearch}
-              onFilterChange={handleFilterChange}
-              initialFilters={{
-                destination: destination,
-                checkIn: dates[0]?.startDate,
-                checkOut: dates[0]?.endDate,
-                guests: { adults: options.adult, children: options.children },
-                rooms: options.room,
-                priceRange: [filters.minPrice || 1000, filters.maxPrice || 20000],
-                ...filters
-              }}
-              className="list-search-filters"
-            />
-          </div>
 
           {/* Results Header */}
           <div className="results-header">
