@@ -2,6 +2,7 @@ import "./featuredProperties.css";
 import useFetch from "../../hooks/useFetch";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import "./featuredProperties.css";
 
 const FeaturedProperties = () => {
   const { data, error, loading } = useFetch("/hotels/featured?limit=4");

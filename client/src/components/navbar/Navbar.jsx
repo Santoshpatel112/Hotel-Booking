@@ -316,6 +316,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { Menu, X, Home, User, LogOut, Settings, Shield } from 'lucide-react';
 import "./navbar.css"
 
 const Navbar = () => {
@@ -363,13 +364,33 @@ const Navbar = () => {
           
           {/* Mobile menu button */}
           <motion.div 
-            className={`mobileMenuButton ${isMenuOpen ? 'open' : ''}`}
+            className="mobileMenuButton"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             whileTap={{ scale: 0.9 }}
           >
-            <span></span>
-            <span></span>
-            <span></span>
+            <AnimatePresence mode="wait">
+              {isMenuOpen ? (
+                <motion.div
+                  key="close"
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <X size={24} color="#1f2937" />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="menu"
+                  initial={{ rotate: 90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: -90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Menu size={24} color="#1f2937" />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
 
           <motion.div 

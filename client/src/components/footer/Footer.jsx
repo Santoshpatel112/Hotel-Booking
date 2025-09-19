@@ -50,35 +50,21 @@ const Footer = () => {
         { name: "Travel Insurance", link: "#" },
         { name: "Currency Exchange", link: "#" }
       ]
-    },
-    {
-      title: "Support",
-      icon: "📞",
-      items: [
-        { name: "24/7 Customer Service", link: "#" },
-        { name: "Partner Support", link: "#" },
-        { name: "Career Opportunities", link: "#" },
-        { name: "Sustainability Initiative", link: "#" },
-        { name: "Press & Media", link: "#" },
-        { name: "Investor Relations", link: "#" }
-      ]
     }
   ];
 
   const socialLinks = [
-    { name: "Facebook", icon: "📱", url: "#", color: "#1877f2" },
-    { name: "Twitter", icon: "🐦", url: "#", color: "#1da1f2" },
-    { name: "Instagram", icon: "📷", url: "#", color: "#e4405f" },
-    { name: "LinkedIn", icon: "💼", url: "#", color: "#0077b5" },
-    { name: "YouTube", icon: "🎥", url: "#", color: "#ff0000" },
-    { name: "TikTok", icon: "🎵", url: "#", color: "#000000" }
+    { name: "GitHub", icon: "💻", url: "https://github.com/Santoshpatel112", color: "#333333" },
+    { name: "LinkedIn", icon: "💼", url: "https://www.linkedin.com/in/santosh-patel112/", color: "#0077b5" },
+    { name: "Email", icon: "📧", url: "mailto:santoshpatelvns5@gmail.com", color: "#ea4335" },
+    { name: "X (Twitter)", icon: "🔗", url: "https://x.com/Santoshp3259330", color: "#000000" }
   ];
 
   const quickStats = [
     { number: "10M+", label: "Happy Travelers" },
     { number: "50K+", label: "Properties" },
     { number: "200+", label: "Countries" },
-    { number: "24/7", label: "Support" }
+    { number: "4.8★", label: "Average Rating" }
   ];
 
   return (
@@ -124,7 +110,7 @@ const Footer = () => {
             ✨ Your Gateway to Extraordinary Stays ✨
           </p>
           <p className="footerBrandDesc">
-            Discover amazing accommodations worldwide with unbeatable prices, verified reviews, and 24/7 support. 
+            Discover amazing accommodations worldwide with unbeatable prices, verified reviews, and seamless booking experience. 
             Your perfect stay is just a click away!
           </p>
           
