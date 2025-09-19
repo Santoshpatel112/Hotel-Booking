@@ -355,6 +355,8 @@ const Navbar = () => {
             className="logo"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={() => navigate('/')}
+            style={{ cursor: 'pointer' }}
           >
             <span className="logoText">EasyStay</span>
           </motion.div>
