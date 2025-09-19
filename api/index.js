@@ -1,4 +1,5 @@
 import express from "express";
+import { createServer } from 'http';
 const app = express();
 import dotenv from "dotenv";
 import cors from "cors";
@@ -10,9 +11,11 @@ import userRoutes from "./routes/user.js";
 import roomRoutes from "./routes/rooms.js";
 import bookingRoutes from "./routes/booking.js";
 import dashboardRoutes from "./routes/dashboard.js";
+import analyticsRoutes from "./routes/analytics.js";
 import propertyTypeRoutes from "./routes/propertyType.js";
 import hotelTypeRoutes from "./routes/hotelType.js";
 import paymentRoutes from "./routes/payment.js";
+import { initializeSocket } from "./utils/socket.js";
 
 
 
@@ -75,10 +78,10 @@ app.use("/api/users",userRoutes);
 app.use("/api/rooms",roomRoutes);
 app.use("/api/bookings",bookingRoutes);
 app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/analytics", analyticsRoutes);
 app.use("/api/property-types", propertyTypeRoutes);
 app.use("/api/hotel-types", hotelTypeRoutes);
 app.use("/api/payment", paymentRoutes);
-app.use('/api/payment', paymentRoutes);
 // app.use("/api/room-types", roomTypeRoutes);
 
 // Error handling middleware
@@ -93,7 +96,14 @@ app.use((err, req, res, next) => {
         stack: process.env.NODE_ENV === "development" ? err.stack : {}
     });
 });
-app.listen(PORT, async () => {
-  console.log(`Server is running on port ${PORT}`);
+// Create HTTP server
+const server = createServer(app);
+
+// Initialize Socket.IO
+initializeSocket(server);
+
+server.listen(PORT, async () => {
+  console.log(`🚀 Server is running on port ${PORT}`);
+  console.log(`🌐 WebSocket server ready for real-time updates`);
   await connectDB();
 });
