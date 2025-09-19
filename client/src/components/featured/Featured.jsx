@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion';
+import { useState } from 'react';
 import "./featured.css";
 import useFetch from "../../hooks/useFetch";
 
@@ -5,15 +7,61 @@ const Featured = () => {
   const { data, error, loading } = useFetch(
     "/hotels/countByCity?cities=Lucknow,Delhi,Jaipur,Bangalore"
   );
+  const [hoveredItems, setHoveredItems] = useState(new Set());
 
   console.log("API Response:", data);
 
+  const handleMouseEnter = (cityName) => {
+    setHoveredItems(prev => new Set([...prev, cityName]));
+  };
+
+  const handleAnimationEnd = (cityName) => {
+    // Remove the item from hovered set after animation completes
+    setTimeout(() => {
+      setHoveredItems(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(cityName);
+        return newSet;
+      });
+    }, 2000); // Keep the effect for 2 seconds after hover ends
+  };
+
   if (loading) {
-    return <div className="featured">Loading...</div>;
+    return (
+      <div className="featured">
+        {[1, 2, 3, 4].map((i) => (
+          <motion.div 
+            key={i}
+            className="featuredItem loading"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: i * 0.1 }}
+          >
+            <div className="loadingSkeleton"></div>
+            <div className="featuredTitles">
+              <div className="skeletonTitle"></div>
+              <div className="skeletonSubtitle"></div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    );
   }
 
   if (error) {
-    return <div className="featured">Error loading data: {error.message}</div>;
+    return (
+      <motion.div 
+        className="featured error"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="errorMessage">
+          <h3>Unable to load destinations</h3>
+          <p>Please try again later</p>
+        </div>
+      </motion.div>
+    );
   }
 
   const cities = [
@@ -36,21 +84,55 @@ const Featured = () => {
   ];
 
   return (
-    <div className="featured">
+    <motion.div 
+      className="featured"
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+    >
       {cities.map((city, index) => (
-        <div className="featuredItem" key={city.name}>
-          <img
-            src={city.image}
-            alt={city.name}
-            className="featuredImg"
-          />
-          <div className="featuredTitles">
+        <motion.div 
+          className={`featuredItem ${hoveredItems.has(city.name) ? 'post-hover-animate' : ''}`} 
+          key={city.name}
+          initial={{ opacity: 0, y: 50, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ 
+            duration: 0.6, 
+            delay: index * 0.15,
+            ease: "easeOut"
+          }}
+          whileHover={{ 
+            y: -8, 
+            scale: 1.02,
+            transition: { duration: 0.3, ease: "easeOut" }
+          }}
+          whileTap={{ scale: 0.98 }}
+          onMouseEnter={() => handleMouseEnter(city.name)}
+          onAnimationEnd={() => handleAnimationEnd(city.name)}
+        >
+          <div className="imageContainer">
+            <motion.img
+              src={city.image}
+              alt={city.name}
+              className="featuredImg"
+              whileHover={{ scale: 1.1 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+            />
+            <div className="imageOverlay"></div>
+          </div>
+          <motion.div 
+            className="featuredTitles"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.15 + 0.3 }}
+          >
             <h1>{city.name}</h1>
             <h2>{data[index] || 0} properties</h2>
-          </div>
-        </div>
+          </motion.div>
+          <div className="borderGlow"></div>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 };
 
