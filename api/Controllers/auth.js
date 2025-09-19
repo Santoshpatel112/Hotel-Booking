@@ -1,6 +1,7 @@
 import { User } from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { emitUserActivity } from "../utils/socket.js";
 export const Register = async (req, res) => {
   try {
     console.log("👤 Creating new user with data:", {
@@ -19,6 +20,17 @@ export const Register = async (req, res) => {
     });
 
     await newuser.save();
+
+    // Emit real-time user registration activity
+    emitUserActivity({
+      action: 'registered',
+      user: {
+        _id: newuser._id,
+        username: newuser.username,
+        email: newuser.email,
+        isAdmin: newuser.isAdmin
+      }
+    });
 
     // Create JWT token for the new user
     const token = jwt.sign(
@@ -155,6 +167,17 @@ export const Login = async (req, res) => {
     console.log("👤 User ID:", user._id);
     console.log("🔑 Admin status:", isAdmin);
     console.log("🎫 JWT token generated");
+
+    // Emit real-time user login activity
+    emitUserActivity({
+      action: 'login',
+      user: {
+        _id: user._id,
+        username: user.username,
+        email: user.email,
+        isAdmin: isAdmin
+      }
+    });
 
     // Create user object with updated admin status
     const userResponse = {
