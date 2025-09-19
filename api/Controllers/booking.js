@@ -1,6 +1,7 @@
 import { Booking } from "../models/Booking.js";
 import { Hotel } from "../models/Hotel.js";
 import { User } from "../models/User.js";
+import { emitBookingActivity } from "../utils/socket.js";
 
 // Create a new booking
 export const createBooking = async (req, res) => {
@@ -86,6 +87,12 @@ export const createBooking = async (req, res) => {
         const populatedBooking = await Booking.findById(savedBooking._id)
             .populate('hotel', 'name city address photos')
             .populate('user', 'username email');
+
+        // Emit real-time booking activity
+        emitBookingActivity({
+            action: 'created',
+            booking: populatedBooking
+        });
 
         res.status(201).json({
             success: true,
@@ -233,6 +240,12 @@ export const updateBookingStatus = async (req, res) => {
             .populate('hotel', 'name city')
             .populate('user', 'username email');
 
+        // Emit real-time booking update
+        emitBookingActivity({
+            action: 'updated',
+            booking: updatedBooking
+        });
+
         res.status(200).json({
             success: true,
             message: "Booking updated successfully",
@@ -303,6 +316,16 @@ export const cancelBooking = async (req, res) => {
         booking.paymentStatus = refundAmount > 0 ? 'refunded' : booking.paymentStatus;
 
         await booking.save();
+
+        // Emit real-time booking cancellation
+        emitBookingActivity({
+            action: 'cancelled',
+            booking: {
+                ...booking.toObject(),
+                user: { username: req.user.username },
+                hotel: await Hotel.findById(booking.hotel).select('name city')
+            }
+        });
 
         res.status(200).json({
             success: true,
