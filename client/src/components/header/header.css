@@ -294,6 +294,7 @@
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(10px);
   overflow: visible; /* Allow dropdowns to overflow */
+  z-index: 1; /* Base z-index for all items */
 }
 
 .headerSearchItem::before {
@@ -645,11 +646,15 @@
   animation: slideDown 0.3s ease-out;
   min-width: 320px;
   max-width: 400px;
+  /* Ensure visibility above all other elements */
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 /* Ensure date picker parent has higher z-index when active */
 .headerSearchItem.dateItem.active {
   z-index: 100000;
+  position: relative;
 }
 
 .datePickerHeader,
@@ -764,11 +769,15 @@
   min-width: 320px;
   max-width: 400px;
   animation: slideDown 0.3s ease-out;
+  /* Ensure visibility above all other elements */
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 /* Ensure guest selector parent has higher z-index when active */
 .headerSearchItem.guestItem.active {
   z-index: 100000;
+  position: relative;
 }
 
 .guestOptions {
@@ -1014,6 +1023,10 @@
     overflow-y: auto;
     z-index: 100001;
     margin-top: 0;
+    /* Enhanced mobile visibility */
+    backdrop-filter: blur(25px);
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid rgba(0, 0, 0, 0.1);
   }
   
   .orb1, .orb2 {
@@ -1207,4 +1220,30 @@
 .datePickerDropdown::-webkit-scrollbar-thumb:hover,
 .guestSelectorDropdown::-webkit-scrollbar-thumb:hover {
   background: #9ca3af;
+}
+
+/* Desktop-specific dropdown improvements */
+@media (min-width: 769px) {
+  .datePickerDropdown {
+    /* Ensure sufficient space and visibility on desktop */
+    min-width: 380px;
+    box-shadow: 
+      0 25px 70px rgba(0, 0, 0, 0.2),
+      0 0 0 1px rgba(255, 255, 255, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+  
+  .guestSelectorDropdown {
+    /* Ensure sufficient space and visibility on desktop */
+    min-width: 350px;
+    box-shadow: 
+      0 25px 70px rgba(0, 0, 0, 0.2),
+      0 0 0 1px rgba(255, 255, 255, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+  
+  /* Ensure search items have proper stacking context */
+  .headerSearchItem.active {
+    transform: translateY(-2px) translateZ(0);
+  }
 }

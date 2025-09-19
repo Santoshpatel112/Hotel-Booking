@@ -13,15 +13,17 @@ import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
 import AdminDashboardDemo from "./pages/demo/AdminDashboardDemo.jsx";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthContextProvider } from "./context/AuthContext";
+import { ThemeProvider } from "./context/ThemeContext";
 import PropertyTypeDetails from "./pages/propertyTypeDetails/PropertyTypeDetails";
 
 function App() {
   return (
-    <AuthContextProvider>
-      <BrowserRouter future={{
-          v7_startTransition: true,
-          v7_relativeSplatPath: true,
-      }}>
+    <ThemeProvider>
+      <AuthContextProvider>
+        <BrowserRouter future={{
+            v7_startTransition: true,
+            v7_relativeSplatPath: true,
+        }}>
         <Routes>
           <Route path="/" element={<Home/>}/>
           <Route path="/hotels" element={<List/>}/>
@@ -52,6 +54,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </AuthContextProvider>
+  </ThemeProvider>
   );
 }
 
