@@ -10,9 +10,13 @@ import {
   faCircleArrowRight,
   faCircleXmark,
   faLocationDot,
+  faChevronLeft,
+  faChevronRight,
+  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import useFetch from "../../hooks/useFetch";
 
 const Hotel = () => {
@@ -100,51 +104,101 @@ const Hotel = () => {
       <Header type="list" />
       <div className="hotelContainer">
         {open && (
-          <div 
-            className="slider"
-            onClick={(e) => {
-              // Close when clicking on the dark background
-              if (e.target === e.currentTarget) {
-                setOpen(false);
-              }
-            }}
-          >
-            <div className="sliderWrapper">
-              <FontAwesomeIcon
-                icon={faCircleXmark}
-                className="close"
-                onClick={(e) => {
-                  e.stopPropagation();
+          <AnimatePresence>
+            <motion.div 
+              className="slider"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              onClick={(e) => {
+                // Close when clicking on the dark background
+                if (e.target === e.currentTarget) {
                   setOpen(false);
-                }}
-                aria-label="Close gallery"
-              />
-              <FontAwesomeIcon
-                icon={faCircleArrowLeft}
-                className="arrow"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleMove("l");
-                }}
-                aria-label="Previous image"
-              />
-              <img 
-                src={photos[slideNumber].src} 
-                alt={`${hotelData.name} - ${slideNumber + 1} of ${photos.length}`} 
-                className="sliderImg" 
-                onClick={(e) => e.stopPropagation()}
-              />
-              <FontAwesomeIcon
-                icon={faCircleArrowRight}
-                className="arrow"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleMove("r");
-                }}
-                aria-label="Next image"
-              />
-            </div>
-          </div>
+                }
+              }}
+            >
+              <div className="sliderWrapper">
+                {/* Modern Close Button */}
+                <motion.button
+                  className="modernClose"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setOpen(false);
+                  }}
+                  whileHover={{ scale: 1.1, rotate: 90 }}
+                  whileTap={{ scale: 0.9 }}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.2 }}
+                  aria-label="Close gallery"
+                >
+                  <FontAwesomeIcon icon={faTimes} />
+                </motion.button>
+
+                {/* Left Arrow - Outside Image */}
+                <motion.button
+                  className="modernArrow modernArrowLeft"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleMove("l");
+                  }}
+                  whileHover={{ scale: 1.1, x: -5 }}
+                  whileTap={{ scale: 0.9 }}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.1 }}
+                  aria-label="Previous image"
+                >
+                  <FontAwesomeIcon icon={faChevronLeft} />
+                </motion.button>
+
+                {/* Image Container with Fade Transition */}
+                <motion.div 
+                  className="imageContainer"
+                  key={slideNumber}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                >
+                  <img 
+                    src={photos[slideNumber].src} 
+                    alt={`${hotelData.name} - ${slideNumber + 1} of ${photos.length}`} 
+                    className="sliderImg" 
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                </motion.div>
+
+                {/* Right Arrow - Outside Image */}
+                <motion.button
+                  className="modernArrow modernArrowRight"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleMove("r");
+                  }}
+                  whileHover={{ scale: 1.1, x: 5 }}
+                  whileTap={{ scale: 0.9 }}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.1 }}
+                  aria-label="Next image"
+                >
+                  <FontAwesomeIcon icon={faChevronRight} />
+                </motion.button>
+
+                {/* Image Counter */}
+                <motion.div 
+                  className="imageCounter"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  {slideNumber + 1} / {photos.length}
+                </motion.div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
         )}
         <div className="hotelWrapper">
           <div className="hotelHeader">

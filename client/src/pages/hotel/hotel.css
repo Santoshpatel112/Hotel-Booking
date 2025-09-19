@@ -249,143 +249,309 @@
   box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
 }
 
+/* Modern Image Slider Modal */
 .slider {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(8px);
   z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
   touch-action: none;
-  animation: fadeIn 0.3s ease-out;
 }
 
 .sliderWrapper {
   position: relative;
   width: 100%;
-  max-width: 1200px;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 80px 120px 80px 120px;
   box-sizing: border-box;
 }
 
-.sliderImg {
-  max-width: 90%;
-  max-height: 90vh;
-  object-fit: contain;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  margin: 0 30px;
+/* Image Container */
+.imageContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  max-height: 100%;
 }
 
-/* Slider Navigation Arrows */
-.arrow {
+.sliderImg {
+  max-width: 100%;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 16px;
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+/* Modern Close Button */
+.modernClose {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.modernClose:hover {
+  background: rgba(220, 38, 38, 0.9);
+  color: white;
+  border-color: rgba(220, 38, 38, 0.5);
+  box-shadow: 0 12px 24px rgba(220, 38, 38, 0.4);
+}
+
+/* Modern Arrow Buttons */
+.modernArrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.6);
-  color: white;
-  font-size: 24px;
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 1000;
-  transition: all 0.3s ease;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-.arrow:hover {
-  background-color: rgba(0, 0, 0, 0.8);
-  transform: translateY(-50%) scale(1.1);
-}
-
-.arrow:first-of-type {
-  left: 20px;
-}
-
-.arrow:last-of-type {
-  right: 20px;
-}
-
-/* Responsive adjustments */
-@media (max-width: 1024px) {
-  .arrow {
-    width: 44px;
-    height: 44px;
-    font-size: 22px;
-  }
-  
-  .arrow:first-of-type {
-    left: 15px;
-  }
-  
-  .arrow:last-of-type {
-    right: 15px;
-  }
-}
-
-@media (max-width: 768px) {
-  .arrow {
-    width: 40px;
-    height: 40px;
-    font-size: 20px;
-  }
-  
-  .arrow:first-of-type {
-    left: 10px;
-  }
-  
-  .arrow:last-of-type {
-    right: 10px;
-  }
-}
-
-.close {
-  position: fixed;
-  top: 30px;
-  right: 30px;
-  font-size: 2.5rem;
-  color: rgba(255, 255, 255, 0.8);
+  border: none;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  color: #1f2937;
+  font-size: 20px;
   cursor: pointer;
   z-index: 1001;
-  background: rgba(0, 0, 0, 0.4);
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 12px 24px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
-.close:hover {
-  color: #ff4444;
-  background: rgba(0, 0, 0, 0.7);
-  transform: rotate(90deg);
+.modernArrow:hover {
+  background: rgba(16, 185, 129, 0.95);
+  color: white;
+  border-color: rgba(16, 185, 129, 0.3);
+  box-shadow: 
+    0 16px 32px rgba(16, 185, 129, 0.3),
+    0 0 20px rgba(16, 185, 129, 0.2);
 }
 
-/* Responsive Gallery */
+.modernArrowLeft {
+  left: 40px;
+}
+
+.modernArrowRight {
+  right: 40px;
+}
+
+/* Image Counter */
+.imageCounter {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  color: rgba(255, 255, 255, 0.9);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive Design for Tablets */
 @media (max-width: 1024px) {
-  .hotelImg {
-    height: 180px;
+  .sliderWrapper {
+    padding: 60px 80px;
+  }
+  
+  .modernArrow {
+    width: 52px;
+    height: 52px;
+    font-size: 18px;
+  }
+  
+  .modernArrowLeft {
+    left: 32px;
+  }
+  
+  .modernArrowRight {
+    right: 32px;
+  }
+  
+  .modernClose {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    top: 20px;
+    right: 20px;
+  }
+}
+
+/* Responsive Design for Mobile */
+@media (max-width: 768px) {
+  .sliderWrapper {
+    padding: 40px 60px;
+  }
+  
+  .modernArrow {
+    width: 48px;
+    height: 48px;
+    font-size: 16px;
+  }
+  
+  .modernArrowLeft {
+    left: 20px;
+  }
+  
+  .modernArrowRight {
+    right: 20px;
   }
   
   .sliderImg {
-    max-width: 85%;
-    margin: 0 20px;
+    max-height: 80vh;
+    border-radius: 12px;
+  }
+  
+  .imageCounter {
+    bottom: 20px;
+    font-size: 13px;
+    padding: 6px 12px;
+  }
+}
+
+/* Mobile Portrait */
+@media (max-width: 480px) {
+  .sliderWrapper {
+    padding: 20px 50px;
+  }
+  
+  .modernArrow {
+    width: 44px;
+    height: 44px;
+    font-size: 14px;
+  }
+  
+  .modernArrowLeft {
+    left: 12px;
+  }
+  
+  .modernArrowRight {
+    right: 12px;
+  }
+  
+  .modernClose {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+    top: 16px;
+    right: 16px;
+  }
+  
+  .sliderImg {
+    max-height: 75vh;
+    border-radius: 8px;
+  }
+  
+  .imageCounter {
+    bottom: 16px;
+    font-size: 12px;
+    padding: 4px 10px;
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) {
+  .modernArrow, .modernClose {
+    opacity: 1 !important;
+  }
+  
+  .modernArrow:hover,
+  .modernClose:hover {
+    transform: none;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .modernArrow {
+    background: white;
+    color: black;
+    border: 2px solid black;
+  }
+  
+  .modernClose {
+    background: white;
+    color: black;
+    border: 2px solid black;
+  }
+  
+  .imageCounter {
+    background: white;
+    color: black;
+    border: 2px solid black;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .modernArrow,
+  .modernClose,
+  .sliderImg,
+  .imageCounter {
+    transition: none;
+  }
+}
+
+/* Dark Theme Enhancements */
+@media (prefers-color-scheme: dark) {
+  .slider {
+    background: rgba(0, 0, 0, 0.98);
+  }
+  
+  .modernArrow {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  .modernArrow:hover {
+    background: rgba(16, 185, 129, 0.9);
+    color: white;
+  }
+}
+
+/* Gallery Grid Responsive */
+@media (max-width: 1024px) {
+  .hotelImg {
+    height: 180px;
   }
 }
 
@@ -397,11 +563,6 @@
   .hotelImg {
     height: 160px;
   }
-  
-  .sliderImg {
-    max-width: 90%;
-    margin: 0 10px;
-  }
 }
 
 @media (max-width: 480px) {
@@ -412,19 +573,10 @@
   .hotelImg {
     height: 220px;
   }
-  
-  .sliderImg {
-    max-height: 70vh;
-    max-width: 95%;
-  }
 }
 
 /* Touch device optimizations */
 @media (hover: none) {
-  .arrow, .close {
-    opacity: 1 !important;
-  }
-  
   .hotelImgWrapper:hover {
     transform: none;
   }
