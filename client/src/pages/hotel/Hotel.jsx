@@ -27,7 +27,6 @@ const Hotel = () => {
   
   const { data: hotel, loading, error } = useFetch(`/hotels/get/${id}`);
   
-  // Default photos as fallback
   const defaultPhotos = [
     {
       src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707778.jpg?k=56ba0babbcbbfeb3d3e911728831dcbc390ed2cb16c51d88159f82bf751d04c6&o=&hp=1",
@@ -40,7 +39,6 @@ const Hotel = () => {
     },
   ];
   
-  // Use hotel photos if available, otherwise use default photos
   const photos = hotel?.hotel?.photos?.length ? 
     hotel.hotel.photos.map(photo => ({ src: photo })) : defaultPhotos;
 
@@ -69,7 +67,6 @@ const Hotel = () => {
       document.body.classList.remove('slider-open');
     }
     
-    // Cleanup
     return () => {
       document.body.classList.remove('slider-open');
     };
@@ -112,14 +109,12 @@ const Hotel = () => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
               onClick={(e) => {
-                // Close when clicking on the dark background
                 if (e.target === e.currentTarget) {
                   setOpen(false);
                 }
               }}
             >
               <div className="sliderWrapper">
-                {/* Modern Close Button */}
                 <motion.button
                   className="modernClose"
                   onClick={(e) => {
@@ -136,7 +131,6 @@ const Hotel = () => {
                   <FontAwesomeIcon icon={faTimes} />
                 </motion.button>
 
-                {/* Left Arrow - Outside Image */}
                 <motion.button
                   className="modernArrow modernArrowLeft"
                   onClick={(e) => {
@@ -153,7 +147,6 @@ const Hotel = () => {
                   <FontAwesomeIcon icon={faChevronLeft} />
                 </motion.button>
 
-                {/* Image Container with Fade Transition */}
                 <motion.div 
                   className="imageContainer"
                   key={slideNumber}
@@ -170,7 +163,6 @@ const Hotel = () => {
                   />
                 </motion.div>
 
-                {/* Right Arrow - Outside Image */}
                 <motion.button
                   className="modernArrow modernArrowRight"
                   onClick={(e) => {
@@ -187,7 +179,6 @@ const Hotel = () => {
                   <FontAwesomeIcon icon={faChevronRight} />
                 </motion.button>
 
-                {/* Image Counter */}
                 <motion.div 
                   className="imageCounter"
                   initial={{ opacity: 0, y: 20 }}
