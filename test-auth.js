@@ -6,7 +6,6 @@ async function testAuth() {
   try {
     console.log('🧪 Testing authentication...');
     
-    // First, try to register a user
     console.log('📝 Registering user...');
     const registerData = {
       username: 'testuser',
@@ -21,7 +20,6 @@ async function testAuth() {
       console.log('⚠️ Registration failed (user might already exist):', registerError.response?.data);
     }
     
-    // Now try to login
     console.log('🔐 Attempting login...');
     const loginData = {
       email: 'ja@gmail.com',
