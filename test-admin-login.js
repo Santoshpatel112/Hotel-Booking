@@ -1,4 +1,3 @@
-// Test script to verify admin user login
 const axios = require('axios');
 
 const API_BASE = 'http://localhost:8000/api';
@@ -36,7 +35,6 @@ async function testAdminLogin() {
   }
 }
 
-// Test function for database connection
 async function testDatabaseConnection() {
   console.log('🧪 Testing Database Connection...\n');
   
@@ -54,7 +52,6 @@ async function testDatabaseConnection() {
   }
 }
 
-// Main test runner
 async function runTests() {
   console.log('🚀 EasyStay Admin Login Test\n');
   console.log('=' * 50);
@@ -64,5 +61,4 @@ async function runTests() {
   await testAdminLogin();
 }
 
-// Run tests
 runTests().catch(console.error);
