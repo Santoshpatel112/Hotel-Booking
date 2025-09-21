@@ -1,8 +1,6 @@
-// Payment Service for handling payment processing
 import api from "./api";
 
 class PaymentService {
-  // Initialize payment session
   async initializePayment(paymentData) {
     try {
       const response = await api.post("/payments/initialize", paymentData);
@@ -14,13 +12,10 @@ class PaymentService {
     }
   }
 
-  // Process credit card payment
   async processCreditCardPayment(paymentData) {
     try {
-      // Simulate payment processing delay
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      // Simulate payment validation
       if (this.validateCreditCard(paymentData.cardNumber)) {
         return {
           success: true,
@@ -35,10 +30,8 @@ class PaymentService {
     }
   }
 
-  // Process PayPal payment
   async processPayPalPayment(paymentData) {
     try {
-      // Simulate PayPal processing
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
       return {
@@ -52,10 +45,8 @@ class PaymentService {
     }
   }
 
-  // Process UPI payment
   async processUPIPayment(paymentData) {
     try {
-      // Simulate UPI processing
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       return {
@@ -69,15 +60,11 @@ class PaymentService {
     }
   }
 
-  // Validate credit card (basic validation)
   validateCreditCard(cardNumber) {
-    // Remove spaces and dashes
     const cleanNumber = cardNumber.replace(/[\s-]/g, "");
 
-    // Check if it's a valid number
     if (!/^\d{13,19}$/.test(cleanNumber)) return false;
 
-    // Luhn algorithm
     let sum = 0;
     let shouldDouble = false;
 
@@ -96,19 +83,16 @@ class PaymentService {
     return sum % 10 === 0;
   }
 
-  // Validate card expiry
   validateCardExpiry(month, year) {
     const now = new Date();
     const expiry = new Date(2000 + parseInt(year), parseInt(month) - 1);
     return expiry > now;
   }
 
-  // Validate CVV
   validateCVV(cvv) {
     return /^\d{3,4}$/.test(cvv);
   }
 
-  // Generate transaction ID
   generateTransactionId() {
     return `TXN${Date.now()}${Math.random()
       .toString(36)
@@ -116,7 +100,6 @@ class PaymentService {
       .toUpperCase()}`;
   }
 
-  // Get card type
   getCardType(cardNumber) {
     const cleanNumber = cardNumber.replace(/[\s-]/g, "");
 
@@ -127,19 +110,17 @@ class PaymentService {
     return "unknown";
   }
 
-  // Calculate processing fee
   calculateProcessingFee(amount, paymentMethod) {
     const fees = {
-      credit_card: amount * 0.029 + 0.3, // 2.9% + $0.30
-      paypal: amount * 0.034, // 3.4%
-      upi: amount * 0.01, // 1%
-      debit_card: amount * 0.019 + 0.2, // 1.9% + $0.20
+      credit_card: amount * 0.029 + 0.3,
+      paypal: amount * 0.034,
+      upi: amount * 0.01,
+      debit_card: amount * 0.019 + 0.2,
     };
 
     return Math.round((fees[paymentMethod] || 0) * 100) / 100;
   }
 
-  // Format amount for display
   formatAmount(amount, currency = "INR") {
     return new Intl.NumberFormat("en-IN", {
       style: "currency",
@@ -149,7 +130,6 @@ class PaymentService {
     }).format(amount);
   }
 
-  // Verify payment status
   async verifyPayment(transactionId) {
     try {
       const response = await api.get(`/payments/verify/${transactionId}`);
@@ -159,7 +139,6 @@ class PaymentService {
     }
   }
 
-  // Refund payment
   async refundPayment(transactionId, amount, reason) {
     try {
       const response = await api.post("/payments/refund", {
