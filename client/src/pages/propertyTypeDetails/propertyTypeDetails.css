@@ -3,7 +3,6 @@
     background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
 }
 
-/* Hero Section */
 .property-hero {
     position: relative;
     padding: 120px 20px 80px;
@@ -78,7 +77,6 @@
     opacity: 0.9;
 }
 
-/* Controls Section */
 .controls-section {
     padding: 40px 20px;
     background: white;
@@ -151,7 +149,6 @@
     box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
 }
 
-/* Properties Section */
 .properties-section {
     padding: 40px 20px 80px;
 }
@@ -173,7 +170,6 @@
     gap: 20px;
 }
 
-/* Property Cards */
 .property-card {
     background: white;
     border-radius: 20px;
@@ -381,7 +377,6 @@
     box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
 }
 
-/* Loading States */
 .loading-container,
 .error-container,
 .no-results-container {
@@ -528,7 +523,6 @@
     font-weight: 600;
 }
 
-/* Responsive Design */
 @media (max-width: 1024px) {
     .hero-title {
         font-size: 36px;
