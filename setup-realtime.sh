@@ -1,11 +1,8 @@
 #!/bin/bash
 
-# Real-time Dashboard Setup Script
-# This script sets up and tests the real-time dashboard system
-
 echo "🚀 Starting Real-time Dashboard Setup..."
 
-# Check if we're in the correct directory
+if [ ! -d "api" ] || [ ! -d "client" ]; then
 if [ ! -d "api" ] || [ ! -d "client" ]; then
     echo "❌ Please run this script from the BOOKINGAPP root directory"
     exit 1
@@ -13,7 +10,6 @@ fi
 
 echo "📦 Checking dependencies..."
 
-# Check backend dependencies
 cd api
 if ! npm list socket.io > /dev/null 2>&1; then
     echo "📦 Installing Socket.IO for backend..."
@@ -22,7 +18,6 @@ else
     echo "✅ Socket.IO already installed in backend"
 fi
 
-# Check frontend dependencies
 cd ../client
 if ! npm list socket.io-client > /dev/null 2>&1; then
     echo "📦 Installing Socket.IO client for frontend..."
