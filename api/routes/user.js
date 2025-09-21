@@ -9,7 +9,6 @@ import {
 
 const router = express.Router();
 
-// A simple test route to check if a user is authenticated
 router.get("/checkAuthenticated", verifyToken, (req, res) => {
   res.send("Hello User, you are Logged In");
 });
@@ -18,16 +17,12 @@ router.get("/checkadmin/:id", verifyAdmin, (req, res) => {
   res.send("Hello admin, you are logged in now you can delete all accounts");
 });
 
-// A route to update a user, protected by a custom verification middleware
 router.put("/:id", verifyUser, UpdateUser);
 
-// A route to delete a user
 router.delete("/:id", verifyUser, DeleteUser);
 
-// A route to get all users (must come before /:id route)
 router.get("/", verifyAdmin, getallUser);
 
-// A route to get a single user by ID
 router.get("/:id", verifyUser, GetUserByID);
 
 export default router;
