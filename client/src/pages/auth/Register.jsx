@@ -32,7 +32,6 @@ const Register = () => {
       ...prev,
       [name]: value,
     }));
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors((prev) => ({
         ...prev,
@@ -101,7 +100,6 @@ const Register = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          {/* Header */}
           <div className="authHeader">
             <motion.div
               className="authLogo"
@@ -218,7 +216,6 @@ const Register = () => {
             </motion.div>
           </div>
 
-          {/* Form */}
           <motion.form
             className="authForm"
             onSubmit={handleSubmit}
@@ -353,7 +350,6 @@ const Register = () => {
             </motion.button>
           </motion.form>
 
-          {/* Footer */}
           <motion.div
             className="authFooter"
             initial={{ opacity: 0 }}
@@ -369,7 +365,6 @@ const Register = () => {
           </motion.div>
         </motion.div>
 
-        {/* Background decoration */}
         <div className="authBackground">
           <div className="circle circle1"></div>
           <div className="circle circle2"></div>
