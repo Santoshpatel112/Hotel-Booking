@@ -23,9 +23,8 @@ import { initializeSocket } from "./utils/socket.js";
 dotenv.config();
 const PORT = process.env.PORT || 8000;
 
-// Middleware
-app.use(express.json()); // Parse JSON request bodies
-app.use(cookieParser()); // Parse cookies
+app.use(express.json());
+app.use(cookieParser());
 app.use(cors({
   origin: 'http://localhost:3000',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -35,13 +34,12 @@ app.use(cors({
   origin: 'http://localhost:3000',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
-})); // Enable CORS 
+})); 
 
 const connectDB = async () => {
     try {
         await mongoose.connect(process.env.MONGO_URL);
         
-        // Check which database we're connected to
         const dbName = mongoose.connection.db.databaseName;
         const host = mongoose.connection.host;
         
@@ -82,9 +80,7 @@ app.use("/api/analytics", analyticsRoutes);
 app.use("/api/property-types", propertyTypeRoutes);
 app.use("/api/hotel-types", hotelTypeRoutes);
 app.use("/api/payment", paymentRoutes);
-// app.use("/api/room-types", roomTypeRoutes);
-
-// Error handling middleware
+app.use((err, req, res, next) => {
 app.use((err, req, res, next) => {
     const errorStatus = err.status || 500;
     const errorMessage = err.message || "Something went wrong!";
@@ -96,10 +92,8 @@ app.use((err, req, res, next) => {
         stack: process.env.NODE_ENV === "development" ? err.stack : {}
     });
 });
-// Create HTTP server
 const server = createServer(app);
 
-// Initialize Socket.IO
 initializeSocket(server);
 
 server.listen(PORT, async () => {
