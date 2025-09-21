@@ -38,9 +38,8 @@ export const verifyUser = (req, res, next) => {
 export const verifyAdmin = (req, res, next) => {
     verifyToken(req, res, () => {
         if (req.user.isAdmin) {
-            next(); // User is an admin, proceed to the next handler
+            next();
         } else {
-            // User is not an admin, send a 403 Forbidden error
             return res.status(403).json({
                 message: "You are not an administrator"
             });
