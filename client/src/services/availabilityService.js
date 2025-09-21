@@ -1,8 +1,6 @@
-// Room Availability Service for checking real-time availability
 import api from './api';
 
 class AvailabilityService {
-  // Check room availability for specific dates
   async checkAvailability(hotelId, checkIn, checkOut, rooms = 1) {
     try {
       const response = await api.get(`/availability/check`, {
@@ -16,16 +14,13 @@ class AvailabilityService {
       
       return response.data;
     } catch (error) {
-      // Simulate availability check for demo
       return this.simulateAvailabilityCheck(hotelId, checkIn, checkOut, rooms);
     }
   }
 
-  // Simulate availability check (for demo purposes)
   simulateAvailabilityCheck(hotelId, checkIn, checkOut, rooms) {
     const nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
     
-    // Simulate different availability scenarios
     const scenarios = [
       { available: true, roomsAvailable: 10, message: 'Rooms available' },
       { available: true, roomsAvailable: 5, message: 'Limited availability' },
@@ -33,9 +28,8 @@ class AvailabilityService {
       { available: false, roomsAvailable: 0, message: 'No rooms available for these dates' }
     ];
     
-    // Random scenario based on hotel ID and dates
     const scenarioIndex = (parseInt(hotelId?.slice(-1) || '0') + nights) % 4;
-    const scenario = scenarios[Math.min(scenarioIndex, 2)]; // Avoid no availability for demo
+    const scenario = scenarios[Math.min(scenarioIndex, 2)];
     
     return {
       available: scenario.available,
@@ -51,29 +45,24 @@ class AvailabilityService {
     };
   }
 
-  // Calculate price variations based on demand and season
   calculatePriceVariation(checkIn, checkOut) {
     const checkInMonth = checkIn.getMonth();
     const checkInDay = checkIn.getDay();
     
     let multiplier = 1.0;
     
-    // Weekend premium (Friday, Saturday)
     if (checkInDay === 5 || checkInDay === 6) {
       multiplier += 0.2;
     }
     
-    // Peak season (December, January)
     if (checkInMonth === 11 || checkInMonth === 0) {
       multiplier += 0.3;
     }
     
-    // Summer season (April, May)
     if (checkInMonth === 3 || checkInMonth === 4) {
       multiplier += 0.15;
     }
     
-    // Holiday periods (approximate)
     const holidays = this.isHolidayPeriod(checkIn);
     if (holidays.length > 0) {
       multiplier += 0.25;
@@ -90,13 +79,11 @@ class AvailabilityService {
     };
   }
 
-  // Check for holiday periods
   isHolidayPeriod(date) {
     const month = date.getMonth();
     const day = date.getDate();
     const holidays = [];
     
-    // Major Indian holidays (approximate dates)
     if (month === 0 && day === 26) holidays.push('Republic Day');
     if (month === 7 && day === 15) holidays.push('Independence Day');
     if (month === 9 && day === 2) holidays.push('Gandhi Jayanti');
@@ -107,13 +94,11 @@ class AvailabilityService {
     return holidays;
   }
 
-  // Get booking restrictions
   getRestrictions(checkIn, checkOut) {
     const restrictions = [];
     const nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
     const daysUntilCheckIn = Math.ceil((checkIn - new Date()) / (1000 * 60 * 60 * 24));
     
-    // Minimum stay requirements
     if (nights < 2 && checkIn.getDay() >= 5) {
       restrictions.push({
         type: 'minimum_stay',
@@ -121,7 +106,6 @@ class AvailabilityService {
       });
     }
     
-    // Advance booking requirements
     if (daysUntilCheckIn < 1) {
       restrictions.push({
         type: 'advance_booking',
@@ -129,7 +113,7 @@ class AvailabilityService {
       });
     }
     
-    // Cancellation policies
+
     if (daysUntilCheckIn <= 7) {
       restrictions.push({
         type: 'cancellation',
