@@ -16,14 +16,13 @@ const Featured = () => {
   };
 
   const handleAnimationEnd = (cityName) => {
-    // Remove the item from hovered set after animation completes
     setTimeout(() => {
       setHoveredItems(prev => {
         const newSet = new Set(prev);
         newSet.delete(cityName);
         return newSet;
       });
-    }, 2000); // Keep the effect for 2 seconds after hover ends
+    }, 2000);
   };
 
   if (loading) {
