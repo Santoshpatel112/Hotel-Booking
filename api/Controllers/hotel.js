@@ -62,15 +62,14 @@ const GetHotelByID = async (req, res) => {
     if (!getHotel) {
       return res.status(404).json({ message: "Hotel not found" });
     }
-    
-    // Transform data to match frontend expectations
+
     const transformedHotel = {
       ...getHotel.toObject(),
       cheapestPrice: getHotel.prices,
       cheapestprice: getHotel.prices,
-      desc: getHotel.description
+      desc: getHotel.description,
     };
-    
+
     return res.status(200).json({ hotel: transformedHotel });
   } catch (error) {
     return res
@@ -80,103 +79,104 @@ const GetHotelByID = async (req, res) => {
 };
 
 const getallHotel = async (req, res) => {
-  const { city, type, min, max, limit, sortBy, ...others} = req.query;
+  const { city, type, min, max, limit, sortBy, ...others } = req.query;
   try {
     let query = {};
-    
-    // Add city filter if provided
+
     if (city) {
-      query.city = { $regex: new RegExp(city, 'i') };
+      query.city = { $regex: new RegExp(city, "i") };
     }
-    
-    // Add type filter if provided
+
     if (type) {
       query.type = type;
     }
-    
-    // Add price range filter
+
     if (min || max) {
-      query.prices = { 
-        $gte: parseInt(min) || 1, 
-        $lte: parseInt(max) || 999999 
+      query.prices = {
+        $gte: parseInt(min) || 1,
+        $lte: parseInt(max) || 999999,
       };
     }
-    
-    // Add any other query parameters
-    Object.keys(others).forEach(key => {
-      if (others[key] && key !== 'city' && key !== 'type' && key !== 'min' && key !== 'max' && key !== 'sortBy') {
+
+    Object.keys(others).forEach((key) => {
+      if (
+        others[key] &&
+        key !== "city" &&
+        key !== "type" &&
+        key !== "min" &&
+        key !== "max" &&
+        key !== "sortBy"
+      ) {
         query[key] = others[key];
       }
     });
-    
+
     console.log(`🔍 Search query:`, query);
     console.log(`📍 City filter: ${city}`);
-    console.log(`💰 Price range: ${min || 'any'} - ${max || 'any'}`);
-    
-    // Build sort criteria
+    console.log(`💰 Price range: ${min || "any"} - ${max || "any"}`);
+
     let sortCriteria = {};
-    switch(sortBy) {
-      case 'price_low':
+    switch (sortBy) {
+      case "price_low":
         sortCriteria = { prices: 1 };
         break;
-      case 'price_high':
+      case "price_high":
         sortCriteria = { prices: -1 };
         break;
-      case 'rating':
+      case "rating":
         sortCriteria = { rating: -1 };
         break;
-      case 'newest':
+      case "newest":
         sortCriteria = { createdAt: -1 };
         break;
       default:
-        sortCriteria = { featured: -1, rating: -1 }; // Default to featured first, then by rating
+        sortCriteria = { featured: -1, rating: -1 };
     }
-    
+
     const getall = await Hotel.find(query)
       .sort(sortCriteria)
       .limit(parseInt(limit) || 0);
-      
+
     console.log(`📊 Found ${getall.length} hotels in database`);
 
     if (getall.length > 0) {
       console.log("🏨 Hotels found:");
       getall.forEach((hotel, index) => {
-        console.log(`  ${index + 1}. ${hotel.name} in ${hotel.city} - ₹${hotel.prices}`);
+        console.log(
+          `  ${index + 1}. ${hotel.name} in ${hotel.city} - ₹${hotel.prices}`
+        );
       });
     } else {
       console.log("⚠️ No hotels found matching criteria");
       console.log(`   Query used:`, JSON.stringify(query, null, 2));
     }
 
-    // Transform data to match frontend expectations
-    const transformedHotels = getall.map(hotel => ({
+    const transformedHotels = getall.map((hotel) => ({
       ...hotel.toObject(),
       cheapestPrice: hotel.prices,
       cheapestprice: hotel.prices,
       desc: hotel.description,
-      rating: hotel.rating || 4.0, // Default rating if not present
-      amenities: hotel.amenities || [], // Default empty array if not present
-      photos: hotel.photos || [] // Default empty array if not present
+      rating: hotel.rating || 4.0,
+      amenities: hotel.amenities || [],
+      photos: hotel.photos || [],
     }));
-    
-    return res.status(200).json({ 
-      data: transformedHotels, // Use 'data' key to match frontend expectations
-      hotels: transformedHotels, // Keep 'hotels' for backward compatibility
+
+    return res.status(200).json({
+      data: transformedHotels,
+      hotels: transformedHotels,
       count: transformedHotels.length,
       query: query,
-      sortBy: sortBy
+      sortBy: sortBy,
     });
   } catch (err) {
     console.error("❌ Error fetching hotels:", err);
-    return res
-      .status(500)
-      .json({ 
-        message: "Unable to find hotels", 
-        error: err.message,
-        data: [],
-        hotels: [],
-        count: 0
-      });
+    return res.status(500).json({
+      message: "Unable to find hotels",
+      error: err.message,
+      data: [],
+      hotels: [],
+      count: 0,
+    });
   }
 };
 
@@ -258,49 +258,49 @@ const testDatabase = async (req, res) => {
   }
 };
 
-const CountByType=async (req,res)=>{
+const CountByType = async (req, res) => {
   try {
-    const HotelCount=await Hotel.countDocuments({type:"hotel"});
-  const apartmentCount=await Hotel.countDocuments({type:"apartment"});
-  const resortCount=await Hotel.countDocuments({type:"resort"});
-  const villaCount=await Hotel.countDocuments({type:"villa"});
-  const cabinCount= await Hotel.countDocuments({type:"cabin"});
-  
-  res.status(200).json([
-    {type:"hotel",count:HotelCount},
-    {type:"apartment",count:apartmentCount},
-    {type:"resort",count:resortCount},
-    {type:"villa",count:villaCount},
-    {type:"cabin",count:cabinCount},
-  ])
+    const HotelCount = await Hotel.countDocuments({ type: "hotel" });
+    const apartmentCount = await Hotel.countDocuments({ type: "apartment" });
+    const resortCount = await Hotel.countDocuments({ type: "resort" });
+    const villaCount = await Hotel.countDocuments({ type: "villa" });
+    const cabinCount = await Hotel.countDocuments({ type: "cabin" });
+
+    res.status(200).json([
+      { type: "hotel", count: HotelCount },
+      { type: "apartment", count: apartmentCount },
+      { type: "resort", count: resortCount },
+      { type: "villa", count: villaCount },
+      { type: "cabin", count: cabinCount },
+    ]);
   } catch (error) {
     return res.status(500).json({
       message: "Unable to count by type",
       error: error.message,
     });
   }
-}
+};
 const getFeaturedHotels = async (req, res) => {
   try {
     const { limit } = req.query;
-    const featuredHotels = await Hotel.find({ featured: true })
-      .limit(parseInt(limit) || 4);
-    
+    const featuredHotels = await Hotel.find({ featured: true }).limit(
+      parseInt(limit) || 4
+    );
+
     if (!featuredHotels || featuredHotels.length === 0) {
       return res.status(404).json({ message: "No featured hotels found" });
     }
-    
+
     return res.status(200).json(featuredHotels);
   } catch (error) {
     console.error("Featured hotels error:", error);
     return res.status(500).json({
       message: "Error fetching featured hotels",
-      error: error.message
+      error: error.message,
     });
   }
 };
 
-// Add to exports at the bottom:
 export default {
   CreateHotel,
   DeleteHotel,
