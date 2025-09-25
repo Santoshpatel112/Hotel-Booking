@@ -40,8 +40,13 @@ export const EnhancedAdminDashboard = () => {
   const navigate = useNavigate();
 
   // State
+  const [activeTab, setActiveTab] = useState('dashboard');
   const [dashboardStats, setDashboardStats] = useState({});
   const [recentActivity, setRecentActivity] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [hotels, setHotels] = useState([]);
+  const [bookings, setBookings] = useState([]);
+  const [pagination, setPagination] = useState({});
   const [loading, setLoading] = useState(true);
 
   // API calls with auth token
@@ -117,6 +122,114 @@ export const EnhancedAdminDashboard = () => {
     }
   }, []);
 
+  // Fetch users
+  const fetchUsers = useCallback(async (page = 1, search = '') => {
+    try {
+      setLoading(true);
+      const data = await apiCall(`/dashboard/users?page=${page}&limit=10&search=${search}`);
+      setUsers(data.users);
+      setPagination(data.pagination);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      toast.error('Failed to load users');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  // Fetch hotels
+  const fetchHotels = useCallback(async (page = 1, search = '') => {
+    try {
+      setLoading(true);
+      const data = await apiCall(`/dashboard/hotels?page=${page}&limit=10&search=${search}`);
+      setHotels(data.hotels);
+      setPagination(data.pagination);
+    } catch (error) {
+      console.error('Error fetching hotels:', error);
+      toast.error('Failed to load hotels');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  // Fetch bookings
+  const fetchBookings = useCallback(async (page = 1, search = '', status = '', paymentStatus = '') => {
+    try {
+      setLoading(true);
+      const data = await apiCall(`/dashboard/bookings?page=${page}&limit=10&search=${search}&status=${status}&paymentStatus=${paymentStatus}`);
+      setBookings(data.bookings);
+      setPagination(data.pagination);
+    } catch (error) {
+      console.error('Error fetching bookings:', error);
+      toast.error('Failed to load bookings');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  // Toggle user admin status
+  const toggleUserAdmin = async (userId) => {
+    try {
+      await apiCall(`/dashboard/users/${userId}/toggle-admin`, { method: 'PATCH' });
+      toast.success('User status updated successfully');
+      fetchUsers();
+    } catch (error) {
+      toast.error('Failed to update user status');
+    }
+  };
+
+  // Delete user
+  const deleteUser = async (userId) => {
+    if (!window.confirm('Are you sure you want to delete this user?')) return;
+    
+    try {
+      await apiCall(`/dashboard/users/${userId}`, { method: 'DELETE' });
+      toast.success('User deleted successfully');
+      fetchUsers();
+    } catch (error) {
+      toast.error('Failed to delete user');
+    }
+  };
+
+  // Toggle hotel featured status
+  const toggleHotelFeatured = async (hotelId) => {
+    try {
+      await apiCall(`/dashboard/hotels/${hotelId}/toggle-featured`, { method: 'PATCH' });
+      toast.success('Hotel status updated successfully');
+      fetchHotels();
+    } catch (error) {
+      toast.error('Failed to update hotel status');
+    }
+  };
+
+  // Update booking status
+  const updateBookingStatus = async (bookingId, status) => {
+    try {
+      await apiCall(`/dashboard/bookings/${bookingId}/status`, {
+        method: 'PATCH',
+        body: JSON.stringify({ status })
+      });
+      toast.success('Booking status updated successfully');
+      fetchBookings();
+    } catch (error) {
+      toast.error('Failed to update booking status');
+    }
+  };
+
+  // Update payment status
+  const updatePaymentStatus = async (bookingId, paymentStatus) => {
+    try {
+      await apiCall(`/dashboard/bookings/${bookingId}/payment-status`, {
+        method: 'PATCH',
+        body: JSON.stringify({ paymentStatus })
+      });
+      toast.success('Payment status updated successfully');
+      fetchBookings();
+    } catch (error) {
+      toast.error('Failed to update payment status');
+    }
+  };
+
   useEffect(() => {
     if (!user?.isAdmin) {
       navigate('/');
@@ -124,6 +237,23 @@ export const EnhancedAdminDashboard = () => {
     }
     fetchDashboardStats();
   }, [user, navigate, fetchDashboardStats]);
+
+  // Load data based on active tab
+  useEffect(() => {
+    switch (activeTab) {
+      case 'users':
+        fetchUsers();
+        break;
+      case 'hotels':
+        fetchHotels();
+        break;
+      case 'bookings':
+        fetchBookings();
+        break;
+      default:
+        break;
+    }
+  }, [activeTab, fetchUsers, fetchHotels, fetchBookings]);
 
   const handleLogout = () => {
     logout();
@@ -135,7 +265,12 @@ export const EnhancedAdminDashboard = () => {
     <div className={`flex min-h-screen w-full ${isDark ? 'dark' : ''}`}>
       <Toaster position="top-right" />
       <div className="flex w-full bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100">
-        <Sidebar user={user} onLogout={handleLogout} />
+        <Sidebar 
+          user={user} 
+          onLogout={handleLogout} 
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+        />
         <MainContent 
           isDark={isDark} 
           setIsDark={toggleTheme} 
@@ -143,15 +278,40 @@ export const EnhancedAdminDashboard = () => {
           recentActivity={recentActivity}
           loading={loading}
           user={user}
+          activeTab={activeTab}
+          users={users}
+          hotels={hotels}
+          bookings={bookings}
+          pagination={pagination}
+          onToggleUserAdmin={toggleUserAdmin}
+          onDeleteUser={deleteUser}
+          onToggleHotelFeatured={toggleHotelFeatured}
+          onUpdateBookingStatus={updateBookingStatus}
+          onUpdatePaymentStatus={updatePaymentStatus}
+          onRefreshData={() => {
+            fetchDashboardStats();
+            switch (activeTab) {
+              case 'users':
+                fetchUsers();
+                break;
+              case 'hotels':
+                fetchHotels();
+                break;
+              case 'bookings':
+                fetchBookings();
+                break;
+              default:
+                break;
+            }
+          }}
         />
       </div>
     </div>
   );
 };
 
-const Sidebar = ({ user, onLogout }) => {
+const Sidebar = ({ user, onLogout, activeTab, setActiveTab }) => {
   const [open, setOpen] = useState(true);
-  const [selected, setSelected] = useState("Dashboard");
 
   return (
     <nav
@@ -163,45 +323,51 @@ const Sidebar = ({ user, onLogout }) => {
       <div className="space-y-1 mb-8">
         <Option
           Icon={Home}
-          title="Dashboard"
-          selected={selected}
-          setSelected={setSelected}
+          title="dashboard"
+          label="Dashboard"
+          selected={activeTab}
+          setSelected={setActiveTab}
           open={open}
         />
         <Option
           Icon={Building2}
-          title="Hotels"
-          selected={selected}
-          setSelected={setSelected}
+          title="hotels"
+          label="Hotels"
+          selected={activeTab}
+          setSelected={setActiveTab}
           open={open}
         />
         <Option
           Icon={Calendar}
-          title="Bookings"
-          selected={selected}
-          setSelected={setSelected}
+          title="bookings"
+          label="Bookings"
+          selected={activeTab}
+          setSelected={setActiveTab}
           open={open}
           notifs={3}
         />
         <Option
           Icon={Users}
-          title="Users"
-          selected={selected}
-          setSelected={setSelected}
+          title="users"
+          label="Users"
+          selected={activeTab}
+          setSelected={setActiveTab}
           open={open}
         />
         <Option
           Icon={DollarSign}
-          title="Revenue"
-          selected={selected}
-          setSelected={setSelected}
+          title="revenue"
+          label="Revenue"
+          selected={activeTab}
+          setSelected={setActiveTab}
           open={open}
         />
         <Option
           Icon={BarChart3}
-          title="Analytics"
-          selected={selected}
-          setSelected={setSelected}
+          title="analytics"
+          label="Analytics"
+          selected={activeTab}
+          setSelected={setActiveTab}
           open={open}
         />
       </div>
@@ -212,16 +378,18 @@ const Sidebar = ({ user, onLogout }) => {
           </div>
           <Option
             Icon={Settings}
-            title="Settings"
-            selected={selected}
-            setSelected={setSelected}
+            title="settings"
+            label="Settings"
+            selected={activeTab}
+            setSelected={setActiveTab}
             open={open}
           />
           <Option
             Icon={HelpCircle}
-            title="Help & Support"
-            selected={selected}
-            setSelected={setSelected}
+            title="help"
+            label="Help & Support"
+            selected={activeTab}
+            setSelected={setActiveTab}
             open={open}
           />
           <button
@@ -244,7 +412,7 @@ const Sidebar = ({ user, onLogout }) => {
   );
 };
 
-const Option = ({ Icon, title, selected, setSelected, open, notifs }) => {
+const Option = ({ Icon, title, label, selected, setSelected, open, notifs }) => {
   const isSelected = selected === title;
 
   return (
@@ -265,7 +433,7 @@ const Option = ({ Icon, title, selected, setSelected, open, notifs }) => {
             open ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          {title}
+          {label || title}
         </span>
       )}
       {notifs && open && (
@@ -359,9 +527,48 @@ const ToggleClose = ({ open, setOpen }) => {
   );
 };
 
-const MainContent = ({ isDark, setIsDark, stats, recentActivity, loading, user }) => {
+const MainContent = ({ 
+  isDark, 
+  setIsDark, 
+  stats, 
+  recentActivity, 
+  loading, 
+  user, 
+  activeTab,
+  users,
+  hotels,
+  bookings,
+  pagination,
+  onToggleUserAdmin,
+  onDeleteUser,
+  onToggleHotelFeatured,
+  onUpdateBookingStatus,
+  onUpdatePaymentStatus,
+  onRefreshData
+}) => {
   const [showCreateHotelModal, setShowCreateHotelModal] = useState(false);
   const [showCreateUserModal, setShowCreateUserModal] = useState(false);
+
+  const getPageTitle = () => {
+    switch (activeTab) {
+      case 'dashboard':
+        return 'Hotel Management Dashboard';
+      case 'users':
+        return 'Users Management';
+      case 'hotels':
+        return 'Hotels Management';
+      case 'bookings':
+        return 'Bookings Management';
+      case 'revenue':
+        return 'Revenue Analytics';
+      case 'analytics':
+        return 'Analytics & Reports';
+      case 'settings':
+        return 'Settings';
+      default:
+        return 'Admin Dashboard';
+    }
+  };
 
   if (loading) {
     return (
@@ -384,7 +591,7 @@ const MainContent = ({ isDark, setIsDark, stats, recentActivity, loading, user }
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
-            Hotel Management Dashboard
+            {getPageTitle()}
           </h1>
           <p className="text-gray-600 dark:text-gray-400 mt-1">
             Welcome back, {user?.username || 'Admin'} • {new Date().toLocaleDateString()}
@@ -674,13 +881,67 @@ const MainContent = ({ isDark, setIsDark, stats, recentActivity, loading, user }
         </div>
       </div>
 
+      {/* Dynamic Content Based on Active Tab */}
+      {activeTab === 'dashboard' && (
+        <DashboardOverview 
+          stats={stats} 
+          recentActivity={recentActivity} 
+          loading={loading}
+          onCreateHotel={() => setShowCreateHotelModal(true)}
+          onCreateUser={() => setShowCreateUserModal(true)}
+        />
+      )}
+
+      {activeTab === 'users' && (
+        <UsersManagement 
+          users={users} 
+          loading={loading} 
+          pagination={pagination}
+          onToggleAdmin={onToggleUserAdmin}
+          onDelete={onDeleteUser}
+          onCreateUser={() => setShowCreateUserModal(true)}
+        />
+      )}
+
+      {activeTab === 'hotels' && (
+        <HotelsManagement 
+          hotels={hotels} 
+          loading={loading} 
+          pagination={pagination}
+          onToggleFeatured={onToggleHotelFeatured}
+          onCreateHotel={() => setShowCreateHotelModal(true)}
+        />
+      )}
+
+      {activeTab === 'bookings' && (
+        <BookingsManagement 
+          bookings={bookings} 
+          loading={loading} 
+          pagination={pagination}
+          onUpdateStatus={onUpdateBookingStatus}
+          onUpdatePaymentStatus={onUpdatePaymentStatus}
+        />
+      )}
+
+      {activeTab === 'revenue' && (
+        <RevenueAnalytics stats={stats} loading={loading} />
+      )}
+
+      {activeTab === 'analytics' && (
+        <AnalyticsReports stats={stats} loading={loading} />
+      )}
+
+      {activeTab === 'settings' && (
+        <SettingsPanel user={user} />
+      )}
+
       {/* Modals */}
       <CreateHotelModal 
         isOpen={showCreateHotelModal}
         onClose={() => setShowCreateHotelModal(false)}
         onSuccess={() => {
-          // Refresh data
-          window.location.reload();
+          onRefreshData();
+          setShowCreateHotelModal(false);
         }}
       />
       
@@ -688,8 +949,8 @@ const MainContent = ({ isDark, setIsDark, stats, recentActivity, loading, user }
         isOpen={showCreateUserModal}
         onClose={() => setShowCreateUserModal(false)}
         onSuccess={() => {
-          // Refresh data
-          window.location.reload();
+          onRefreshData();
+          setShowCreateUserModal(false);
         }}
       />
     </div>
