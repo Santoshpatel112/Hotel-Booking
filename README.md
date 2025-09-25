@@ -9,18 +9,28 @@
 [![MongoDB](https://img.shields.io/badge/MongoDB-6.0-47A248?style=flat-square&logo=mongodb&logoColor=white)](https://mongodb.com/)
 [![Express.js](https://img.shields.io/badge/Express.js-4.18-000000?style=flat-square&logo=express&logoColor=white)](https://expressjs.com/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3.4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![Framer Motion](https://imdge/Framer%20Motioe=flat-square&logo=framerolor=white)](httpsom/motion)
+[![Raodern,](https://img.shields.ing platform wity-Paymentd a8FF0?style=flat-square&logme featureslogoColor=white)://razorpay.com/)
 
-**A modern, full-stack hotel booking platform with advanced admin dashboard and real-time features**
+[🚀 Livcutting-edge,e-demo)tack hotecumooking platform featuring) • [🛠️ Ied admin on](#️-ins real-time analytics, and se-fless payment in
 
-[🚀 Live Demo](#-live-demo) • [📖 Documentation](#-documentation) • [🛠️ Installation](#️-installation) • [🎯 Features](#-features)
-
-</div>
+</div>Demo](#-live-demoAdmin Dashboard](#-in-dashboard-) • [🛠️ Quick Squick-start-guide) •res](#-key-fes) • [📖ocs](#-api-docution
 
 ---
 
+### 🎭 **Interactivo Preview**
+
+`
+er Journey         🎛️ Admin Expence
+                  ↓
+🏠 Browse HSearch → 📅 Book →ay → ✅ Confirm
+             ↓            ↓        ↓
+ UI    Smart Filtee   azorpay  Email
+   Dare    Real-e    Picker   Gat  Notify
+        UX       Secu
 ## 🌟 **Animated Feature Showcase**
 
-<div align="center">
+</div><div align="center">
 
 ### � *o*Interactive User Experience**
 ```
@@ -600,251 +610,76 @@ test: add booking flow tests
 
 ---
 
-## 🌟 Live Demo
-
-### 📋 **Quick Demo Access**
+## 📞 **Support & Contact**
 
 <div align="center">
 
-| Demo Type | URL | Credentials | Features |
-|:---------:|:---:|:-----------:|:--------:|
-| 👥 **User Demo** | [localhost:3000](http://localhost:3000) | Register new account | Booking, Search, Profile |
-| 👩‍💼 **Admin Demo** | [localhost:3000/admin](http://localhost:3000/admin) | admin123@gmail.com / admin123 | Analytics, Management |
-| 📈 **API Demo** | [localhost:8000/api](http://localhost:8000/api) | Bearer token required | RESTful endpoints |
+### 🤝 **Get Help**
+| Channel | Link | Response Time |
+|---------|------|---------------|
+| 🐛 **Issues** | [GitHub Issues](https://github.com/Santoshpatel112/Hotel-Booking/issues) | 24-48 hours |
+| �  **Discussions** | [GitHub Discussions](https://github.com/Santoshpatel112/Hotel-Booking/discussions) | 1-2 days |
+| � ** Email** | santoshpatelvns5@gmail.com | 2-3 days |
+| � **SoIcial** | [LinkedIn](https://linkedin.com/in/santoshpatel112) | 1-2 days |
+
+### 🌟 **Show Your Support**
+If you find this project helpful, please consider:
+- ⭐ **Star** the repository
+- 🍴 **Fork** for your own projects
+- 📢 **Share** with others
+- 🐛 **Report** issues
+- 💡 **Suggest** improvements
 
 </div>
 
-### 📱 **Sample API Requests**
+---
 
-```bash
-# 🏨 Get all hotels
-curl -X GET "http://localhost:8000/api/hotels" \
-  -H "Content-Type: application/json"
-
-# 🔍 Search hotels by location
-curl -X GET "http://localhost:8000/api/hotels/search?city=Mumbai&checkin=2024-03-20&checkout=2024-03-23" \
-  -H "Content-Type: application/json"
-
+## 📄 **License**
 # 📋 Create new booking (requires authentication)
-curl -X POST "http://localhost:8000/api/bookings" \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+curl -X gn="center">
+
+T -H "Authot is licensed undYOUR_JWT_TOK License** - see t [LICENSE](LICENS file for details.
   -d '{
-    "hotelId": "670123456789abcdef123456",
-    "checkInDate": "2024-03-20",
-    "checkOutDate": "2024-03-23",
-    "guests": 2,
-    "roomType": "Deluxe Room"
+    "hotelId": "67ummary**
+```
+✅ CommerciOutDate": ✅ Mod-03-23", ✅ Distributiovate use
+❌ Liability   2, Warrant License notice  📝 t notice
+``` "roomType": "Deluxe Room"
   }'
 
 # 📈 Get booking analytics (admin only)
 curl -X GET "http://localhost:8000/api/analytics/dashboard" \
   -H "Authorization: Bearer YOUR_ADMIN_TOKEN"
-```
+``` **Acknowledg
 
-### 🎬 **Interactive Features Demo**
+#div align=teractive Features Demo**
 
-```javascript
-// 📈 Real-time Dashboard Updates
-const DashboardDemo = () => {
-  const [metrics, setMetrics] = useState({});
-  
+### 🙏 **Special 
+/ 🎨 **Design Inspiration **:pRazorpao stman, MongoDB Co
+112/Hotel-Booking/gra
+
+</d**UI ibumors]ts*lwind CSS rib.rocks/imag
   useEffect(() => {
-    // Fetch initial data
-    const fetchMetrics = async () => {
-      const response = await api.get('/analytics/real-time');
-      setMetrics(response.data);
-    };
-    
-    fetchMetrics();
-    
-    // Set up real-time updates
-    const interval = setInterval(fetchMetrics, 30000);
-    
-    return () => clearInterval(interval);
-  }, []);
-  
-  return (
-    <div className="dashboard-demo">
-      <AreaChart data={metrics.bookingTrends}>
-        <Area 
-          type="monotone" 
-          dataKey="bookings" 
-          stroke="#3b82f6" 
-          fill="#3b82f6" 
-          fillOpacity={0.3}
-        />
-      </AreaChart>
-    </div>
-  );
-};
-
-// 🌙 Theme Toggle Demonstration
-const ThemeDemo = () => {
-  const [darkMode, setDarkMode] = useState(false);
-  
-  const toggleTheme = () => {
-    setDarkMode(!darkMode);
-    document.documentElement.classList.toggle('dark');
-    toast.success(
-      darkMode ? '☀️ Light mode activated' : '🌙 Dark mode activated'
-    );
-  };
-  
-  return (
-    <button 
-      onClick={toggleTheme}
-      className="theme-toggle-demo"
-    >
-      {darkMode ? '☀️' : '🌙'} Toggle Theme
-    </button>
-  );
-};
-```
-
 ---
 
-## 🏢 System Architecture
+<div align="cesponse = await api.get('/analytics/real-time');
+### 🚀 **Ready t(responserted?**
 
-### 🚀 **Microservices Architecture Overview**
+[![Get Stard](https://img.shields.io/badge/Get%20Started-Now-blue?style=for-the-badge&logo=rocket)](https://github.com/Santoshpatel112/Hotel-Booking)
+[![View Demo](https://img.shields.io/badge/View%20Demo-Live-green?style=for-the-badge&logo=eye)](https://easystay-demo.vercel.app)
+[![Documentation](https://img.shields.io/badge/Read%20Docs-Here-orange?style=for-the-badge&logo=book)](https://github.com/Santoshpatel112/Hotel-Booking/wiki)
 
-```mermaid
-graph TB
-    subgraph "🌐 Client Layer"
-        A1["📱 Mobile App<br/>React Native"]
-        A2["💻 Web App<br/>React 18.x"]
-        A3["📋 Admin Panel<br/>Modern Dashboard"]
-    end
-    
-    subgraph "🌍 Load Balancer & CDN"
-        B1["⚖️ Load Balancer<br/>Nginx/CloudFlare"]
-        B2["🚀 CDN<br/>Static Assets"]
-    end
-    
-    subgraph "🛡️ API Gateway"
-        C1["🔐 Authentication<br/>JWT Middleware"]
-        C2["📋 Rate Limiting<br/>API Protection"]
-        C3["📝 Request Validation<br/>Schema Validation"]
-        C4["📊 Analytics<br/>Request Tracking"]
-    end
-    
-    subgraph "🎯 Business Services"
-        D1["🏨 Hotel Service<br/>Property Management"]
-        D2["📋 Booking Service<br/>Reservation Logic"]
-        D3["👥 User Service<br/>Profile Management"]
-        D4["💳 Payment Service<br/>Transaction Processing"]
-        D5["📈 Analytics Service<br/>Data Aggregation"]
-        D6["📧 Notification Service<br/>Email/SMS/Push"]
-    end
-    
-    subgraph "🗄️ Data Layer"
-        E1[("🏨 Hotels DB<br/>MongoDB<br/>Property Data")]
-        E2[("📋 Bookings DB<br/>MongoDB<br/>Reservation Data")]
-        E3[("👥 Users DB<br/>MongoDB<br/>Profile Data")]
-        E4[("📈 Analytics DB<br/>MongoDB<br/>Metrics Data")]
-        E5[("🗺️ Cache<br/>Redis<br/>Session & Cache")]
-    end
-    
-    %% Client Connections
-    A1 --> B1
-    A2 --> B1
-    A3 --> B1
-    
-    %% Load Balancer
-    B1 --> C1
-    B2 --> C1
-    
-    %% API Gateway Flow
-    C1 --> C2
-    C2 --> C3
-    C3 --> C4
-    
-    %% Service Routing
-    C4 --> D1
-    C4 --> D2
-    C4 --> D3
-    C4 --> D4
-    C4 --> D5
-    C4 --> D6
-    
-    %% Database Connections
-    D1 --> E1
-    D2 --> E2
-    D3 --> E3
-    D5 --> E4
-    
-    %% Cache Layer
-    D1 --> E5
-    D2 --> E5
-    D3 --> E5
-    
-    %% Styling
-    style A2 fill:#3b82f6,stroke:#1e40af,color:#fff
-    style A3 fill:#10b981,stroke:#059669,color:#fff
-    style C1 fill:#f59e0b,stroke:#d97706,color:#fff
-    style D2 fill:#ef4444,stroke:#dc2626,color:#fff
-    style D5 fill:#8b5cf6,stroke:#7c3aed,color:#fff
-```
+**Made with ❤️ by [Santosh Patel](https://github.com/Santoshpatel112)**
 
----
-
-## 🤝 Contributing
-
-### 🌟 **How to Contribute**
-
-<div align="center">
-
-| Step | Action | Description | Tools |
-|:----:|:------:|:-----------:|:-----:|
-| 1️⃣ | 🍴 **Fork** | Fork the repository | GitHub |
-| 2️⃣ | 🌱 **Branch** | Create feature branch | `git checkout -b feature/analytics` |
-| 3️⃣ | 📝 **Code** | Implement your changes | VS Code, WebStorm |
-| 4️⃣ | ✅ **Test** | Run tests and linting | Jest, ESLint |
-| 5️⃣ | 📤 **Commit** | Commit with clear message | `git commit -m "Add: revenue analytics"` |
-| 6️⃣ | 🚀 **Push** | Push to your fork | `git push origin feature/analytics` |
-| 7️⃣ | 🔄 **PR** | Create Pull Request | GitHub |
-
-</div>
-
-### 🐛 **Issue Reporting**
-
-- 🐛 **Bug Reports** - Use GitHub Issues with detailed reproduction steps
-- 💡 **Feature Requests** - Describe use case and expected behavior
-- 📋 **Documentation** - Help improve setup and usage guides
-
----
-
-## 📄 License
-
-<div align="center">
-
-### 📃 **MIT License**
-
-**Free for personal and commercial use** • **Modify and distribute** • **No warranty provided**
-
-[📄 View Full License](LICENSE) • [🌐 OSI Approved](https://opensource.org/licenses/MIT)
+⭐ **Star this repo if you found it helpful!** ⭐
 
 </div>
 
 ---
 
 <div align="center">
-
-## 🎆 **Ready to Transform Your Hotel Business?**
-
-### 🚀 **Get Started in 5 Minutes**
-
-[📦 **Clone Repository**](https://github.com/YOUR_USERNAME/EasyStay-BookingApp) • [📈 **View Analytics Demo**](http://localhost:3000/admin) • [📝 **Read Documentation**](#🚀-quick-start)
-
----
-
-### 🌐 **Connect With Us**
-
-[💬 **Discussions**](https://github.com/YOUR_USERNAME/EasyStay-BookingApp/discussions) • [🐛 **Report Issues**](https://github.com/YOUR_USERNAME/EasyStay-BookingApp/issues) • [📧 **Contact Support**](mailto:support@easystay.com)
-
----
-
-**📊 Built with Modern Tech Stack** • **🌙 Dark Mode Support** • **📱 Mobile Optimized** • **⚡ Real-time Analytics**
+<sub>Last updated: December 2024 | Version 2.0.0</sub>
+</div>uilt with Modern Tech Stack** • **🌙 Dark Mode Support** • **📱 Mobile Optimized** • **⚡ Real-time Analytics**
 
 **🏨 Powering the Future of Hospitality** • **© 2024 EasyStay Platform** • **📄 MIT Licensed**
 
