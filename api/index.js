@@ -27,11 +27,6 @@ app.use(cors({
   origin: 'http://localhost:3000',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
-}));
-app.use(cors({
-  origin: 'http://localhost:3000',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true
 })); 
 
 const connectDB = async () => {
@@ -78,7 +73,8 @@ app.use("/api/analytics", analyticsRoutes);
 app.use("/api/property-types", propertyTypeRoutes);
 app.use("/api/hotel-types", hotelTypeRoutes);
 app.use("/api/payment", paymentRoutes);
-app.use((err, req, res, next) => {
+
+// Error handling middleware
 app.use((err, req, res, next) => {
     const errorStatus = err.status || 500;
     const errorMessage = err.message || "Something went wrong!";
@@ -90,6 +86,7 @@ app.use((err, req, res, next) => {
         stack: process.env.NODE_ENV === "development" ? err.stack : {}
     });
 });
+
 const server = createServer(app);
 
 initializeSocket(server);
