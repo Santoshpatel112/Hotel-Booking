@@ -13,6 +13,7 @@ import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
 import EnhancedAdminDashboard from "./pages/admin/EnhancedAdminDashboard.jsx";
 import AdminDashboardDemo from "./pages/demo/AdminDashboardDemo.jsx";
 import DashboardDemo from "./pages/demo/DashboardDemo.jsx";
+import HotelManagementDemo from "./pages/demo/HotelManagementDemo.jsx";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthContextProvider } from "./context/AuthContext";
 import { ThemeProvider } from "./context/ThemeContext";
@@ -59,6 +60,9 @@ function App() {
             <ProtectedRoute requireAdmin={true}>
               <AdminDashboardDemo/>
             </ProtectedRoute>
+          }/>
+          <Route path="/hotel-management-demo" element={
+            <HotelManagementDemo/>
           }/>
           <Route path="/properties/:type" element={<PropertyTypeDetails />} />
         </Routes>
