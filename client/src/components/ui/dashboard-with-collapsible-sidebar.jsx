@@ -18,10 +18,23 @@ import {
   Settings,
   HelpCircle,
   User,
+  Menu,
 } from "lucide-react";
 
 export const DashboardWithCollapsibleSidebar = () => {
   const [isDark, setIsDark] = useState(false);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+
+  // Load persisted theme on first mount
+  useEffect(() => {
+    try {
+      const savedTheme = window.localStorage.getItem('dashboard-theme');
+      if (savedTheme === 'dark') {
+        setIsDark(true);
+        document.documentElement.classList.add('dark');
+      }
+    } catch {}
+  }, []);
 
   useEffect(() => {
     if (isDark) {
@@ -29,30 +42,66 @@ export const DashboardWithCollapsibleSidebar = () => {
     } else {
       document.documentElement.classList.remove('dark');
     }
+    try {
+      window.localStorage.setItem('dashboard-theme', isDark ? 'dark' : 'light');
+    } catch {}
   }, [isDark]);
+
+  // Keyboard shortcuts for quick actions
+  useEffect(() => {
+    const onKeyDown = (e) => {
+      const key = e.key?.toLowerCase();
+      if (key === 'b') {
+        setIsDark((d) => !d);
+      }
+      if (key === 's') {
+        setIsMobileSidebarOpen(true);
+      }
+      if (e.key === 'Escape') {
+        setIsMobileSidebarOpen(false);
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, []);
 
   return (
     <div className={`flex min-h-screen w-full ${isDark ? 'dark' : ''}`}>
+      {/* Mobile overlay */}
+      {isMobileSidebarOpen && (
+        <div
+          className="fixed inset-0 z-30 bg-black/40 lg:hidden"
+          onClick={() => setIsMobileSidebarOpen(false)}
+        />
+      )}
       <div className="flex w-full bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100">
-        <Sidebar />
-        <ExampleContent isDark={isDark} setIsDark={setIsDark} />
+        <Sidebar
+          isMobileSidebarOpen={isMobileSidebarOpen}
+          setIsMobileSidebarOpen={setIsMobileSidebarOpen}
+        />
+        <ExampleContent
+          isDark={isDark}
+          setIsDark={setIsDark}
+          onOpenMobileSidebar={() => setIsMobileSidebarOpen(true)}
+        />
       </div>
     </div>
   );
 };
 
-const Sidebar = () => {
+const Sidebar = ({ isMobileSidebarOpen, setIsMobileSidebarOpen }) => {
   const [open, setOpen] = useState(true);
   const [selected, setSelected] = useState("Dashboard");
 
   return (
     <nav
-      className={`sticky top-0 h-screen shrink-0 border-r transition-all duration-300 ease-in-out ${
-        open ? 'w-64' : 'w-16'
-      } border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-2 shadow-sm`}
+      className={`fixed inset-y-0 left-0 z-40 w-64 border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-2 shadow-sm transition-transform duration-300 ease-in-out motion-reduce:transition-none lg:sticky lg:translate-x-0 ${
+        isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+      } ${open ? 'lg:w-64' : 'lg:w-16'}`}
+      aria-label="Sidebar"
     >
       <TitleSection open={open} />
-      <div className="space-y-1 mb-8">
+      <div className="space-y-1 mb-8 overflow-y-auto max-h-[calc(100vh-200px)] pr-1">
         <Option
           Icon={Home}
           title="Dashboard"
@@ -126,7 +175,20 @@ const Sidebar = () => {
           />
         </div>
       )}
-      <ToggleClose open={open} setOpen={setOpen} />
+      {/* Collapse toggle visible on lg screens */}
+      <div className="hidden lg:block">
+        <ToggleClose open={open} setOpen={setOpen} />
+      </div>
+
+      {/* Close button for mobile */}
+      <div className="lg:hidden mt-4">
+        <button
+          onClick={() => setIsMobileSidebarOpen(false)}
+          className="w-full rounded-md border border-gray-200 dark:border-gray-800 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
+        >
+          Close
+        </button>
+      </div>
     </nav>
   );
 };
@@ -137,7 +199,9 @@ const Option = ({ Icon, title, selected, setSelected, open, notifs }) => {
   return (
     <button
       onClick={() => setSelected(title)}
-      className={`relative flex h-11 w-full items-center rounded-md transition-all duration-200 ${
+      title={!open ? title : undefined}
+      aria-label={title}
+      className={`relative flex h-11 w-full items-center rounded-md transition-all duration-200 motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-gray-900 ${
         isSelected
           ? "bg-blue-50 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 shadow-sm border-l-2 border-blue-500"
           : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200"
@@ -243,12 +307,20 @@ const ToggleClose = ({ open, setOpen }) => {
   );
 };
 
-const ExampleContent = ({ isDark, setIsDark }) => {
+const ExampleContent = ({ isDark, setIsDark, onOpenMobileSidebar }) => {
   return (
     <div className="flex-1 bg-gray-50 dark:bg-gray-950 p-6 overflow-auto">
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
-        <div>
+        <div className="flex items-center gap-3">
+          {/* Mobile menu button */}
+          <button
+            className="inline-flex lg:hidden h-10 w-10 items-center justify-center rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-gray-900"
+            onClick={onOpenMobileSidebar}
+            aria-label="Open sidebar"
+          >
+            <Menu className="h-5 w-5" />
+          </button>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
             Dashboard
           </h1>
@@ -257,13 +329,14 @@ const ExampleContent = ({ isDark, setIsDark }) => {
           </p>
         </div>
         <div className="flex items-center gap-4">
-          <button className="relative p-2 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">
+          <button className="relative p-2 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-gray-900" aria-label="Notifications">
             <Bell className="h-5 w-5" />
             <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full"></span>
           </button>
           <button
             onClick={() => setIsDark(!isDark)}
-            className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+            className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100 transition-colors motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-gray-900"
+            aria-label="Toggle dark mode (b)"
           >
             {isDark ? (
               <Sun className="h-4 w-4" />
@@ -271,7 +344,7 @@ const ExampleContent = ({ isDark, setIsDark }) => {
               <Moon className="h-4 w-4" />
             )}
           </button>
-          <button className="p-2 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">
+          <button className="p-2 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-gray-900" aria-label="Account">
             <User className="h-5 w-5" />
           </button>
         </div>
