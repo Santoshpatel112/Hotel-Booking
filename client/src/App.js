@@ -10,7 +10,9 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Profile from "./pages/profile/Profile";
 import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
+import EnhancedAdminDashboard from "./pages/admin/EnhancedAdminDashboard.jsx";
 import AdminDashboardDemo from "./pages/demo/AdminDashboardDemo.jsx";
+import DashboardDemo from "./pages/demo/DashboardDemo.jsx";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthContextProvider } from "./context/AuthContext";
 import { ThemeProvider } from "./context/ThemeContext";
@@ -37,13 +39,21 @@ function App() {
           }/>
           <Route path="/admin" element={
             <ProtectedRoute requireAdmin={true}>
-              <AdminDashboard/>
+              <EnhancedAdminDashboard/>
             </ProtectedRoute>
           }/>
           <Route path="/admin/*" element={
             <ProtectedRoute requireAdmin={true}>
+              <EnhancedAdminDashboard/>
+            </ProtectedRoute>
+          }/>
+          <Route path="/admin-old" element={
+            <ProtectedRoute requireAdmin={true}>
               <AdminDashboard/>
             </ProtectedRoute>
+          }/>
+          <Route path="/dashboard-demo" element={
+            <DashboardDemo/>
           }/>
           <Route path="/admin-demo" element={
             <ProtectedRoute requireAdmin={true}>
