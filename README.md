@@ -1,4 +1,4 @@
-# 🏨 EasyStay - Modern Hoking Plking Platform
+# 🏨 EasyStay - Modern Hotel Booking Platform
 
 <div align="center">
 
