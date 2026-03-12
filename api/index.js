@@ -20,6 +20,9 @@ import { initializeSocket } from "./utils/socket.js";
 dotenv.config();
 const PORT = process.env.PORT || 8000;
 
+// Use explicit IPv4 host to avoid potential IPv6 localhost issues
+const MONGO_URL = process.env.MONGO_URL || "mongodb://127.0.0.1:27017/hotelBooking";
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(
@@ -32,7 +35,13 @@ app.use(
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URL);
+    if (!MONGO_URL) {
+      console.error("❌ MONGO_URL is not set. Please set it in your .env file.");
+      process.exit(1);
+    }
+
+    console.log(`🔌 Connecting to MongoDB at: ${MONGO_URL}`);
+    await mongoose.connect(MONGO_URL);
 
     const dbName = mongoose.connection.db.databaseName;
     const host = mongoose.connection.host;

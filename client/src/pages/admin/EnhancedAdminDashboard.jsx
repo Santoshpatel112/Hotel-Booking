@@ -12,7 +12,7 @@ import {
   TrendingUp,
   Activity,
   Bell,
-  Settings,
+  Settings as SettingsIcon,
   HelpCircle,
   User,
   MapPin,
@@ -31,6 +31,12 @@ import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import CreateHotelModal from '../../components/admin/CreateHotelModal';
 import CreateUserModal from '../../components/admin/CreateUserModal';
+import { BookingsManagement } from '../../components/ui/BookingsManagement';
+import { RevenueAnalytics } from '../../components/ui/RevenueAnalytics';
+import { UserManagement } from '../../components/ui/UserManagement';
+import { HotelManagement } from '../../components/ui/HotelManagement';
+import { AnalyticsDashboard } from '../../components/ui/AnalyticsDashboard';
+import SettingsPanel from '../../components/ui/Settings';
 
 const API_BASE = 'http://localhost:8000/api';
 
@@ -377,7 +383,7 @@ const Sidebar = ({ user, onLogout, activeTab, setActiveTab }) => {
             Account
           </div>
           <Option
-            Icon={Settings}
+            Icon={SettingsIcon}
             title="settings"
             label="Settings"
             selected={activeTab}
@@ -731,7 +737,7 @@ const MainContent = ({
         <button className="p-4 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 hover:border-orange-500 dark:hover:border-orange-400 transition-colors group">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-orange-50 dark:bg-orange-900/20 rounded-lg group-hover:bg-orange-100 dark:group-hover:bg-orange-900/40 transition-colors">
-              <Settings className="h-5 w-5 text-orange-600 dark:text-orange-400" />
+              <SettingsIcon className="h-5 w-5 text-orange-600 dark:text-orange-400" />
             </div>
             <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Settings</span>
           </div>
@@ -893,7 +899,7 @@ const MainContent = ({
       )}
 
       {activeTab === 'users' && (
-        <UsersManagement 
+        <UserManagement 
           users={users} 
           loading={loading} 
           pagination={pagination}
@@ -904,7 +910,7 @@ const MainContent = ({
       )}
 
       {activeTab === 'hotels' && (
-        <HotelsManagement 
+        <HotelManagement 
           hotels={hotels} 
           loading={loading} 
           pagination={pagination}
@@ -928,7 +934,7 @@ const MainContent = ({
       )}
 
       {activeTab === 'analytics' && (
-        <AnalyticsReports stats={stats} loading={loading} />
+        <AnalyticsDashboard stats={stats} loading={loading} />
       )}
 
       {activeTab === 'settings' && (
@@ -953,6 +959,104 @@ const MainContent = ({
           setShowCreateUserModal(false);
         }}
       />
+    </div>
+  );
+};
+
+const DashboardOverview = ({ stats, recentActivity, loading, onCreateHotel, onCreateUser }) => {
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Dashboard Overview</h2>
+          <p className="text-gray-600 dark:text-gray-400">Quick insights into recent activity and overall stats.</p>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <button
+            onClick={onCreateHotel}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            <Plus className="h-4 w-4" />
+            Add Hotel
+          </button>
+          <button
+            onClick={onCreateUser}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+          >
+            <User className="h-4 w-4" />
+            Add User
+          </button>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-sm">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Total Bookings</h3>
+              <p className="text-2xl font-semibold text-gray-900 dark:text-gray-100">{stats?.totalBookings ?? 0}</p>
+            </div>
+            <Calendar className="h-6 w-6 text-blue-500 dark:text-blue-400" />
+          </div>
+        </div>
+        <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-sm">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Total Users</h3>
+              <p className="text-2xl font-semibold text-gray-900 dark:text-gray-100">{stats?.totalUsers ?? 0}</p>
+            </div>
+            <Users className="h-6 w-6 text-green-500 dark:text-green-400" />
+          </div>
+        </div>
+        <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-sm">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Total Hotels</h3>
+              <p className="text-2xl font-semibold text-gray-900 dark:text-gray-100">{stats?.totalHotels ?? 0}</p>
+            </div>
+            <Building2 className="h-6 w-6 text-purple-500 dark:text-purple-400" />
+          </div>
+        </div>
+        <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-sm">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Total Revenue</h3>
+              <p className="text-2xl font-semibold text-gray-900 dark:text-gray-100">₹{(stats?.totalRevenue ?? 0).toLocaleString()}</p>
+            </div>
+            <DollarSign className="h-6 w-6 text-orange-500 dark:text-orange-400" />
+          </div>
+        </div>
+      </div>
+
+      <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-sm">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Recent Activity</h3>
+        <div className="space-y-3">
+          {recentActivity?.length ? (
+            recentActivity.map((activity, index) => (
+              <div key={index} className="flex items-start gap-4">
+                <div className="grid h-10 w-10 place-content-center rounded-xl bg-gray-100 dark:bg-gray-800">
+                  {activity.icon && <activity.icon className="h-5 w-5 text-gray-600 dark:text-gray-300" />}
+                </div>
+                <div>
+                  <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{activity.title}</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">{activity.desc}</div>
+                  <div className="text-xs text-gray-400 dark:text-gray-500 mt-1">{activity.time}</div>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p className="text-sm text-gray-500 dark:text-gray-400">No recent activity available.</p>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
