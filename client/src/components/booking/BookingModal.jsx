@@ -12,7 +12,7 @@ import {
 import { DateRange } from 'react-date-range';
 import { format } from 'date-fns';
 import { useAuth } from '../../context/AuthContext';
-import axios from 'axios';
+import api from '../../services/api';
 import toast from 'react-hot-toast';
 import './booking.css';
 
@@ -133,7 +133,7 @@ const BookingModal = ({ hotel, isOpen, onClose, onSuccess }) => {
       }
 
       // 2. Fetch Order ID securely from our backend
-      const orderResponse = await axios.post('http://localhost:8000/api/payment/order', {
+      const orderResponse = await api.post('/payment/order', {
         amount: priceBreakdown.total,
         currency: "INR",
         receipt: `receipt_${Date.now()}`
@@ -148,7 +148,7 @@ const BookingModal = ({ hotel, isOpen, onClose, onSuccess }) => {
         toast?.success("Mock Payment Mode Active. Simulating checkout...");
         
         // Simulating the secure crypto handshake
-        const verifyMock = await axios.post('http://localhost:8000/api/payment/verify', {
+        const verifyMock = await api.post('/payment/verify', {
            razorpay_order_id: orderResponse.data.id,
            razorpay_payment_id: "pay_mock_" + Date.now(),
            razorpay_signature: "mock_signature_bypass"
@@ -175,7 +175,7 @@ const BookingModal = ({ hotel, isOpen, onClose, onSuccess }) => {
         handler: async function (response) {
           try {
             // 4a. Crypto-verify Payment Signature with our Backend
-            const verification = await axios.post('http://localhost:8000/api/payment/verify', {
+            const verification = await api.post('/payment/verify', {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature
