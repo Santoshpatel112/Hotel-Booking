@@ -1,11 +1,11 @@
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 // Create axios instance with default configuration
 const api = axios.create({
-  baseURL: process.env.NODE_ENV === 'production' 
-    ? 'http://localhost:8000/api' 
-    : '/api', // Use proxy in development
+  baseURL: process.env.REACT_APP_API_URL || '/api', // Enables proxy in dev and Vercel routing in prod
   withCredentials: true,
+  timeout: 10000, // 10 second timeout for better robustness
   headers: {
     'Content-Type': 'application/json',
   },
@@ -29,11 +29,27 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      window.location.href = '/login';
+    // Check for network errors (host down or unreachable)
+    if (!error.response) {
+      console.error('🌐 Network Error - Server might be offline:', error.message);
+      // We don't toast here to avoid spamming, the ConnectionBanner will handle the UI
     }
+
+    if (error.response?.status === 401) {
+      // Don't redirect if we're already on login/register to avoid loops
+      if (!window.location.pathname.includes('/login') && !window.location.pathname.includes('/register')) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        window.location.href = '/login';
+      }
+    }
+    
+    // Service Unavailable or Internal Server Error (often DB issues)
+    if (error.response?.status === 503 || error.response?.status === 500) {
+        const msg = error.response.data?.message || 'The server is having trouble. Please try again later.';
+        toast.error(msg, { id: 'server-error' });
+    }
+
     return Promise.reject(error);
   }
 );
@@ -87,100 +103,36 @@ export const hotelAPI = {
   
   // Test database connection
   testDatabase: () => api.get('/hotels/test-db'),
+  
+  // Health check
+  checkHealth: () => axios.get('http://localhost:8000/health', { timeout: 3000 }),
 };
 
 // Room API functions
 export const roomAPI = {
-  // Get all rooms
   getAllRooms: () => api.get('/rooms'),
-  
-  // Get room by ID
   getRoomById: (id) => api.get(`/rooms/${id}`),
-  
-  // Create room (admin only)
   createRoom: (hotelId, roomData) => api.post(`/rooms/${hotelId}`, roomData),
-  
-  // Update room (admin only)
   updateRoom: (id, roomData) => api.put(`/rooms/${id}`, roomData),
-  
-  // Delete room (admin only)
   deleteRoom: (id, hotelId) => api.delete(`/rooms/${id}/${hotelId}`),
-  
-  // Update room availability
   updateRoomAvailability: (id, dates) => api.put(`/rooms/availability/${id}`, { dates }),
 };
 
 // User API functions
 export const userAPI = {
-  // Get all users (admin only)
   getAllUsers: () => api.get('/users'),
-  
-  // Get user by ID
   getUserById: (id) => api.get(`/users/${id}`),
-  
-  // Update user
   updateUser: (id, userData) => api.put(`/users/${id}`, userData),
-  
-  // Delete user (admin only)
   deleteUser: (id) => api.delete(`/users/${id}`),
 };
 
 // Auth API functions
 export const authAPI = {
-  // Register new user
   register: (userData) => api.post('/auth/register', userData),
-  
-  // Login user
   login: (credentials) => api.post('/auth/login', credentials),
-  
-  // Logout user
   logout: () => api.post('/auth/logout'),
-  
-  // Get current user profile
   getProfile: () => api.get('/auth/profile'),
-  
-  // Refresh token
   refreshToken: () => api.post('/auth/refresh'),
-};
-
-// Generic API helper functions
-export const apiHelpers = {
-  // Handle API errors consistently
-  handleError: (error) => {
-    if (error.response) {
-      // Server responded with error status
-      return {
-        message: error.response.data?.message || 'Server error occurred',
-        status: error.response.status,
-        data: error.response.data,
-      };
-    } else if (error.request) {
-      // Network error
-      return {
-        message: 'Network error - please check your connection',
-        status: 0,
-        data: null,
-      };
-    } else {
-      // Other error
-      return {
-        message: error.message || 'An unexpected error occurred',
-        status: 500,
-        data: null,
-      };
-    }
-  },
-  
-  // Format query parameters for URLs
-  formatQueryParams: (params) => {
-    const searchParams = new URLSearchParams();
-    Object.keys(params).forEach(key => {
-      if (params[key] !== null && params[key] !== undefined && params[key] !== '') {
-        searchParams.append(key, params[key]);
-      }
-    });
-    return searchParams.toString();
-  },
 };
 
 export default api;

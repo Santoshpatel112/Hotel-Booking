@@ -18,10 +18,12 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthContextProvider } from "./context/AuthContext";
 import { ThemeProvider } from "./context/ThemeContext";
 import PropertyTypeDetails from "./pages/propertyTypeDetails/PropertyTypeDetails";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
     <ThemeProvider>
+      <Toaster position="top-center" reverseOrder={false} />
       <AuthContextProvider>
         <BrowserRouter future={{
             v7_startTransition: true,
