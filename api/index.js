@@ -38,14 +38,32 @@ fetchIP();
 // ─── Middleware ───────────────────────────────────────────────────────────────
 app.use(express.json());
 app.use(cookieParser());
+
+const isDev = process.env.NODE_ENV !== "production";
+
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:3001",
+  "http://127.0.0.1:3000",
+  "http://127.0.0.1:3001",
+  ...(process.env.RAILWAY_PUBLIC_DOMAIN
+    ? [
+        `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`,
+        `http://${process.env.RAILWAY_PUBLIC_DOMAIN}`,
+      ]
+    : []),
+];
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "http://localhost:3001",
-      "http://127.0.0.1:3000",
-      "http://127.0.0.1:3001"
-    ],
+    origin: (origin, callback) => {
+      // Allow requests with no origin (e.g. mobile apps, curl, server-to-server)
+      if (!origin) return callback(null, true);
+      // In development, allow all origins for flexibility
+      if (isDev) return callback(null, true);
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+      callback(new Error(`CORS: origin '${origin}' not allowed`));
+    },
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     credentials: true,
   })
