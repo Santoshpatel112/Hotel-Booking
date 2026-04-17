@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { Hotel } from "../models/Hotel.js";
 
 const CreateHotel = async (req, res) => {
@@ -79,6 +80,17 @@ const GetHotelByID = async (req, res) => {
 };
 
 const getallHotel = async (req, res) => {
+  // DB Connectivity Check
+  if (mongoose.connection.readyState !== 1) {
+    return res.status(503).json({
+      success: false,
+      message: "Database connection is currently unavailable. Please try again in a moment.",
+      data: [],
+      hotels: [],
+      count: 0
+    });
+  }
+
   const { city, type, min, max, limit, sortBy, ...others } = req.query;
   try {
     let query = {};
@@ -259,6 +271,9 @@ const testDatabase = async (req, res) => {
 };
 
 const CountByType = async (req, res) => {
+  if (mongoose.connection.readyState !== 1) {
+    return res.status(503).json([{ type: "hotel", count: 0 }, { type: "apartment", count: 0 }, { type: "resort", count: 0 }, { type: "villa", count: 0 }, { type: "cabin", count: 0 }]);
+  }
   try {
     const HotelCount = await Hotel.countDocuments({ type: "hotel" });
     const apartmentCount = await Hotel.countDocuments({ type: "apartment" });
@@ -281,6 +296,9 @@ const CountByType = async (req, res) => {
   }
 };
 const getFeaturedHotels = async (req, res) => {
+  if (mongoose.connection.readyState !== 1) {
+    return res.status(503).json({ message: "Database connection unavailable", data: [] });
+  }
   try {
     const { limit } = req.query;
     const featuredHotels = await Hotel.find({ featured: true }).limit(
