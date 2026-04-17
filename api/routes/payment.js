@@ -5,7 +5,7 @@ import {
   createOrder,
   verifyPayment,
   getPublicKey,
-} from "../controllers/payment.js";
+} from "../Controllers/payment.js";
 
 dotenv.config();
 const router = express.Router();
