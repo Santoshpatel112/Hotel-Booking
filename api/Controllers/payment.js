@@ -14,13 +14,17 @@ export const getPublicKey = (req, res) => {
 };
 
 const getClient = () => {
-  const key_id = process.env.RAZORPAY_KEY_ID?.trim();
-  const key_secret = process.env.RAZORPAY_KEY_SECRET?.trim();
+  const key_id = process.env.RAZORPAY_KEY_ID;
+  const key_secret = process.env.RAZORPAY_KEY_SECRET;
 
-  if (!key_id || !key_secret) {
+  console.log("🛠️  [DEBUG] getClient checking env bindings:");
+  console.log("ID:", key_id);
+  console.log("SECRET:", key_secret ? "(Hidden but defined)" : undefined);
+
+  if (!key_id?.trim() || !key_secret?.trim()) {
     throw new Error("Razorpay credentials not configured in backend .env");
   }
-  return new Razorpay({ key_id, key_secret });
+  return new Razorpay({ key_id: key_id.trim(), key_secret: key_secret.trim() });
 };
 
 // Create an order in Razorpay (amount in INR rupees on client; convert to paise here)
