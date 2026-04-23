@@ -105,7 +105,7 @@ export const hotelAPI = {
   testDatabase: () => api.get('/hotels/test-db'),
   
   // Health check
-  checkHealth: () => axios.get('http://localhost:8000/health', { timeout: 3000 }),
+  checkHealth: () => api.get('/health', { timeout: 3000 }),
 };
 
 // Room API functions

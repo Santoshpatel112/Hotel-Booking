@@ -19,7 +19,7 @@ const handleRazorpayPayment = async () => {
 
   try {
     // Step 1: Call your backend to create an order
-    const { data: order } = await axios.post('http://localhost:5000/api/payment/create-order', {
+    const { data: order } = await axios.post(`${process.env.REACT_APP_API_URL || '/api'}/payment/create-order`, {
       amount: 500,  // Amount in INR
     });
 

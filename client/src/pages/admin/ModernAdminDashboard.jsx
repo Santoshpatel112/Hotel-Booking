@@ -20,7 +20,7 @@ import CreateHotelModal from '../../components/admin/CreateHotelModal';
 import CreateUserModal from '../../components/admin/CreateUserModal';
 import './admin-modern.css';
 
-const API_BASE = 'http://localhost:8000/api';
+const API_BASE = process.env.REACT_APP_API_URL || '/api';
 
 const ModernAdminDashboard = () => {
   const { user, logout } = useAuth();

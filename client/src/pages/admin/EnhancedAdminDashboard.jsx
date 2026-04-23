@@ -38,7 +38,7 @@ import { HotelManagement } from '../../components/ui/HotelManagement';
 import { AnalyticsDashboard } from '../../components/ui/AnalyticsDashboard';
 import SettingsPanel from '../../components/ui/Settings';
 
-const API_BASE = 'http://localhost:8000/api';
+const API_BASE = process.env.REACT_APP_API_URL || '/api';
 
 export const EnhancedAdminDashboard = () => {
   const { user, logout } = useAuth();
