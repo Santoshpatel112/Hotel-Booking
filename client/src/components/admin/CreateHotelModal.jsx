@@ -37,7 +37,7 @@ const CreateHotelModal = ({ isOpen, onClose, onSuccess }) => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:8000/api/hotels', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || '/api'}/hotels`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

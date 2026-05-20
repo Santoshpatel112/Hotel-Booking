@@ -15,8 +15,8 @@ const DashboardPage = () => {
       }
 
       try {
-        const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
-        const res = await axios.get(`${BASE_URL}/api/dashboard/admin-dashboard`, {
+        const BASE_URL = process.env.REACT_APP_API_URL || "/api";
+        const res = await axios.get(`${BASE_URL}/dashboard/admin-dashboard`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setDashboardData(res.data);

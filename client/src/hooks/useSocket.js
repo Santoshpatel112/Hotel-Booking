@@ -34,7 +34,7 @@ export const useSocket = (options = {}) => {
         try {
             console.log('🔌 Initializing Socket.IO connection...');
             
-            socketRef.current = io('http://localhost:8000', {
+            socketRef.current = io(process.env.REACT_APP_SOCKET_URL || 'http://localhost:8000', {
                 auth: {
                     token: user.token
                 },

@@ -64,6 +64,13 @@ app.use(
       if (allowedOrigins.includes(origin)) return callback(null, true);
       callback(new Error(`CORS: origin '${origin}' not allowed`));
     },
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:3001",
+      "http://127.0.0.1:3000",
+      "http://127.0.0.1:3001",
+      process.env.CLIENT_URL,       // Railway client URL
+    ].filter(Boolean),
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     credentials: true,
   })

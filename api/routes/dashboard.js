@@ -12,7 +12,7 @@ import {
   getBookings,
   getRevenue,
   getAnalytics
-} from '../controllers/dashboard.js';
+} from '../Controllers/dashboard.js';
 const router = express.Router();
 
 // Dashboard overview
